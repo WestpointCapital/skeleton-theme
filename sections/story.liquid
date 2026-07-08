@@ -37,18 +37,20 @@
 
       <div class="story__frame" aria-hidden="true"></div>
 
-      <div class="story__main">
-        <img src="{{ img_main }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="2000">
+      <div class="story__images">
+        <div class="story__main">
+          <img src="{{ img_main }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="2000">
+        </div>
+
+        {% if img_alt != blank %}
+          <div class="story__inset" data-reveal style="--reveal-delay: 0.25s">
+            <img src="{{ img_alt }}" alt="" loading="lazy" width="900" height="720">
+          </div>
+        {% endif %}
       </div>
 
-      {% if img_alt != blank %}
-        <div class="story__inset" data-reveal style="--reveal-delay: 0.25s">
-          <img src="{{ img_alt }}" alt="" loading="lazy" width="900" height="720">
-        </div>
-      {% endif %}
-
       {% if section.settings.visual_caption != blank %}
-        <span class="meta-label story__caption">{{ section.settings.visual_caption }}</span>
+        <p class="meta-label story__caption">{{ section.settings.visual_caption }}</p>
       {% endif %}
     </div>
 
@@ -137,16 +139,26 @@
     position: relative;
     z-index: 1;
     display: grid;
-    /* minmax(0, 1fr): image intrinsic widths must never expand the tracks */
     grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: var(--space-md);
     align-items: center;
     padding-inline: var(--page-inline);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   .story__visual,
   .story__content {
     min-width: 0;
+    max-width: 100%;
+  }
+
+  /* Clipped stage for main + inset (outline/box-shadow stay inside) */
+  .story__images {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
   }
 
   .story__visual {
@@ -203,7 +215,9 @@
     overflow: hidden;
   }
   .story__main img {
+    display: block;
     width: 100%;
+    max-width: 100%;
     height: auto;
     aspect-ratio: 4 / 5;
     object-fit: cover;
@@ -219,18 +233,21 @@
     right: 0;
     bottom: 1.25rem;
     width: 46%;
-    outline: 8px solid var(--color-background);
+    max-width: 11rem;
+    border: 6px solid var(--color-background);
     box-shadow: 0 34px 70px -34px rgba(10, 22, 40, 0.6);
   }
   .on-dark .story__inset {
-    outline-color: var(--color-navy);
+    border-color: var(--color-navy);
   }
   .story--media-right .story__inset {
     right: auto;
     left: 0;
   }
   .story__inset img {
+    display: block;
     width: 100%;
+    max-width: 100%;
     height: auto;
     aspect-ratio: 5 / 4;
     object-fit: cover;
@@ -260,9 +277,12 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-md);
+    width: 100%;
+    box-sizing: border-box;
   }
   .story__heading {
     font-weight: 400;
+    max-width: 100%;
   }
   .story__heading em {
     display: block;
@@ -274,7 +294,13 @@
     font-weight: 300;
     line-height: 1.75;
     max-width: 30rem;
-    overflow-wrap: anywhere;
+    width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+  .story__body p {
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
   .on-dark .story__body {
     color: color-mix(in srgb, var(--color-contrast) 78%, transparent);
@@ -324,59 +350,69 @@
   }
 
   @media (max-width: 989px) {
+    .story {
+      overflow-x: clip;
+    }
+
     .story__inner {
+      display: flex;
+      flex-direction: column;
       gap: var(--space-lg);
       padding-inline: var(--page-margin);
     }
+
     .story__visual,
     .story--media-right .story__visual {
-      grid-column: 1 / -1;
       order: 0;
-      padding: 0 0 1rem;
-      overflow: hidden;
+      width: 100%;
+      padding: 0;
     }
+
     .story__content,
     .story--media-right .story__content {
-      grid-column: 1 / -1;
       order: 1;
-      max-width: 100%;
       width: 100%;
+      max-width: 100%;
+      padding: 0;
     }
 
-    .story__ghost {
-      display: none;
-    }
-
+    .story__ghost,
     .story__vertical,
     .story__frame {
       display: none;
     }
 
+    .story__images {
+      width: 100%;
+    }
+
     .story__inset,
     .story--media-right .story__inset {
-      width: 42%;
-      max-width: 9.5rem;
-      right: 0.5rem;
+      right: 0.75rem;
       left: auto;
-      bottom: 0.5rem;
-      outline-width: 4px;
+      bottom: 0.75rem;
+      width: 36%;
+      max-width: 7.5rem;
+      border-width: 3px;
     }
 
     .story__caption,
     .story--media-right .story__caption {
       position: static;
-      display: block;
+      width: 100%;
       max-width: 100%;
-      margin-top: 0.85rem;
+      margin: 0.75rem 0 0;
+      padding: 0;
       font-size: 0.65rem;
       line-height: 1.5;
+      overflow-wrap: break-word;
     }
 
     .story__heading {
       font-size: var(--text-2xl);
     }
     .story__heading em {
-      padding-left: 0.5em;
+      padding-left: 0.35em;
     }
 
     .story__body {
@@ -384,14 +420,20 @@
       font-size: var(--text-base);
     }
 
-    /* Stats: stack vertically so labels never clip */
+    .story__eyebrow,
+    .story__content .eyebrow {
+      max-width: 100%;
+    }
+
     .story__stats {
       flex-direction: column;
       align-items: stretch;
       gap: 0;
+      width: 100%;
     }
     .story__stat {
       padding: var(--space-sm) 0;
+      width: 100%;
     }
     .story__stat + .story__stat {
       padding-left: 0;
@@ -403,6 +445,11 @@
     }
     .story__stat-value {
       font-size: var(--text-xl);
+    }
+
+    .story__link {
+      max-width: 100%;
+      overflow-wrap: break-word;
     }
   }
 {% endstylesheet %}
