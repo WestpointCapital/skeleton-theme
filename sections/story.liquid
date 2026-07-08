@@ -154,17 +154,18 @@
     max-width: 100%;
   }
 
-  /* Clipped stage for main + inset (outline/box-shadow stay inside) */
+  /* Clipped stage — inset may sit flush on the corner; visual clips the stage */
   .story__images {
     position: relative;
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
   }
 
   .story__visual {
     grid-column: 1 / span 6;
     position: relative;
     padding: 1.5rem 3.5rem 4.5rem 2.75rem;
+    overflow: hidden;
   }
   .story__content {
     grid-column: 8 / span 5;
@@ -227,11 +228,11 @@
     transform: scale(1.04);
   }
 
-  /* Inset: the place the jewel came from */
+  /* Inset: flush bottom-right of the main image */
   .story__inset {
     position: absolute;
     right: 0;
-    bottom: 1.25rem;
+    bottom: 0;
     width: 46%;
     max-width: 11rem;
     border: 6px solid var(--color-background);
@@ -367,7 +368,7 @@
       width: 100%;
       max-width: 100%;
       position: relative;
-      /* Scaled-down desktop padding — room for frame + caption */
+      overflow: hidden;
       padding: 0.75rem 1.35rem 2.1rem 0.85rem;
     }
     .story--media-right .story__visual {
@@ -413,15 +414,14 @@
     .story__images {
       width: 100%;
       max-width: 100%;
-      border-radius: 0;
     }
 
-    /* Inset: desktop proportions, contained inside the image stage */
+    /* Inset: pinned to bottom-right corner of main image */
     .story__inset,
     .story--media-right .story__inset {
       right: 0;
       left: auto;
-      bottom: 1rem;
+      bottom: 0;
       width: 42%;
       max-width: 9rem;
       border-width: 5px;
@@ -432,15 +432,19 @@
       left: 0;
     }
 
-    /* Caption inside the frame, above the bottom hairline */
+    /*
+      Caption inside the frame, just above the bottom hairline.
+      Frame inner-left ≈ padding-left + frame inset-left + translate-x
+      Frame bottom ≈ padding-bottom area; caption sits above the line.
+    */
     .story__caption,
     .story--media-right .story__caption {
       position: absolute;
-      left: 1.65rem;
-      right: 1rem;
-      bottom: 0.15rem;
+      left: 1.85rem;
+      right: auto;
+      bottom: 1.05rem;
       width: auto;
-      max-width: calc(100% - 2.65rem);
+      max-width: calc(100% - 3rem);
       margin: 0;
       padding: 0;
       font-size: 0.62rem;
@@ -449,8 +453,8 @@
       overflow-wrap: break-word;
     }
     .story--media-right .story__caption {
-      left: 1rem;
-      right: 1.65rem;
+      left: auto;
+      right: 1.85rem;
       text-align: right;
     }
 
