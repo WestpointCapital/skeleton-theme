@@ -1,6 +1,7 @@
 {% comment %}
-  Full-viewport cinematic hero with a background video (or image fallback),
-  overlay, eyebrow, headline and call-to-action buttons.
+  Cinematic editorial hero. Background video (or image), bottom-left
+  composition, italic serif accent line, expedition metadata and a
+  hairline base row with scroll cue and coordinates.
 {% endcomment %}
 
 {% liquid
@@ -10,11 +11,11 @@
   endif
 %}
 
-<section class="hero full-width" style="--overlay: {{ section.settings.overlay_opacity }}%; --min-h: {{ section.settings.height }}svh;">
+<section class="hero full-width" style="--overlay: {{ section.settings.overlay_opacity }}%;">
   <div class="hero__media">
     {% if section.settings.video_url != blank %}
       <video
-        class="hero__video"
+        class="hero__bg"
         autoplay
         muted
         loop
@@ -24,49 +25,59 @@
         <source src="{{ section.settings.video_url }}" type="video/mp4">
       </video>
     {% else %}
-      <img class="hero__video" src="{{ poster }}" alt="" loading="eager" width="2400" height="1350">
+      <img class="hero__bg" src="{{ poster }}" alt="" loading="eager" width="2400" height="1350">
     {% endif %}
     <div class="hero__overlay"></div>
   </div>
 
-  <div class="hero__content text-center">
-    {% if section.settings.eyebrow != blank %}
-      <p class="eyebrow hero__eyebrow">{{ section.settings.eyebrow }}</p>
-    {% endif %}
-    {% if section.settings.heading != blank %}
-      <h1 class="hero__heading">{{ section.settings.heading }}</h1>
-    {% endif %}
-    {% if section.settings.subheading != blank %}
-      <p class="hero__subheading measure">{{ section.settings.subheading }}</p>
+  <div class="hero__content">
+    {% if section.settings.expedition != blank %}
+      <p class="eyebrow eyebrow--rule hero__eyebrow" data-reveal>{{ section.settings.expedition }}</p>
     {% endif %}
 
-    <div class="hero__actions">
+    <h1 class="hero__heading" data-reveal style="--reveal-delay: 0.12s">
+      {{ section.settings.heading }}
+      {% if section.settings.heading_italic != blank %}
+        <em>{{ section.settings.heading_italic }}</em>
+      {% endif %}
+    </h1>
+
+    {% if section.settings.subheading != blank %}
+      <p class="hero__sub measure" data-reveal style="--reveal-delay: 0.24s">{{ section.settings.subheading }}</p>
+    {% endif %}
+
+    <div class="hero__actions" data-reveal style="--reveal-delay: 0.36s">
       {% if section.settings.button_label != blank %}
         <a class="button button--on-dark" href="{{ section.settings.button_url | default: routes.all_products_collection_url }}">
           {{ section.settings.button_label }}
         </a>
       {% endif %}
-      {% if section.settings.button_label_2 != blank %}
-        <a class="button button--ghost hero__button-ghost" href="{{ section.settings.button_url_2 }}">
-          {{ section.settings.button_label_2 }}
+      {% if section.settings.link_label != blank %}
+        <a class="link-underline hero__text-link" href="{{ section.settings.link_url | default: '#' }}">
+          {{ section.settings.link_label }}
         </a>
       {% endif %}
     </div>
   </div>
 
-  {% if section.settings.show_scroll_cue %}
-    <div class="hero__scroll" aria-hidden="true">
-      <span></span>
-    </div>
-  {% endif %}
+  <div class="hero__base full-width">
+    <span class="meta-label hero__scroll-label">
+      <span class="hero__scroll-line"><span></span></span>
+      {{ section.settings.scroll_label }}
+    </span>
+    {% if section.settings.coordinates != blank %}
+      <span class="meta-label">{{ section.settings.coordinates }}</span>
+    {% endif %}
+  </div>
 </section>
 
 {% stylesheet %}
   .hero {
     position: relative;
-    min-height: var(--min-h, 92svh);
-    display: grid;
-    place-items: center;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     overflow: hidden;
     color: var(--color-contrast);
     isolation: isolate;
@@ -76,7 +87,7 @@
     inset: 0;
     z-index: -1;
   }
-  .hero__video {
+  .hero__bg {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -85,71 +96,89 @@
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(to bottom, rgba(14, 30, 51, 0.25), rgba(14, 30, 51, 0.65)),
-      rgba(14, 30, 51, calc(var(--overlay) / 100));
+      linear-gradient(to top, rgba(10, 22, 40, 0.72) 0%, rgba(10, 22, 40, 0.15) 45%, rgba(10, 22, 40, 0.3) 100%),
+      rgba(10, 22, 40, calc(var(--overlay) / 100));
   }
+
   .hero__content {
-    padding: var(--space-2xl) var(--page-margin);
-    max-width: 60rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--space-md);
-    animation: hero-rise 1.2s var(--ease) both;
+    padding-inline: var(--page-inline);
+    padding-bottom: var(--space-xl);
+    max-width: 72rem;
   }
   .hero__eyebrow {
     color: var(--color-accent-soft);
   }
   .hero__heading {
     font-size: var(--text-hero);
+    font-weight: 400;
     margin: 0;
   }
-  .hero__subheading {
+  .hero__heading em {
+    display: block;
+  }
+  .hero__sub {
     font-size: var(--text-lg);
-    color: color-mix(in srgb, var(--color-contrast) 88%, transparent);
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    color: color-mix(in srgb, var(--color-contrast) 85%, transparent);
   }
   .hero__actions {
     display: flex;
-    gap: var(--space-sm);
+    align-items: center;
+    gap: var(--space-lg);
     flex-wrap: wrap;
-    justify-content: center;
     margin-top: var(--space-sm);
   }
-  .hero__button-ghost {
+  .hero__text-link {
     color: var(--color-contrast);
-    border-color: var(--color-contrast);
-  }
-  .hero__button-ghost:hover {
-    background-color: var(--color-contrast);
-    color: var(--color-navy);
-  }
-  .hero__scroll {
-    position: absolute;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 3.5rem;
-    background: color-mix(in srgb, var(--color-contrast) 40%, transparent);
-    overflow: hidden;
-  }
-  .hero__scroll span {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 40%;
-    background: var(--color-contrast);
-    animation: hero-scroll 2s var(--ease) infinite;
   }
 
-  @keyframes hero-rise {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+  .hero__base {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    border-top: 1px solid color-mix(in srgb, var(--color-contrast) 22%, transparent);
+    padding: 1.4rem var(--page-inline);
+    margin-top: var(--space-lg);
   }
-  @keyframes hero-scroll {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(250%); }
+  .hero__scroll-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero__scroll-line {
+    position: relative;
+    display: inline-block;
+    width: 3.5rem;
+    height: 1px;
+    background: color-mix(in srgb, var(--color-contrast) 30%, transparent);
+    overflow: hidden;
+  }
+  .hero__scroll-line span {
+    position: absolute;
+    inset: 0;
+    background: var(--color-contrast);
+    animation: hero-line 2.6s var(--ease) infinite;
+  }
+
+  @keyframes hero-line {
+    0% { transform: translateX(-100%); }
+    55% { transform: translateX(0); }
+    100% { transform: translateX(102%); }
+  }
+
+  @media (max-width: 749px) {
+    .hero__actions {
+      gap: var(--space-md);
+    }
+    .hero__base {
+      padding-block: 1.1rem;
+    }
   }
 {% endstylesheet %}
 
@@ -187,17 +216,7 @@
       "step": 5,
       "unit": "%",
       "label": "Overlay darkness",
-      "default": 25
-    },
-    {
-      "type": "range",
-      "id": "height",
-      "min": 60,
-      "max": 100,
-      "step": 2,
-      "unit": "vh",
-      "label": "Section height",
-      "default": 92
+      "default": 20
     },
     {
       "type": "header",
@@ -205,15 +224,21 @@
     },
     {
       "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow",
-      "default": "Odyssey Jewels"
+      "id": "expedition",
+      "label": "Expedition label",
+      "default": "Expedition N° 001 — Oceania"
     },
     {
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Travel the World, Collect the World"
+      "default": "Travel the World,"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading (italic line)",
+      "default": "Collect the World"
     },
     {
       "type": "textarea",
@@ -234,20 +259,30 @@
     },
     {
       "type": "text",
-      "id": "button_label_2",
-      "label": "Secondary button label",
+      "id": "link_label",
+      "label": "Text link label",
       "default": "Our story"
     },
     {
       "type": "url",
-      "id": "button_url_2",
-      "label": "Secondary button link"
+      "id": "link_url",
+      "label": "Text link URL"
     },
     {
-      "type": "checkbox",
-      "id": "show_scroll_cue",
-      "label": "Show scroll indicator",
-      "default": true
+      "type": "header",
+      "content": "Base row"
+    },
+    {
+      "type": "text",
+      "id": "scroll_label",
+      "label": "Scroll label",
+      "default": "Scroll to explore"
+    },
+    {
+      "type": "text",
+      "id": "coordinates",
+      "label": "Coordinates",
+      "default": "17.6797° S, 149.4068° W — South Pacific"
     }
   ],
   "presets": [

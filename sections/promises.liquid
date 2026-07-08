@@ -1,13 +1,24 @@
 {% comment %}
-  Slim assurance band: a row of short brand promises (icon + label + text).
+  Brand promises as a numbered ledger row — hairline-divided columns with
+  index numbers, serif titles and quiet supporting text.
 {% endcomment %}
 
-<section class="promises {% if section.settings.dark %}on-dark{% endif %}">
-  <div class="promises__row full-width">
+<section class="promises section-spacing{% if section.settings.dark %} on-dark{% endif %}">
+  {% if section.settings.eyebrow != blank %}
+    <p class="eyebrow eyebrow--rule promises__eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+  {% endif %}
+
+  <div class="promises__row">
     {% for block in section.blocks %}
-      <div class="promise" {{ block.shopify_attributes }}>
+      <div
+        class="promise"
+        data-reveal
+        style="--reveal-delay: {{ forloop.index0 | times: 0.12 }}s"
+        {{ block.shopify_attributes }}
+      >
+        <span class="meta-label promise__index">{{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
         {% if block.settings.title != blank %}
-          <p class="promise__title">{{ block.settings.title }}</p>
+          <h3 class="promise__title">{{ block.settings.title }}</h3>
         {% endif %}
         {% if block.settings.text != blank %}
           <p class="promise__text">{{ block.settings.text }}</p>
@@ -18,33 +29,58 @@
 </section>
 
 {% stylesheet %}
+  .promises__eyebrow {
+    margin-bottom: var(--space-xl);
+  }
   .promises__row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
-    gap: var(--space-lg);
-    padding: var(--space-xl) var(--page-margin);
+    grid-template-columns: repeat(auto-fit, minmax(min(15rem, 100%), 1fr));
     border-top: 1px solid var(--color-line);
-    border-bottom: 1px solid var(--color-line);
   }
   .on-dark .promises__row {
     border-color: color-mix(in srgb, var(--color-contrast) 18%, transparent);
   }
   .promise {
-    text-align: center;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-sm);
+    padding: var(--space-lg) var(--space-lg) 0 0;
+    border-top: 1px solid transparent;
+    position: relative;
+  }
+  .promise + .promise {
+    padding-left: var(--space-lg);
+    border-left: 1px solid var(--color-line);
+  }
+  .on-dark .promise + .promise {
+    border-color: color-mix(in srgb, var(--color-contrast) 18%, transparent);
+  }
+  .promise__index {
+    color: var(--color-accent);
   }
   .promise__title {
-    font-family: var(--font-heading--family);
-    font-size: var(--text-xl);
+    font-size: var(--text-2xl);
+    font-weight: 400;
+    margin: 0;
   }
   .promise__text {
     font-size: var(--text-sm);
+    font-weight: 300;
+    line-height: 1.7;
     color: var(--color-foreground-50);
+    max-width: 26rem;
   }
   .on-dark .promise__text {
-    color: color-mix(in srgb, var(--color-contrast) 78%, transparent);
+    color: color-mix(in srgb, var(--color-contrast) 75%, transparent);
+  }
+
+  @media (max-width: 749px) {
+    .promise + .promise {
+      padding-left: 0;
+      border-left: 0;
+      border-top: 1px solid var(--color-line);
+      margin-top: var(--space-lg);
+    }
   }
 {% endstylesheet %}
 
@@ -52,6 +88,12 @@
 {
   "name": "Promises",
   "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Odyssey standard"
+    },
     {
       "type": "checkbox",
       "id": "dark",
@@ -88,21 +130,21 @@
           "type": "promise",
           "settings": {
             "title": "One of a kind",
-            "text": "Every piece is unique. When it's gone, it's gone."
+            "text": "Every piece is unique. When it's gone, it's gone forever."
           }
         },
         {
           "type": "promise",
           "settings": {
             "title": "Artisan made",
-            "text": "Crafted by master makers in their homeland."
+            "text": "Crafted by master makers in their homeland, never mass-produced."
           }
         },
         {
           "type": "promise",
           "settings": {
             "title": "Worldwide delivery",
-            "text": "Complimentary, insured shipping across the globe."
+            "text": "Complimentary, fully insured shipping across the globe."
           }
         }
       ]

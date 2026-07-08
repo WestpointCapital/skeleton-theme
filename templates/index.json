@@ -12,48 +12,40 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "eyebrow": "Odyssey Jewels",
-        "heading": "Travel the World, Collect the World",
+        "expedition": "Expedition N° 001 — Oceania",
+        "heading": "Travel the World,",
+        "heading_italic": "Collect the World",
         "subheading": "Rare, one-of-a-kind treasures gathered from artisans across the globe. Every jewel tells a story.",
         "button_label": "Explore the collection",
-        "button_label_2": "Our story",
-        "overlay_opacity": 25,
-        "height": 92
+        "link_label": "Our story",
+        "scroll_label": "Scroll to explore",
+        "coordinates": "17.6797° S, 149.4068° W — South Pacific",
+        "overlay_opacity": 20
       }
     },
-    "promises": {
-      "type": "promises",
-      "blocks": {
-        "p1": {
-          "type": "promise",
-          "settings": {
-            "title": "One of a kind",
-            "text": "Every piece is unique. When it's gone, it's gone."
-          }
-        },
-        "p2": {
-          "type": "promise",
-          "settings": {
-            "title": "Artisan made",
-            "text": "Crafted by master makers in their homeland."
-          }
-        },
-        "p3": {
-          "type": "promise",
-          "settings": {
-            "title": "Worldwide delivery",
-            "text": "Complimentary, insured shipping across the globe."
-          }
-        }
+    "marquee": {
+      "type": "marquee",
+      "settings": {
+        "dark": false,
+        "speed": 45
       },
-      "block_order": ["p1", "p2", "p3"]
+      "blocks": {
+        "m1": { "type": "item", "settings": { "text": "Oceania" } },
+        "m2": { "type": "item", "settings": { "text": "Every jewel tells a story" } },
+        "m3": { "type": "item", "settings": { "text": "Asia" } },
+        "m4": { "type": "item", "settings": { "text": "One of a kind" } },
+        "m5": { "type": "item", "settings": { "text": "The Founders Collection" } },
+        "m6": { "type": "item", "settings": { "text": "Artisan made" } }
+      },
+      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6"]
     },
     "regions": {
       "type": "regions",
       "settings": {
-        "eyebrow": "Collections by region",
-        "heading": "Where in the world will you begin?",
-        "subheading": "Each region reveals a curated collection of treasures — released one expedition at a time."
+        "eyebrow": "The expeditions",
+        "heading": "Where in the world",
+        "heading_italic": "will you begin?",
+        "link_label": "All expeditions"
       },
       "blocks": {
         "r1": {
@@ -62,8 +54,9 @@
             "title": "Oceania",
             "status": "Available now",
             "subtitle": "Treasures of the South Pacific",
+            "meta": "First drop — 200 pieces",
             "cta": "Discover",
-            "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80"
+            "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80"
           }
         },
         "r2": {
@@ -72,8 +65,9 @@
             "title": "The Founders Collection",
             "status": "By invitation",
             "subtitle": "Rare pieces for our earliest collectors",
+            "meta": "Private access",
             "cta": "Enquire",
-            "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1200&q=80"
+            "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=80"
           }
         },
         "r3": {
@@ -82,8 +76,9 @@
             "title": "Asia",
             "status": "Coming soon",
             "subtitle": "Along the ancient trade routes",
+            "meta": "Expedition in progress",
             "cta": "Join the waitlist",
-            "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=80"
+            "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1400&q=80"
           }
         }
       },
@@ -95,18 +90,22 @@
         "media_position": "left",
         "dark": false,
         "eyebrow": "Our philosophy",
-        "heading": "Every jewel tells a story",
+        "heading": "Every jewel",
+        "heading_italic": "tells a story",
         "body": "<p>We travel to the far corners of the world to work directly with master artisans. Each piece we bring home is one of a kind — shaped by the hands, heritage and horizon of the place it came from. When it's gone, it's gone.</p>",
         "button_label": "Read our story",
-        "image_url": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1600&q=80"
+        "visual_caption": "Handcrafted — Rarotonga, Cook Islands",
+        "image_url": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1600&q=80",
+        "image_2_url": "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=900&q=80"
       }
     },
     "featured": {
       "type": "featured",
       "settings": {
         "eyebrow": "The first drop",
-        "heading": "Oceania Collection",
-        "link_label": "View all pieces"
+        "heading": "Oceania",
+        "heading_italic": "Collection",
+        "link_label": "View the full collection"
       },
       "blocks": {
         "f1": {
@@ -148,9 +147,19 @@
             "price": "$760",
             "image_url": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=900&q=80"
           }
+        },
+        "f5": {
+          "type": "piece",
+          "settings": {
+            "title": "Atoll Signet",
+            "region": "Oceania",
+            "badge": "One of a kind",
+            "price": "$1,880",
+            "image_url": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=900&q=80"
+          }
         }
       },
-      "block_order": ["f1", "f2", "f3", "f4"]
+      "block_order": ["f1", "f2", "f3", "f4", "f5"]
     },
     "story_artisans": {
       "type": "story",
@@ -158,17 +167,51 @@
         "media_position": "right",
         "dark": true,
         "eyebrow": "The makers",
-        "heading": "Meet the artisans",
+        "heading": "Meet the",
+        "heading_italic": "artisans",
         "body": "<p>Behind every treasure is a person and a place. We put their names, their cities and their craft at the heart of the story — because you're not just collecting jewellery, you're collecting the world.</p>",
         "button_label": "Meet the makers",
-        "image_url": "https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=1600&q=80"
+        "visual_caption": "Master goldsmith — Ubud, Bali",
+        "image_url": "https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=1600&q=80",
+        "image_2_url": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=900&q=80"
       }
+    },
+    "promises": {
+      "type": "promises",
+      "settings": {
+        "eyebrow": "The Odyssey standard"
+      },
+      "blocks": {
+        "p1": {
+          "type": "promise",
+          "settings": {
+            "title": "One of a kind",
+            "text": "Every piece is unique. When it's gone, it's gone forever."
+          }
+        },
+        "p2": {
+          "type": "promise",
+          "settings": {
+            "title": "Artisan made",
+            "text": "Crafted by master makers in their homeland, never mass-produced."
+          }
+        },
+        "p3": {
+          "type": "promise",
+          "settings": {
+            "title": "Worldwide delivery",
+            "text": "Complimentary, fully insured shipping across the globe."
+          }
+        }
+      },
+      "block_order": ["p1", "p2", "p3"]
     },
     "cta": {
       "type": "cta-banner",
       "settings": {
         "eyebrow": "The odyssey begins",
-        "heading": "Begin your collection",
+        "heading": "Begin your",
+        "heading_italic": "collection",
         "subheading": "The first expedition has landed. Claim a piece of Oceania before it's gone forever.",
         "button_label": "Shop the first drop",
         "overlay_opacity": 45,
@@ -178,11 +221,12 @@
   },
   "order": [
     "hero",
-    "promises",
+    "marquee",
     "regions",
     "story",
     "featured",
     "story_artisans",
+    "promises",
     "cta"
   ]
 }

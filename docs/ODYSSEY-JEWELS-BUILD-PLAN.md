@@ -94,8 +94,8 @@ Core hierarchy from the brief: **Region → Country → City → Artisan**, with
 
 ## 5. Design System
 
-- [ ] **Palette:** Navy (primary) + Rose (accent). Define full scale in `config/settings_schema.json` and expose as CSS vars via `snippets/css-variables.liquid`.
-- [ ] **Typography:** Premium pairing (display serif + clean sans). Set in theme settings; preload base weight (pattern already in `layout/theme.liquid`).
+- [x] **Palette:** Navy (primary) + Rose (accent). Defined in `config/settings_schema.json` and exposed as CSS vars via `snippets/css-variables.liquid`.
+- [x] **Typography:** Premium pairing — Cormorant (display serif, italic accents) + Jost (sans). Set in theme settings; base weight preloaded.
 - [ ] **Logo:** Cleaned-up mark — separate "OJ" from wordmark, keep compass rose, remove busy background so it works for embroidery/small branding. `@client` to supply source; `@core` to produce SVG variants (full, mark-only, mono).
 - [ ] **Tone:** Editorial, story-first, generous whitespace, large photography. "Every Jewel Tells a Story."
 - [ ] **Design tokens doc:** spacing scale, radii, shadows, motion — documented so `@dev` stays consistent.
@@ -107,25 +107,25 @@ Core hierarchy from the brief: **Region → Country → City → Artisan**, with
 Mapped to the skeleton's folders. Items marked `@core` are the premium framework we build; `@dev` items are handed off.
 
 ### 6.1 Global / Layout `@core`
-- [ ] `layout/theme.liquid` — add skip links, header/footer groups, cart drawer mount, structured-data hooks, GTM/analytics slot.
-- [ ] `snippets/css-variables.liquid` — full token set (Navy/Rose, spacing, type scale).
+- [ ] `layout/theme.liquid` — add skip links, header/footer groups, cart drawer mount, structured-data hooks, GTM/analytics slot. *(theme.js reveal/header system wired in)*
+- [x] `snippets/css-variables.liquid` — full token set (Navy/Rose, spacing, fluid type scale, motion).
 - [ ] `snippets/meta-tags.liquid` — Open Graph, Twitter, canonical, JSON-LD org/product.
-- [ ] `assets/critical.css` — base grid, typography, buttons, header/footer critical styles.
+- [x] `assets/critical.css` — base grid, typography, buttons, eyebrows/meta-labels, scroll-reveal system.
 
 ### 6.2 Header & Navigation `@core`
-- [ ] Clean navigation focused on **region-based collections** (Oceania, Founders, etc.) — not a deep Region→Country→City mega-menu. Country/city surface as filters on the collection page, not primary nav.
+- [x] Clean navigation focused on **region-based collections** — sticky header with blur backdrop, transparent-over-hero mode, full-screen menu overlay. Country/city surface as filters on the collection page, not primary nav.
 - [ ] Cart drawer (AJAX cart) — standard behavior; no special "sold = gone" logic needed here (handled by inventory, see §7.4).
 - [ ] Predictive search.
-- [ ] Account entry (ties to Rewards).
+- [x] Account entry (ties to Rewards).
 
 ### 6.3 Homepage sections `@dev` (framework by `@core`)
-- [ ] Hero (brand video + "Travel the World, Collect the World").
+- [x] Hero (stock video + "Travel the World, Collect the World" — editorial layout, expedition metadata, staggered reveals).
 - [ ] Interactive World Map section (**hero custom feature** — see §7.1).
-- [ ] Featured drop (Oceania) carousel/grid.
-- [ ] "How it works" / storytelling band.
-- [ ] Featured artisans.
+- [x] Featured drop (Oceania) — horizontal gallery rail with controls + progress line.
+- [x] "How it works" / storytelling band — layered dual-image story sections + destination marquee + promises ledger.
+- [x] Featured artisans (dark story variant; to be backed by artisan metaobjects later).
 - [ ] Rewards teaser.
-- [ ] Newsletter signup.
+- [x] Newsletter signup (footer).
 
 ### 6.4 Product page (PDP) — rebuild `sections/product.liquid` `@core`
 - [ ] Media gallery (multi-image, angles, zoom, video).
