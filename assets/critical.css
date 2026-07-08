@@ -13,6 +13,15 @@ body {
   min-height: 100svh;
 }
 
+/*
+ * Horizontal overflow safety net. `clip` (unlike `hidden`) does not create
+ * a scroll container, so position: sticky keeps working.
+ */
+html,
+body {
+  overflow-x: clip;
+}
+
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
   overflow: hidden;
 }
@@ -316,6 +325,9 @@ button.button {
 /* Child elements, by default, are constrained to the central column of the grid. */
 .shopify-section > * {
   grid-column: 2;
+  /* Prevent content-based minimum sizes from blowing out the grid tracks */
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* Child elements that use the full-width utility class span the entire viewport. */

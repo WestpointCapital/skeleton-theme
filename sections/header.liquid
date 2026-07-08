@@ -131,6 +131,7 @@
 
   <div class="menu-overlay__foot">
     <span class="meta-label">{{ section.settings.menu_overlay_footer }}</span>
+    <a class="meta-label menu-overlay__search" href="{{ routes.search_url }}">Search</a>
   </div>
 </div>
 
@@ -170,7 +171,7 @@
   .hdr__bar {
     position: relative;
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     height: var(--hdr-bar-height);
     padding-inline: var(--page-inline);
@@ -416,6 +417,12 @@
     justify-content: space-between;
     color: color-mix(in srgb, var(--color-contrast) 65%, transparent);
   }
+  .menu-overlay__search {
+    color: var(--color-contrast);
+    text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-contrast) 45%, transparent);
+    padding-bottom: 0.25rem;
+  }
 
   @media (max-width: 989px) {
     .hdr__nav {
@@ -425,19 +432,33 @@
       display: flex;
     }
     .hdr__wordmark {
-      font-size: 1.05rem;
-      letter-spacing: 0.26em;
-      text-indent: 0.26em;
+      /* Scales with viewport so the brand can never overflow narrow phones */
+      font-size: clamp(0.8rem, 3.4vw, 1.05rem);
+      letter-spacing: 0.22em;
+      text-indent: 0.22em;
+    }
+    .hdr__logo {
+      max-width: 42vw;
     }
     .hdr__announcement {
       font-size: 0.58rem;
       letter-spacing: 2px;
     }
     .hdr__side--right {
-      gap: 1.1rem;
+      gap: 1rem;
+    }
+    .hdr__bar {
+      gap: var(--space-sm);
     }
     :root {
       --hdr-bar-height: 4.25rem;
+    }
+  }
+
+  @media (max-width: 479px) {
+    /* Very narrow phones: search lives in the menu; keep the bar airy */
+    .hdr__icon[aria-label="Search"] {
+      display: none;
     }
   }
 {% endstylesheet %}

@@ -134,10 +134,16 @@
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    /* minmax(0, 1fr): image intrinsic widths must never expand the tracks */
+    grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: var(--space-md);
     align-items: center;
     padding-inline: var(--page-inline);
+  }
+
+  .story__visual,
+  .story__content {
+    min-width: 0;
   }
 
   .story__visual {

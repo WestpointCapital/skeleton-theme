@@ -90,13 +90,15 @@
 
   .regions__grid {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    /* minmax(0, 1fr): image intrinsic widths must never expand the tracks */
+    grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: var(--space-lg) var(--space-md);
     align-items: start;
   }
 
   .region-card {
     display: block;
+    min-width: 0;
     text-decoration: none;
     color: var(--color-foreground);
   }
