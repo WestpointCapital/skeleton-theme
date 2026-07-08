@@ -35,18 +35,20 @@
         <span class="meta-label story__vertical">{{ section.settings.vertical_label }}</span>
       {% endif %}
 
-      <div class="story__frame" aria-hidden="true"></div>
+      <div class="story__media">
+        <div class="story__frame" aria-hidden="true"></div>
 
-      <div class="story__images">
-        <div class="story__main">
-          <img src="{{ img_main }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="2000">
-        </div>
-
-        {% if img_alt != blank %}
-          <div class="story__inset" data-reveal style="--reveal-delay: 0.25s">
-            <img src="{{ img_alt }}" alt="" loading="lazy" width="900" height="720">
+        <div class="story__images">
+          <div class="story__main">
+            <img src="{{ img_main }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="2000">
           </div>
-        {% endif %}
+
+          {% if img_alt != blank %}
+            <div class="story__inset" data-reveal style="--reveal-delay: 0.25s">
+              <img src="{{ img_alt }}" alt="" loading="lazy" width="900" height="720">
+            </div>
+          {% endif %}
+        </div>
       </div>
 
       {% if section.settings.visual_caption != blank %}
@@ -154,7 +156,12 @@
     max-width: 100%;
   }
 
-  /* Clipped stage — inset may sit flush on the corner; visual clips the stage */
+  .story__media {
+    position: relative;
+    width: 100%;
+    padding-bottom: 3rem;
+  }
+
   .story__images {
     position: relative;
     width: 100%;
@@ -199,16 +206,16 @@
     color: color-mix(in srgb, var(--color-contrast) 55%, transparent);
   }
 
-  /* Offset hairline frame */
+  /* Offset hairline frame — hugs the image block; caption band via media padding */
   .story__frame {
     position: absolute;
-    inset: 0 2rem 3rem 1.25rem;
+    inset: 0 2rem 0 1.25rem;
     border: 1px solid color-mix(in srgb, var(--color-accent) 50%, transparent);
     transform: translate(1.5rem, 1.5rem);
     pointer-events: none;
   }
   .story--media-right .story__frame {
-    inset: 0 1.25rem 3rem 2rem;
+    inset: 0 1.25rem 0 2rem;
     transform: translate(-1.5rem, 1.5rem);
   }
 
@@ -368,11 +375,18 @@
       width: 100%;
       max-width: 100%;
       position: relative;
-      overflow: hidden;
-      padding: 0.75rem 1.35rem 2.1rem 0.85rem;
+      overflow: visible;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      padding: 0.75rem 1.35rem 0.85rem 0.85rem;
     }
     .story--media-right .story__visual {
-      padding: 0.75rem 0.85rem 2.1rem 1.35rem;
+      padding: 0.75rem 0.85rem 0.85rem 1.35rem;
+    }
+
+    .story__media {
+      padding-bottom: 0;
     }
 
     .story__content,
@@ -400,15 +414,12 @@
       display: none;
     }
 
-    /* Hairline frame — same editorial offset as desktop, tighter */
-    .story__frame {
-      display: block;
-      inset: 0 0.85rem 1.65rem 0.35rem;
-      transform: translate(0.65rem, 0.65rem);
-    }
+    /* Frame hugs the image — left edge aligned, caption sits below */
+    .story__frame,
     .story--media-right .story__frame {
-      inset: 0 0.35rem 1.65rem 0.85rem;
-      transform: translate(-0.65rem, 0.65rem);
+      display: block;
+      inset: 0;
+      transform: none;
     }
 
     .story__images {
@@ -432,30 +443,17 @@
       left: 0;
     }
 
-    /*
-      Caption inside the frame, just above the bottom hairline.
-      Frame inner-left ≈ padding-left + frame inset-left + translate-x
-      Frame bottom ≈ padding-bottom area; caption sits above the line.
-    */
+    /* Caption below the frame — readable, not over the photo */
     .story__caption,
     .story--media-right .story__caption {
-      position: absolute;
-      left: 1.85rem;
-      right: auto;
-      bottom: 1.05rem;
-      width: auto;
-      max-width: calc(100% - 3rem);
+      position: static;
       margin: 0;
-      padding: 0;
+      padding: 0 0.15rem;
       font-size: 0.62rem;
       letter-spacing: 1.75px;
       line-height: 1.45;
       overflow-wrap: break-word;
-    }
-    .story--media-right .story__caption {
-      left: auto;
-      right: 1.85rem;
-      text-align: right;
+      text-align: left;
     }
 
     .story__heading {
