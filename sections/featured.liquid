@@ -142,10 +142,26 @@
   }
 
   .piece-card {
-    flex: 0 0 clamp(16rem, 24vw, 22rem);
+    flex: 0 0 clamp(15rem, 24vw, 22rem);
     scroll-snap-align: start;
     text-decoration: none;
     color: var(--color-foreground);
+  }
+
+  @media (max-width: 749px) {
+    /* Touch-first: swipe is the navigation, cards show a peek of the next */
+    .featured__controls {
+      display: none;
+    }
+    .piece-card {
+      flex-basis: 76vw;
+    }
+    .featured__head {
+      margin-bottom: var(--space-md);
+    }
+    .featured__progress {
+      margin-top: var(--space-md);
+    }
   }
   .piece-card__media {
     position: relative;

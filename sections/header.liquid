@@ -337,7 +337,7 @@
     color: var(--color-contrast);
     display: flex;
     flex-direction: column;
-    padding: var(--space-md) var(--page-margin) var(--space-lg);
+    padding: var(--space-md) var(--page-margin) calc(var(--space-lg) + env(safe-area-inset-bottom, 0px));
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.5s var(--ease), visibility 0.5s var(--ease);
@@ -425,12 +425,19 @@
       display: flex;
     }
     .hdr__wordmark {
-      font-size: 1.15rem;
-      letter-spacing: 0.32em;
-      text-indent: 0.32em;
+      font-size: 1.05rem;
+      letter-spacing: 0.26em;
+      text-indent: 0.26em;
+    }
+    .hdr__announcement {
+      font-size: 0.58rem;
+      letter-spacing: 2px;
+    }
+    .hdr__side--right {
+      gap: 1.1rem;
     }
     :root {
-      --hdr-bar-height: 4.5rem;
+      --hdr-bar-height: 4.25rem;
     }
   }
 {% endstylesheet %}

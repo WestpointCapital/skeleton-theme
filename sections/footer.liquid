@@ -190,15 +190,17 @@
     padding-left: 0.4rem;
   }
 
-  /* Oversized wordmark */
+  /* Oversized wordmark — scales fluidly so it never overflows small screens */
   .site-footer__giant {
     font-family: var(--font-heading--family);
-    font-size: clamp(2.75rem, 11vw, 10rem);
+    font-size: clamp(1.9rem, 10.5vw, 10rem);
     line-height: 0.95;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     text-align: center;
     white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
     color: color-mix(in srgb, var(--color-contrast) 92%, transparent);
     border-bottom: 1px solid color-mix(in srgb, var(--color-contrast) 15%, transparent);
     padding-bottom: var(--space-lg);
@@ -228,9 +230,18 @@
   }
 
   @media (max-width: 989px) {
+    .site-footer__inner {
+      padding-top: var(--space-xl);
+      gap: var(--space-xl);
+    }
     .site-footer__top {
       grid-template-columns: 1fr;
       gap: var(--space-xl);
+    }
+    .site-footer__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-sm);
     }
   }
 {% endstylesheet %}

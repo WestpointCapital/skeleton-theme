@@ -96,6 +96,22 @@
     font-weight: 300;
     color: color-mix(in srgb, var(--color-contrast) 85%, transparent);
   }
+
+  @media (max-width: 749px) {
+    .cta-banner {
+      min-height: 68svh;
+    }
+    .cta-banner__frame {
+      inset: 0.9rem;
+    }
+    .cta-banner__content {
+      padding-block: var(--space-2xl);
+      gap: var(--space-sm);
+    }
+    .cta-banner__sub {
+      font-size: var(--text-base);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}

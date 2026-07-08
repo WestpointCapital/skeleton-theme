@@ -239,7 +239,8 @@
     color: var(--color-foreground-50);
   }
   .story--media-right .story__caption {
-    left: 2rem;
+    left: auto;
+    right: 4.25rem;
   }
   .on-dark .story__caption {
     color: color-mix(in srgb, var(--color-contrast) 55%, transparent);
@@ -309,29 +310,67 @@
     margin-top: var(--space-2xs);
   }
 
+  /*
+    Mobile: a dedicated composition rather than a squeezed desktop one.
+    The decorative frame and vertical label step aside; the inset image
+    overlaps the main image's bottom-right corner; the caption flows
+    statically beneath the image on the left, clear of everything.
+  */
   @media (max-width: 989px) {
+    .story__inner {
+      gap: var(--space-lg);
+    }
     .story__visual,
     .story--media-right .story__visual {
       grid-column: 1 / -1;
       order: 0;
-      padding: 1rem 2rem 3.5rem 1.5rem;
+      padding: 0 0 3.5rem;
     }
     .story__content,
     .story--media-right .story__content {
       grid-column: 1 / -1;
       order: 1;
     }
-    .story__vertical {
+
+    .story__vertical,
+    .story__frame {
       display: none;
     }
-    .story__ghost {
-      font-size: clamp(10rem, 34vw, 16rem);
+
+    .story__inset,
+    .story--media-right .story__inset {
+      width: 44%;
+      right: 0;
+      left: auto;
+      bottom: 0;
+      outline-width: 5px;
     }
-    .story__caption {
-      left: 1.5rem;
-    }
+
+    .story__caption,
     .story--media-right .story__caption {
-      left: 2rem;
+      position: static;
+      display: block;
+      max-width: 52%;
+      margin-top: 0.85rem;
+    }
+
+    .story__heading em {
+      padding-left: 0.75em;
+    }
+
+    .story__stats {
+      flex-wrap: wrap;
+      row-gap: var(--space-sm);
+    }
+
+    .story__ghost {
+      top: 0;
+      right: 0;
+      font-size: clamp(8rem, 32vw, 14rem);
+    }
+    .story--media-right .story__ghost {
+      left: 0;
+      right: auto;
     }
   }
 {% endstylesheet %}

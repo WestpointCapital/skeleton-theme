@@ -73,6 +73,18 @@
       animation: none;
     }
   }
+
+  @media (max-width: 749px) {
+    .marquee {
+      padding-block: 1rem;
+    }
+    .marquee__item {
+      padding-inline: 1.5rem;
+    }
+    .marquee__item--serif {
+      font-size: var(--text-xl);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
