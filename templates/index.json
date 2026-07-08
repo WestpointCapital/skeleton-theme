@@ -12,7 +12,7 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "expedition": "Expedition N° 001 — Oceania",
+        "region": "Region N° 001 — Oceania",
         "heading": "Travel the World,",
         "heading_italic": "Collect the World",
         "subheading": "Rare, one-of-a-kind treasures gathered from artisans across the globe. Every jewel tells a story.",
@@ -42,10 +42,10 @@
     "regions": {
       "type": "regions",
       "settings": {
-        "eyebrow": "The expeditions",
+        "eyebrow": "The regions",
         "heading": "Where in the world",
         "heading_italic": "will you begin?",
-        "link_label": "All expeditions"
+        "link_label": "All regions"
       },
       "blocks": {
         "r1": {
@@ -76,7 +76,7 @@
             "title": "Asia",
             "status": "Coming soon",
             "subtitle": "Along the ancient trade routes",
-            "meta": "Expedition in progress",
+            "meta": "Region in progress",
             "cta": "Join the waitlist",
             "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1400&q=80"
           }
@@ -226,7 +226,7 @@
         "eyebrow": "The odyssey begins",
         "heading": "Begin your",
         "heading_italic": "collection",
-        "subheading": "The first expedition has landed. Claim a piece of Oceania before it's gone forever.",
+        "subheading": "The first region has landed. Claim a piece of Oceania before it's gone forever.",
         "button_label": "Shop the first drop",
         "overlay_opacity": 45,
         "image_url": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=2400&q=80"

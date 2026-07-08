@@ -1,6 +1,6 @@
 {% comment %}
   Cinematic editorial hero. Background video (or image), bottom-left
-  composition, italic serif accent line, expedition metadata and a
+  composition, italic serif accent line, region metadata and a
   hairline base row with scroll cue and coordinates.
 {% endcomment %}
 
@@ -31,8 +31,8 @@
   </div>
 
   <div class="hero__content">
-    {% if section.settings.expedition != blank %}
-      <p class="eyebrow eyebrow--rule hero__eyebrow" data-reveal>{{ section.settings.expedition }}</p>
+    {% if section.settings.region != blank %}
+      <p class="eyebrow eyebrow--rule hero__eyebrow" data-reveal>{{ section.settings.region }}</p>
     {% endif %}
 
     <h1 class="hero__heading" data-reveal style="--reveal-delay: 0.12s">
@@ -245,9 +245,9 @@
     },
     {
       "type": "text",
-      "id": "expedition",
-      "label": "Expedition label",
-      "default": "Expedition N° 001 — Oceania"
+      "id": "region",
+      "label": "Region label",
+      "default": "Region N° 001 — Oceania"
     },
     {
       "type": "text",

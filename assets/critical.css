@@ -147,7 +147,7 @@ a {
   opacity: 0.7;
 }
 
-/** Small meta label — coordinates, indices, expedition numbers */
+/** Small meta label — coordinates, indices, region numbers */
 .meta-label {
   font-size: 0.7rem;
   font-weight: 500;
