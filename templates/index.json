@@ -89,14 +89,22 @@
       "settings": {
         "media_position": "left",
         "dark": false,
+        "chapter": "01",
+        "vertical_label": "The Odyssey Journal — Chapter 01",
         "eyebrow": "Our philosophy",
         "heading": "Every jewel",
         "heading_italic": "tells a story",
         "body": "<p>We travel to the far corners of the world to work directly with master artisans. Each piece we bring home is one of a kind — shaped by the hands, heritage and horizon of the place it came from. When it's gone, it's gone.</p>",
+        "stat_1_value": "07",
+        "stat_1_label": "Regions to explore",
+        "stat_2_value": "1/1",
+        "stat_2_label": "Every piece unique",
+        "stat_3_value": "200",
+        "stat_3_label": "Pieces in first drop",
         "button_label": "Read our story",
-        "visual_caption": "Handcrafted — Rarotonga, Cook Islands",
-        "image_url": "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=1600&q=80",
-        "image_2_url": "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=900&q=80"
+        "visual_caption": "Gold work — hand finished, one of one",
+        "image_url": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1600&q=80",
+        "image_2_url": "https://images.unsplash.com/photo-1468413253725-0d5181091126?auto=format&fit=crop&w=900&q=80"
       }
     },
     "featured": {
@@ -166,14 +174,20 @@
       "settings": {
         "media_position": "right",
         "dark": true,
+        "chapter": "02",
+        "vertical_label": "The Odyssey Journal — Chapter 02",
         "eyebrow": "The makers",
         "heading": "Meet the",
         "heading_italic": "artisans",
         "body": "<p>Behind every treasure is a person and a place. We put their names, their cities and their craft at the heart of the story — because you're not just collecting jewellery, you're collecting the world.</p>",
+        "stat_1_value": "12",
+        "stat_1_label": "Master artisans",
+        "stat_2_value": "05",
+        "stat_2_label": "Islands of Oceania",
         "button_label": "Meet the makers",
-        "visual_caption": "Master goldsmith — Ubud, Bali",
-        "image_url": "https://images.unsplash.com/photo-1590650516494-0c8e4a4dd67e?auto=format&fit=crop&w=1600&q=80",
-        "image_2_url": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=900&q=80"
+        "visual_caption": "Layered gold — worn the island way",
+        "image_url": "https://images.unsplash.com/photo-1599459183200-59c7687a0275?auto=format&fit=crop&w=1600&q=80",
+        "image_2_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
       }
     },
     "promises": {
