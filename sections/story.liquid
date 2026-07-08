@@ -227,14 +227,19 @@
     object-fit: cover;
   }
 
+  /*
+    Caption sits inside the hairline frame, just above its bottom edge.
+    Frame bottom line lands 1.5rem from the visual's bottom (3rem inset
+    minus 1.5rem translate); frame left edge lands at 2.75rem.
+  */
   .story__caption {
     position: absolute;
-    left: 2.75rem;
-    bottom: 0.75rem;
+    left: 4.25rem;
+    bottom: 2.6rem;
     color: var(--color-foreground-50);
   }
   .story--media-right .story__caption {
-    left: 3.5rem;
+    left: 2rem;
   }
   .on-dark .story__caption {
     color: color-mix(in srgb, var(--color-contrast) 55%, transparent);
