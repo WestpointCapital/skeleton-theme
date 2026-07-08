@@ -157,9 +157,8 @@
   }
 
   .story__media {
-    position: relative;
+    position: static;
     width: 100%;
-    padding-bottom: 3rem;
   }
 
   .story__images {
@@ -206,16 +205,16 @@
     color: color-mix(in srgb, var(--color-contrast) 55%, transparent);
   }
 
-  /* Offset hairline frame — hugs the image block; caption band via media padding */
+  /* Offset hairline frame — positioned against the full visual column */
   .story__frame {
     position: absolute;
-    inset: 0 2rem 0 1.25rem;
+    inset: 0 2rem 3rem 1.25rem;
     border: 1px solid color-mix(in srgb, var(--color-accent) 50%, transparent);
     transform: translate(1.5rem, 1.5rem);
     pointer-events: none;
   }
   .story--media-right .story__frame {
-    inset: 0 1.25rem 0 2rem;
+    inset: 0 1.25rem 3rem 2rem;
     transform: translate(-1.5rem, 1.5rem);
   }
 
@@ -386,6 +385,7 @@
     }
 
     .story__media {
+      position: relative;
       padding-bottom: 0;
     }
 
