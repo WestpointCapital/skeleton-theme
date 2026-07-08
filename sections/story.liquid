@@ -365,7 +365,13 @@
     .story--media-right .story__visual {
       order: 0;
       width: 100%;
-      padding: 0;
+      max-width: 100%;
+      position: relative;
+      /* Scaled-down desktop padding — room for frame + caption */
+      padding: 0.75rem 1.35rem 2.1rem 0.85rem;
+    }
+    .story--media-right .story__visual {
+      padding: 0.75rem 0.85rem 2.1rem 1.35rem;
     }
 
     .story__content,
@@ -376,36 +382,76 @@
       padding: 0;
     }
 
-    .story__ghost,
-    .story__vertical,
-    .story__frame {
+    /* Faint chapter numeral — desktop detail, mobile-safe */
+    .story__ghost {
+      display: block;
+      font-size: clamp(5.5rem, 26vw, 9rem);
+      top: -0.15em;
+      right: 0;
+      opacity: 0.04;
+    }
+    .story--media-right .story__ghost {
+      left: 0;
+      right: auto;
+    }
+
+    .story__vertical {
       display: none;
+    }
+
+    /* Hairline frame — same editorial offset as desktop, tighter */
+    .story__frame {
+      display: block;
+      inset: 0 0.85rem 1.65rem 0.35rem;
+      transform: translate(0.65rem, 0.65rem);
+    }
+    .story--media-right .story__frame {
+      inset: 0 0.35rem 1.65rem 0.85rem;
+      transform: translate(-0.65rem, 0.65rem);
     }
 
     .story__images {
       width: 100%;
+      max-width: 100%;
+      border-radius: 0;
     }
 
+    /* Inset: desktop proportions, contained inside the image stage */
     .story__inset,
     .story--media-right .story__inset {
-      right: 0.75rem;
+      right: 0;
       left: auto;
-      bottom: 0.75rem;
-      width: 36%;
-      max-width: 7.5rem;
-      border-width: 3px;
+      bottom: 1rem;
+      width: 42%;
+      max-width: 9rem;
+      border-width: 5px;
+      box-shadow: 0 20px 44px -22px rgba(10, 22, 40, 0.45);
+    }
+    .story--media-right .story__inset {
+      right: auto;
+      left: 0;
     }
 
+    /* Caption inside the frame, above the bottom hairline */
     .story__caption,
     .story--media-right .story__caption {
-      position: static;
-      width: 100%;
-      max-width: 100%;
-      margin: 0.75rem 0 0;
+      position: absolute;
+      left: 1.65rem;
+      right: 1rem;
+      bottom: 0.15rem;
+      width: auto;
+      max-width: calc(100% - 2.65rem);
+      margin: 0;
       padding: 0;
-      font-size: 0.65rem;
-      line-height: 1.5;
+      font-size: 0.62rem;
+      letter-spacing: 1.75px;
+      line-height: 1.45;
       overflow-wrap: break-word;
+    }
+    .story--media-right .story__caption {
+      left: 1rem;
+      right: 1.65rem;
+      text-align: right;
     }
 
     .story__heading {
@@ -420,7 +466,6 @@
       font-size: var(--text-base);
     }
 
-    .story__eyebrow,
     .story__content .eyebrow {
       max-width: 100%;
     }
