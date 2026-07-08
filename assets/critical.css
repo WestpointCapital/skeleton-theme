@@ -13,15 +13,6 @@ body {
   min-height: 100svh;
 }
 
-/*
- * Horizontal overflow safety net. `clip` (unlike `hidden`) does not create
- * a scroll container, so position: sticky keeps working.
- */
-html,
-body {
-  overflow-x: clip;
-}
-
 html:has(dialog[scroll-lock][open], details[scroll-lock][open]) {
   overflow: hidden;
 }
@@ -288,12 +279,22 @@ button.button {
 
 /** Section layout utilities */
 
-/* Inline padding that aligns full-bleed content with the page column */
+/*
+ * Horizontal padding aligned to the page column.
+ * On mobile we use the gutter only — never 100vw (that includes scrollbar
+ * width and causes subtle overflow on real devices).
+ */
 :root {
-  --page-inline: max(
-    var(--page-margin),
-    calc((100vw - var(--page-width)) / 2 + var(--page-margin))
-  );
+  --page-inline: var(--page-margin);
+}
+
+@media (min-width: 990px) {
+  :root {
+    --page-inline: max(
+      var(--page-margin),
+      calc((100% - min(var(--page-width), 100%)) / 2 + var(--page-margin))
+    );
+  }
 }
 
 /**
@@ -315,22 +316,41 @@ button.button {
   --content-margin: minmax(var(--page-margin), 1fr);
   --content-grid: var(--content-margin) var(--content-width) var(--content-margin);
 
-  /* This is required to make <img> elements work as background images */
   position: relative;
   grid-template-columns: var(--content-grid);
   display: grid;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 /* Child elements, by default, are constrained to the central column of the grid. */
 .shopify-section > * {
   grid-column: 2;
-  /* Prevent content-based minimum sizes from blowing out the grid tracks */
   min-width: 0;
   max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Child elements that use the full-width utility class span the entire viewport. */
 .shopify-section > .full-width {
   grid-column: 1 / -1;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/* Constrained sections: belt-and-suspenders padding on small screens */
+@media (max-width: 989px) {
+  .regions,
+  .promises,
+  .featured {
+    padding-inline: var(--page-margin);
+  }
+
+  .featured__head {
+    padding-inline: 0;
+  }
 }

@@ -89,6 +89,13 @@
 </section>
 
 {% stylesheet %}
+  .featured {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: clip;
+    box-sizing: border-box;
+  }
   .featured__head {
     display: flex;
     align-items: flex-end;
@@ -127,10 +134,15 @@
 
   .featured__rail-wrap {
     position: relative;
+    width: 100%;
+    max-width: 100%;
     min-width: 0;
+    overflow: hidden;
   }
   .featured__rail {
     display: flex;
+    width: 100%;
+    max-width: 100%;
     min-width: 0;
     gap: var(--space-md);
     overflow-x: auto;
@@ -156,13 +168,18 @@
       display: none;
     }
     .piece-card {
-      flex-basis: 76vw;
+      flex: 0 0 82%;
     }
     .featured__head {
       margin-bottom: var(--space-md);
     }
+    .featured__rail {
+      padding-inline: 0;
+      scroll-padding-inline: 0;
+    }
     .featured__progress {
       margin-top: var(--space-md);
+      margin-inline: 0;
     }
   }
   .piece-card__media {

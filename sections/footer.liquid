@@ -3,8 +3,8 @@
   closing with a hairline legal row and payment icons.
 {% endcomment %}
 
-<footer class="site-footer on-dark">
-  <div class="site-footer__inner full-width">
+<footer class="site-footer on-dark full-width">
+  <div class="site-footer__inner">
     <div class="site-footer__top">
       <div class="site-footer__brand">
         {% if section.settings.tagline != blank %}
@@ -82,6 +82,11 @@
 </footer>
 
 {% stylesheet %}
+  .site-footer {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
   .site-footer__inner {
     padding: var(--space-2xl) var(--page-inline) var(--space-lg);
     display: flex;
@@ -190,15 +195,16 @@
     padding-left: 0.4rem;
   }
 
-  /* Oversized wordmark — scales fluidly so it never overflows small screens */
+  /* Oversized wordmark — scales to fit any phone width */
   .site-footer__giant {
     font-family: var(--font-heading--family);
-    font-size: clamp(1.9rem, 10.5vw, 10rem);
-    line-height: 0.95;
+    font-size: clamp(1.35rem, 9vw, 10rem);
+    line-height: 1.05;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: clamp(0.02em, 1.2vw, 0.06em);
     text-align: center;
     white-space: nowrap;
+    width: 100%;
     max-width: 100%;
     overflow: hidden;
     color: color-mix(in srgb, var(--color-contrast) 92%, transparent);
@@ -233,6 +239,7 @@
     .site-footer__inner {
       padding-top: var(--space-xl);
       gap: var(--space-xl);
+      padding-inline: var(--page-margin);
     }
     .site-footer__top {
       grid-template-columns: 1fr;
@@ -242,6 +249,16 @@
       flex-direction: column;
       align-items: flex-start;
       gap: var(--space-sm);
+    }
+    .site-footer__giant {
+      font-size: clamp(1.15rem, 7.8vw, 2.25rem);
+      letter-spacing: 0.04em;
+      white-space: normal;
+      word-break: break-word;
+    }
+    .newsletter-field {
+      min-width: 0;
+      width: 100%;
     }
   }
 {% endstylesheet %}

@@ -29,6 +29,11 @@
 </section>
 
 {% stylesheet %}
+  .promises {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
   .promises__eyebrow {
     margin-bottom: var(--space-xl);
   }
@@ -77,6 +82,9 @@
   @media (max-width: 749px) {
     .promises__eyebrow {
       margin-bottom: var(--space-lg);
+    }
+    .promises__row {
+      grid-template-columns: 1fr;
     }
     .promise {
       padding: var(--space-md) 0 0;

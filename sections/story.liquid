@@ -104,6 +104,9 @@
   .story {
     position: relative;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   /* Giant ghost chapter numeral */
@@ -271,6 +274,7 @@
     font-weight: 300;
     line-height: 1.75;
     max-width: 30rem;
+    overflow-wrap: anywhere;
   }
   .on-dark .story__body {
     color: color-mix(in srgb, var(--color-contrast) 78%, transparent);
@@ -297,6 +301,9 @@
     padding-left: var(--space-lg);
     border-left: 1px solid var(--color-line);
   }
+  .story__stat .meta-label {
+    overflow-wrap: anywhere;
+  }
   .on-dark .story__stat + .story__stat {
     border-color: color-mix(in srgb, var(--color-contrast) 18%, transparent);
   }
@@ -316,26 +323,28 @@
     margin-top: var(--space-2xs);
   }
 
-  /*
-    Mobile: a dedicated composition rather than a squeezed desktop one.
-    The decorative frame and vertical label step aside; the inset image
-    overlaps the main image's bottom-right corner; the caption flows
-    statically beneath the image on the left, clear of everything.
-  */
   @media (max-width: 989px) {
     .story__inner {
       gap: var(--space-lg);
+      padding-inline: var(--page-margin);
     }
     .story__visual,
     .story--media-right .story__visual {
       grid-column: 1 / -1;
       order: 0;
-      padding: 0 0 3.5rem;
+      padding: 0 0 1rem;
+      overflow: hidden;
     }
     .story__content,
     .story--media-right .story__content {
       grid-column: 1 / -1;
       order: 1;
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .story__ghost {
+      display: none;
     }
 
     .story__vertical,
@@ -345,38 +354,55 @@
 
     .story__inset,
     .story--media-right .story__inset {
-      width: 44%;
-      right: 0;
+      width: 42%;
+      max-width: 9.5rem;
+      right: 0.5rem;
       left: auto;
-      bottom: 0;
-      outline-width: 5px;
+      bottom: 0.5rem;
+      outline-width: 4px;
     }
 
     .story__caption,
     .story--media-right .story__caption {
       position: static;
       display: block;
-      max-width: 52%;
+      max-width: 100%;
       margin-top: 0.85rem;
+      font-size: 0.65rem;
+      line-height: 1.5;
     }
 
+    .story__heading {
+      font-size: var(--text-2xl);
+    }
     .story__heading em {
-      padding-left: 0.75em;
+      padding-left: 0.5em;
     }
 
+    .story__body {
+      max-width: 100%;
+      font-size: var(--text-base);
+    }
+
+    /* Stats: stack vertically so labels never clip */
     .story__stats {
-      flex-wrap: wrap;
-      row-gap: var(--space-sm);
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
     }
-
-    .story__ghost {
-      top: 0;
-      right: 0;
-      font-size: clamp(8rem, 32vw, 14rem);
+    .story__stat {
+      padding: var(--space-sm) 0;
     }
-    .story--media-right .story__ghost {
-      left: 0;
-      right: auto;
+    .story__stat + .story__stat {
+      padding-left: 0;
+      border-left: 0;
+      border-top: 1px solid var(--color-line);
+    }
+    .on-dark .story__stat + .story__stat {
+      border-color: color-mix(in srgb, var(--color-contrast) 18%, transparent);
+    }
+    .story__stat-value {
+      font-size: var(--text-xl);
     }
   }
 {% endstylesheet %}

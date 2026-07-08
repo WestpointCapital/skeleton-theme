@@ -72,6 +72,12 @@
 </section>
 
 {% stylesheet %}
+  .regions {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
   .regions__head {
     display: flex;
     align-items: flex-end;
@@ -126,6 +132,7 @@
   .region-card__media img {
     width: 100%;
     height: 100%;
+    max-width: 100%;
     object-fit: cover;
     transition: transform 1.4s var(--ease);
   }
@@ -187,11 +194,18 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: var(--space-sm);
     padding-top: 1rem;
     border-bottom: 1px solid var(--color-line);
     padding-bottom: 1rem;
+    min-width: 0;
+  }
+  .region-card__foot .meta-label {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
   .region-card__cta {
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     gap: 0.6rem;
@@ -207,14 +221,15 @@
     transform: translateX(5px);
   }
 
-  @media (max-width: 749px) {
+  @media (max-width: 989px) {
+    .regions__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
     .region-card:nth-child(n) {
       grid-column: 1 / -1;
       margin-top: 0;
       --card-ratio: 4 / 5;
-    }
-    .regions__grid {
-      gap: var(--space-lg);
     }
     .regions__head {
       margin-bottom: var(--space-lg);
@@ -223,16 +238,26 @@
       padding: 1.25rem;
     }
     .region-card__index {
-      top: 1.1rem;
-      left: 1.25rem;
+      top: 1rem;
+      left: 1rem;
     }
     .region-card__status {
-      top: 1rem;
-      right: 1rem;
+      top: 0.85rem;
+      right: 0.85rem;
+      font-size: 0.55rem;
+      letter-spacing: 1.5px;
+      padding: 0.35rem 0.65rem;
+      max-width: calc(100% - 5rem);
+      text-align: center;
+      line-height: 1.3;
     }
     .region-card__foot {
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.65rem;
+    }
+    .region-card__title {
+      font-size: var(--text-xl);
     }
   }
 {% endstylesheet %}
