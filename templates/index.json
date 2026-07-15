@@ -12,7 +12,7 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "video_url": "https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4",
+        "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_culture_pearls_go_con_be_motion_video_01_6s_3x4_Gemini_D1229867/mp4_720p",
         "poster_url": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=2400&q=80",
         "show_controls": true,
         "height": "tall",
@@ -24,78 +24,128 @@
         "heading_italic": "collect the world",
         "subheading": "Rare, one-of-a-kind treasures gathered from artisans across the globe.",
         "button_label": "Shop the collection",
+        "button_url": "",
         "button_style": "solid",
-        "link_label": "Our story"
+        "link_label": "Our story",
+        "link_url": ""
       }
     },
     "marquee": {
       "type": "marquee",
+      "blocks": {
+        "m1": {
+          "type": "item",
+          "settings": {
+            "text": "Oceania"
+          }
+        },
+        "m2": {
+          "type": "item",
+          "settings": {
+            "text": "Every jewel tells a story"
+          }
+        },
+        "m3": {
+          "type": "item",
+          "settings": {
+            "text": "Asia"
+          }
+        },
+        "m4": {
+          "type": "item",
+          "settings": {
+            "text": "One of a kind"
+          }
+        },
+        "m5": {
+          "type": "item",
+          "settings": {
+            "text": "The Founders Collection"
+          }
+        },
+        "m6": {
+          "type": "item",
+          "settings": {
+            "text": "Artisan made"
+          }
+        }
+      },
+      "block_order": [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5",
+        "m6"
+      ],
       "settings": {
         "dark": false,
         "speed": 45
-      },
-      "blocks": {
-        "m1": { "type": "item", "settings": { "text": "Oceania" } },
-        "m2": { "type": "item", "settings": { "text": "Every jewel tells a story" } },
-        "m3": { "type": "item", "settings": { "text": "Asia" } },
-        "m4": { "type": "item", "settings": { "text": "One of a kind" } },
-        "m5": { "type": "item", "settings": { "text": "The Founders Collection" } },
-        "m6": { "type": "item", "settings": { "text": "Artisan made" } }
-      },
-      "block_order": ["m1", "m2", "m3", "m4", "m5", "m6"]
+      }
     },
     "regions": {
       "type": "regions",
-      "settings": {
-        "eyebrow": "The regions",
-        "heading": "Where in the world",
-        "heading_italic": "will you begin?",
-        "link_label": "All regions"
-      },
       "blocks": {
         "r1": {
           "type": "region",
           "settings": {
-            "title": "Oceania",
+            "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80",
             "status": "Available now",
+            "title": "Oceania",
             "subtitle": "Treasures of the South Pacific",
             "meta": "First drop — 200 pieces",
             "cta": "Discover",
-            "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80"
+            "link": ""
           }
         },
         "r2": {
           "type": "region",
           "settings": {
-            "title": "The Founders Collection",
+            "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=80",
             "status": "By invitation",
+            "title": "The Founders Collection",
             "subtitle": "Rare pieces for our earliest collectors",
             "meta": "Private access",
             "cta": "Enquire",
-            "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=80"
+            "link": ""
           }
         },
         "r3": {
           "type": "region",
           "settings": {
-            "title": "Asia",
+            "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1400&q=80",
             "status": "Coming soon",
+            "title": "Asia",
             "subtitle": "Along the ancient trade routes",
             "meta": "Region in progress",
             "cta": "Join the waitlist",
-            "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1400&q=80"
+            "link": ""
           }
         }
       },
-      "block_order": ["r1", "r2", "r3"]
+      "block_order": [
+        "r1",
+        "r2",
+        "r3"
+      ],
+      "settings": {
+        "eyebrow": "The regions",
+        "heading": "Where in the world",
+        "heading_italic": "will you begin?",
+        "link_label": "All regions",
+        "link_url": ""
+      }
     },
     "story": {
       "type": "story",
       "settings": {
-        "media_position": "left",
-        "dark": false,
         "chapter": "01",
         "vertical_label": "The Odyssey Journal — Chapter 01",
+        "image_url": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1600&q=80",
+        "image_2_url": "https://images.unsplash.com/photo-1468413253725-0d5181091126?auto=format&fit=crop&w=900&q=80",
+        "visual_caption": "Gold work — hand finished, one of one",
+        "media_position": "left",
+        "dark": false,
         "eyebrow": "Our philosophy",
         "heading": "Every jewel",
         "heading_italic": "tells a story",
@@ -107,79 +157,91 @@
         "stat_3_value": "200",
         "stat_3_label": "Pieces in first drop",
         "button_label": "Read our story",
-        "visual_caption": "Gold work — hand finished, one of one",
-        "image_url": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1600&q=80",
-        "image_2_url": "https://images.unsplash.com/photo-1468413253725-0d5181091126?auto=format&fit=crop&w=900&q=80"
+        "button_url": ""
       }
     },
     "featured": {
       "type": "featured",
-      "settings": {
-        "eyebrow": "The first drop",
-        "heading": "Oceania",
-        "heading_italic": "Collection",
-        "link_label": "View the full collection"
-      },
       "blocks": {
         "f1": {
           "type": "piece",
           "settings": {
-            "title": "Coral Tide Ring",
-            "region": "Oceania",
+            "image_url": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=80",
             "badge": "One of a kind",
+            "region": "Oceania",
+            "title": "Coral Tide Ring",
             "price": "$1,200",
-            "image_url": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=80"
+            "link": ""
           }
         },
         "f2": {
           "type": "piece",
           "settings": {
-            "title": "Lagoon Pearl Pendant",
-            "region": "Oceania",
+            "image_url": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=80",
             "badge": "One of a kind",
+            "region": "Oceania",
+            "title": "Lagoon Pearl Pendant",
             "price": "$980",
-            "image_url": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=80"
+            "link": ""
           }
         },
         "f3": {
           "type": "piece",
           "settings": {
-            "title": "Reef Gold Bangle",
-            "region": "Oceania",
+            "image_url": "https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=900&q=80",
             "badge": "One of a kind",
+            "region": "Oceania",
+            "title": "Reef Gold Bangle",
             "price": "$1,540",
-            "image_url": "https://images.unsplash.com/photo-1611085583191-a3b181a88401?auto=format&fit=crop&w=900&q=80"
+            "link": ""
           }
         },
         "f4": {
           "type": "piece",
           "settings": {
-            "title": "Tide Drop Earrings",
-            "region": "Oceania",
+            "image_url": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=900&q=80",
             "badge": "One of a kind",
+            "region": "Oceania",
+            "title": "Tide Drop Earrings",
             "price": "$760",
-            "image_url": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=900&q=80"
+            "link": ""
           }
         },
         "f5": {
           "type": "piece",
           "settings": {
-            "title": "Atoll Signet",
-            "region": "Oceania",
+            "image_url": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=900&q=80",
             "badge": "One of a kind",
+            "region": "Oceania",
+            "title": "Atoll Signet",
             "price": "$1,880",
-            "image_url": "https://images.unsplash.com/photo-1603561591411-07134e71a2a9?auto=format&fit=crop&w=900&q=80"
+            "link": ""
           }
         }
       },
-      "block_order": ["f1", "f2", "f3", "f4", "f5"]
+      "block_order": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
+      ],
+      "settings": {
+        "eyebrow": "The first drop",
+        "heading": "Oceania",
+        "heading_italic": "Collection",
+        "link_label": "View the full collection",
+        "link_url": ""
+      }
     },
     "video_story": {
       "type": "video-story",
       "settings": {
         "layout": "overlay",
         "height": "cinema",
+        "media_position": "left",
         "text_align": "left",
+        "dark": true,
         "video_url": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4",
         "poster_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
         "autoplay": true,
@@ -190,16 +252,21 @@
         "heading_italic": "South Pacific",
         "body": "<p>Follow the tide to where each piece began — the hands, the heritage and the horizon behind the Oceania collection.</p>",
         "button_label": "Explore Oceania",
-        "link_label": "Watch the film"
+        "button_url": "",
+        "link_label": "Watch the film",
+        "link_url": ""
       }
     },
     "story_artisans": {
       "type": "story",
       "settings": {
-        "media_position": "right",
-        "dark": true,
         "chapter": "02",
         "vertical_label": "The Odyssey Journal — Chapter 02",
+        "image_url": "https://images.unsplash.com/photo-1599459183200-59c7687a0275?auto=format&fit=crop&w=1600&q=80",
+        "image_2_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+        "visual_caption": "Layered gold — worn the island way",
+        "media_position": "right",
+        "dark": true,
         "eyebrow": "The makers",
         "heading": "Meet the",
         "heading_italic": "artisans",
@@ -208,17 +275,14 @@
         "stat_1_label": "Master artisans",
         "stat_2_value": "05",
         "stat_2_label": "Islands of Oceania",
+        "stat_3_value": "",
+        "stat_3_label": "",
         "button_label": "Meet the makers",
-        "visual_caption": "Layered gold — worn the island way",
-        "image_url": "https://images.unsplash.com/photo-1599459183200-59c7687a0275?auto=format&fit=crop&w=1600&q=80",
-        "image_2_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
+        "button_url": ""
       }
     },
     "promises": {
       "type": "promises",
-      "settings": {
-        "eyebrow": "The Odyssey standard"
-      },
       "blocks": {
         "p1": {
           "type": "promise",
@@ -242,18 +306,28 @@
           }
         }
       },
-      "block_order": ["p1", "p2", "p3"]
+      "block_order": [
+        "p1",
+        "p2",
+        "p3"
+      ],
+      "settings": {
+        "eyebrow": "The Odyssey standard",
+        "dark": false
+      }
     },
     "cta": {
       "type": "cta-banner",
       "settings": {
+        "video_url": "",
+        "image_url": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=2400&q=80",
+        "overlay_opacity": 45,
         "eyebrow": "The odyssey begins",
         "heading": "Begin your",
         "heading_italic": "collection",
         "subheading": "The first region has landed. Claim a piece of Oceania before it's gone forever.",
         "button_label": "Shop the first drop",
-        "overlay_opacity": 45,
-        "image_url": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=2400&q=80"
+        "button_url": ""
       }
     }
   },
