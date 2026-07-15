@@ -10,10 +10,8 @@
     assign poster = section.settings.poster_image | image_url: width: 2400
   endif
 
-  assign hero_video = section.settings.video
-
   assign has_video = false
-  if hero_video != blank or section.settings.video_url != blank
+  if section.settings.video != blank or section.settings.video_url != blank or section.settings.video_mobile != blank or section.settings.video_mobile_url != blank
     assign has_video = true
   endif
 %}
@@ -21,62 +19,25 @@
 <section
   class="hero full-width hero--{{ section.settings.text_align }} hero--h-{{ section.settings.height }}"
   style="--overlay: {{ section.settings.overlay_opacity }}%; --scrim: {{ section.settings.scrim_strength }}%;"
+  {% if has_video %}data-video-section{% endif %}
 >
-  <div class="hero__media" {% if has_video %}data-media-video{% endif %}>
-    {% if hero_video != blank %}
-      <video
-        class="hero__bg"
-        autoplay
-        muted
-        loop
-        playsinline
-        poster="{{ poster }}"
-      >
-        {% for source in hero_video.sources %}
-          <source src="{{ source.url }}" type="{{ source.mime_type }}">
-        {% endfor %}
-      </video>
-    {% elsif section.settings.video_url != blank %}
-      <video
-        class="hero__bg"
-        autoplay
-        muted
-        loop
-        playsinline
-        poster="{{ poster }}"
-      >
-        <source src="{{ section.settings.video_url }}" type="video/mp4">
-      </video>
+  <div class="hero__media">
+    {% if has_video %}
+      {% render 'responsive-bg-video',
+        classes: 'hero__bg',
+        desktop_video: section.settings.video,
+        desktop_url: section.settings.video_url,
+        mobile_video: section.settings.video_mobile,
+        mobile_url: section.settings.video_mobile_url,
+        poster: poster,
+        autoplay: true
+      %}
     {% else %}
       <img class="hero__bg" src="{{ poster }}" alt="" loading="eager" width="2400" height="1350">
     {% endif %}
 
     <div class="hero__overlay"></div>
     <div class="hero__scrim"></div>
-
-    {% if has_video and section.settings.show_controls %}
-      <div class="media-controls">
-        <button class="media-controls__btn" type="button" data-video-play data-state="playing" aria-label="Play or pause video">
-          <svg class="media-controls__icon media-controls__icon--pause" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <rect x="7.5" y="6" width="2.5" height="12" fill="currentColor"/>
-            <rect x="14" y="6" width="2.5" height="12" fill="currentColor"/>
-          </svg>
-          <svg class="media-controls__icon media-controls__icon--play" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor"/>
-          </svg>
-        </button>
-        <button class="media-controls__btn" type="button" data-video-mute data-state="muted" aria-label="Mute or unmute video">
-          <svg class="media-controls__icon media-controls__icon--muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/>
-            <path d="M16.5 9.5l4 4m0-4l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-          <svg class="media-controls__icon media-controls__icon--unmuted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/>
-            <path d="M16.5 8.5a5 5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
-          </svg>
-        </button>
-      </div>
-    {% endif %}
   </div>
 
   <div class="hero__inner">
@@ -115,6 +76,30 @@
       {% endif %}
     </div>
   </div>
+
+  {% if has_video and section.settings.show_controls %}
+    <div class="media-controls">
+      <button class="media-controls__btn" type="button" data-video-play data-state="playing" aria-label="Play or pause video">
+        <svg class="media-controls__icon media-controls__icon--pause" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="7.5" y="6" width="2.5" height="12" fill="currentColor"/>
+          <rect x="14" y="6" width="2.5" height="12" fill="currentColor"/>
+        </svg>
+        <svg class="media-controls__icon media-controls__icon--play" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="media-controls__btn" type="button" data-video-mute data-state="muted" aria-label="Mute or unmute video">
+        <svg class="media-controls__icon media-controls__icon--muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/>
+          <path d="M16.5 9.5l4 4m0-4l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        </svg>
+        <svg class="media-controls__icon media-controls__icon--unmuted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/>
+          <path d="M16.5 8.5a5 5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+        </svg>
+      </button>
+    </div>
+  {% endif %}
 </section>
 
 {% stylesheet %}
@@ -147,6 +132,7 @@
     position: absolute;
     inset: 0;
     background: rgba(14, 30, 51, calc(var(--overlay) / 100));
+    pointer-events: none;
   }
   .hero__scrim {
     position: absolute;
@@ -157,9 +143,16 @@
       rgba(14, 30, 51, calc(var(--scrim) / 100 * 0.45)) 26%,
       transparent 55%
     );
+    pointer-events: none;
+  }
+
+  .hero .media-controls {
+    z-index: 2;
   }
 
   .hero__inner {
+    position: relative;
+    z-index: 1;
     padding-inline: var(--page-inline);
     padding-bottom: clamp(2.5rem, 1.5rem + 4vw, 5.5rem);
     padding-top: var(--space-2xl);
@@ -256,15 +249,27 @@
     {
       "type": "video",
       "id": "video",
-      "label": "Background video (upload)",
+      "label": "Desktop video (upload)",
       "info": "Upload or pick a Shopify-hosted video. Takes priority over the URL below."
     },
     {
       "type": "text",
       "id": "video_url",
-      "label": "Background video URL (mp4)",
-      "info": "Used only if no uploaded video is set. Leave empty for image only.",
+      "label": "Desktop video URL (mp4)",
+      "info": "Used only if no uploaded desktop video is set. Leave empty for image only.",
       "default": "https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Mobile video (upload)",
+      "info": "Optional. Shown on phones instead of the desktop video. Falls back to the desktop video when empty."
+    },
+    {
+      "type": "text",
+      "id": "video_mobile_url",
+      "label": "Mobile video URL (mp4)",
+      "info": "Used only if no uploaded mobile video is set."
     },
     {
       "type": "image_picker",

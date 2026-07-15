@@ -12,10 +12,8 @@
     assign poster = section.settings.poster_image | image_url: width: 2000
   endif
 
-  assign story_video = section.settings.video
-
   assign has_video = false
-  if story_video != blank or section.settings.video_url != blank
+  if section.settings.video != blank or section.settings.video_url != blank or section.settings.video_mobile != blank or section.settings.video_mobile_url != blank
     assign has_video = true
   endif
 %}
@@ -25,29 +23,17 @@
   style="--scrim: {{ section.settings.scrim_strength }}%;"
 >
   <div class="vstory__grid">
-    <div class="vstory__media vstory--h-{{ section.settings.height }}" {% if has_video %}data-media-video{% endif %}>
-      {% if story_video != blank %}
-        <video
-          class="vstory__bg"
-          {% if section.settings.autoplay %}autoplay muted loop{% endif %}
-          playsinline
-          preload="metadata"
-          poster="{{ poster }}"
-        >
-          {% for source in story_video.sources %}
-            <source src="{{ source.url }}" type="{{ source.mime_type }}">
-          {% endfor %}
-        </video>
-      {% elsif section.settings.video_url != blank %}
-        <video
-          class="vstory__bg"
-          {% if section.settings.autoplay %}autoplay muted loop{% endif %}
-          playsinline
-          preload="metadata"
-          poster="{{ poster }}"
-        >
-          <source src="{{ section.settings.video_url }}" type="video/mp4">
-        </video>
+    <div class="vstory__media vstory--h-{{ section.settings.height }}" {% if has_video %}data-video-section{% endif %}>
+      {% if has_video %}
+        {% render 'responsive-bg-video',
+          classes: 'vstory__bg',
+          desktop_video: section.settings.video,
+          desktop_url: section.settings.video_url,
+          mobile_video: section.settings.video_mobile,
+          mobile_url: section.settings.video_mobile_url,
+          poster: poster,
+          autoplay: section.settings.autoplay
+        %}
       {% else %}
         <img class="vstory__bg" src="{{ poster }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="2000" height="1200">
       {% endif %}
@@ -126,6 +112,11 @@
       rgba(14, 30, 51, calc(var(--scrim) / 100 * 0.35)) 40%,
       transparent 72%
     );
+    pointer-events: none;
+  }
+
+  .vstory__media .media-controls {
+    z-index: 4;
   }
 
   /* --- Copy block --- */
@@ -311,15 +302,27 @@
     {
       "type": "video",
       "id": "video",
-      "label": "Video (upload)",
+      "label": "Desktop video (upload)",
       "info": "Upload or pick a Shopify-hosted video. Takes priority over the URL below."
     },
     {
       "type": "text",
       "id": "video_url",
-      "label": "Video URL (mp4)",
-      "info": "Used only if no uploaded video is set.",
+      "label": "Desktop video URL (mp4)",
+      "info": "Used only if no uploaded desktop video is set.",
       "default": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4"
+    },
+    {
+      "type": "video",
+      "id": "video_mobile",
+      "label": "Mobile video (upload)",
+      "info": "Optional. Shown on phones instead of the desktop video. Falls back to the desktop video when empty."
+    },
+    {
+      "type": "text",
+      "id": "video_mobile_url",
+      "label": "Mobile video URL (mp4)",
+      "info": "Used only if no uploaded mobile video is set."
     },
     {
       "type": "image_picker",

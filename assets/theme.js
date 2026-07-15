@@ -32,16 +32,55 @@
     window.addEventListener('scroll', onScroll, { passive: true });
   }
 
+  /* Responsive background video: swap desktop/mobile source by viewport */
+  const initResponsiveVideos = (root = document) => {
+    root.querySelectorAll('video[data-responsive-video]').forEach((video) => {
+      if (video.dataset.responsiveReady === 'true') return;
+      video.dataset.responsiveReady = 'true';
+
+      const desktop = video.dataset.desktop || '';
+      const mobile = video.dataset.mobile || desktop;
+      const bp = parseInt(video.dataset.breakpoint || '750', 10);
+      const mq = window.matchMedia(`(max-width: ${bp}px)`);
+
+      /* Inline <source> tags render the desktop file, so we start there */
+      let current = 'desktop';
+
+      const apply = () => {
+        const target = mq.matches && mobile ? 'mobile' : 'desktop';
+        if (target === current) return;
+        current = target;
+
+        const url = target === 'mobile' ? mobile : desktop;
+        if (!url) return;
+
+        const wasPlaying = !video.paused && !video.dataset.userPaused;
+        video.src = url;
+        video.load();
+        if (video.autoplay || wasPlaying) {
+          video.play().catch(() => {});
+        }
+      };
+
+      apply();
+      if (mq.addEventListener) {
+        mq.addEventListener('change', apply);
+      } else if (mq.addListener) {
+        mq.addListener(apply);
+      }
+    });
+  };
+
   /* Cinematic media: play/pause + mute toggles (hero, video story) */
   const initVideoControls = (root = document) => {
-    root.querySelectorAll('[data-media-video]').forEach((wrap) => {
-      if (wrap.dataset.videoReady === 'true') return;
-      const video = wrap.querySelector('video');
+    root.querySelectorAll('[data-video-section]').forEach((scope) => {
+      if (scope.dataset.videoReady === 'true') return;
+      const video = scope.querySelector('video');
       if (!video) return;
-      wrap.dataset.videoReady = 'true';
+      scope.dataset.videoReady = 'true';
 
-      const playBtn = wrap.querySelector('[data-video-play]');
-      const muteBtn = wrap.querySelector('[data-video-mute]');
+      const playBtn = scope.querySelector('[data-video-play]');
+      const muteBtn = scope.querySelector('[data-video-mute]');
 
       const syncPlay = () => {
         if (playBtn) playBtn.dataset.state = video.paused ? 'paused' : 'playing';
@@ -51,18 +90,34 @@
       };
 
       if (playBtn) {
-        playBtn.addEventListener('click', () => {
+        playBtn.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
           if (video.paused) {
-            video.play();
+            video.dataset.userPaused = '';
+            video.play().catch(() => {});
           } else {
+            video.dataset.userPaused = 'true';
             video.pause();
           }
+          syncPlay();
         });
       }
+
       if (muteBtn) {
-        muteBtn.addEventListener('click', () => {
+        muteBtn.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+
           video.muted = !video.muted;
           syncMute();
+
+          /* Unmuting often needs an explicit play() in the same gesture */
+          if (!video.muted && video.paused) {
+            video.play().catch(() => {});
+            syncPlay();
+          }
         });
       }
 
@@ -70,16 +125,16 @@
       video.addEventListener('pause', syncPlay);
       video.addEventListener('volumechange', syncMute);
 
-      /* Pause offscreen videos to save resources, resume when visible */
+      /* Pause offscreen videos to save resources; don't fight user pause */
       const playState = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
-            if (!video.dataset.userPaused) {
-              if (entry.isIntersecting && video.paused && video.autoplay) {
-                video.play().catch(() => {});
-              } else if (!entry.isIntersecting && !video.paused) {
-                video.pause();
-              }
+            if (video.dataset.userPaused) continue;
+
+            if (entry.isIntersecting && video.paused && video.autoplay) {
+              video.play().catch(() => {});
+            } else if (!entry.isIntersecting && !video.paused) {
+              video.pause();
             }
           }
         },
@@ -87,20 +142,16 @@
       );
       playState.observe(video);
 
-      /* Track explicit user pause so we don't auto-resume against their wish */
-      if (playBtn) {
-        playBtn.addEventListener('click', () => {
-          video.dataset.userPaused = video.paused ? 'true' : '';
-        });
-      }
-
       syncPlay();
       syncMute();
     });
   };
 
+  initResponsiveVideos();
   initVideoControls();
   document.addEventListener('shopify:section:load', (event) => {
-    initVideoControls(event.target || document);
+    const scope = event.target || document;
+    initResponsiveVideos(scope);
+    initVideoControls(scope);
   });
 })();
