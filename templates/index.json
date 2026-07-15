@@ -12,7 +12,8 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_culture_pearls_go_con_be_motion_video_01_6s_3x4_Gemini_D1229867/mp4_720p",
+        "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_awa_be_essence_motion_film06_10s_16x9_Gemini/mp4_720p",
+        "video_mobile_url": "",
         "poster_url": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=2400&q=80",
         "show_controls": true,
         "height": "tall",
@@ -243,6 +244,7 @@
         "text_align": "left",
         "dark": true,
         "video_url": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4",
+        "video_mobile_url": "",
         "poster_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
         "autoplay": true,
         "show_controls": true,
