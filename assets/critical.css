@@ -250,6 +250,56 @@ button.button {
   transform: scaleX(0);
 }
 
+/** Shared cinematic media controls (hero + video story) */
+.media-controls {
+  position: absolute;
+  right: clamp(1.25rem, 0.5rem + 2vw, 2.75rem);
+  bottom: clamp(1.25rem, 0.5rem + 2vw, 2.75rem);
+  display: flex;
+  gap: 0.6rem;
+  z-index: 3;
+}
+.media-controls__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  color: var(--color-contrast);
+  background: color-mix(in srgb, var(--color-navy) 32%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-contrast) 55%, transparent);
+  border-radius: 50%;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background-color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.media-controls__btn:hover {
+  background: color-mix(in srgb, var(--color-navy) 55%, transparent);
+  border-color: var(--color-contrast);
+}
+.media-controls__icon {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+/* Toggle icon visibility from the button's data-state */
+.media-controls__icon--play,
+.media-controls__icon--unmuted {
+  display: none;
+}
+[data-video-play][data-state="paused"] .media-controls__icon--pause { display: none; }
+[data-video-play][data-state="paused"] .media-controls__icon--play { display: block; }
+[data-video-mute][data-state="unmuted"] .media-controls__icon--muted { display: none; }
+[data-video-mute][data-state="unmuted"] .media-controls__icon--unmuted { display: block; }
+
+@media (max-width: 749px) {
+  .media-controls__btn {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
 /** Utilities */
 .section-spacing {
   padding-block: var(--section-spacing);

@@ -12,15 +12,20 @@
     "hero": {
       "type": "hero",
       "settings": {
-        "region": "Region N° 001 — Oceania",
-        "heading": "Travel the World,",
-        "heading_italic": "Collect the World",
-        "subheading": "Rare, one-of-a-kind treasures gathered from artisans across the globe. Every jewel tells a story.",
-        "button_label": "Explore the collection",
-        "link_label": "Our story",
-        "scroll_label": "Scroll to explore",
-        "coordinates": "17.6797° S, 149.4068° W — South Pacific",
-        "overlay_opacity": 20
+        "video_url": "https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4",
+        "poster_url": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=2400&q=80",
+        "show_controls": true,
+        "height": "tall",
+        "overlay_opacity": 10,
+        "scrim_strength": 60,
+        "text_align": "left",
+        "eyebrow": "The Oceania Collection",
+        "heading": "Travel the world,",
+        "heading_italic": "collect the world",
+        "subheading": "Rare, one-of-a-kind treasures gathered from artisans across the globe.",
+        "button_label": "Shop the collection",
+        "button_style": "solid",
+        "link_label": "Our story"
       }
     },
     "marquee": {
@@ -169,6 +174,25 @@
       },
       "block_order": ["f1", "f2", "f3", "f4", "f5"]
     },
+    "video_story": {
+      "type": "video-story",
+      "settings": {
+        "layout": "overlay",
+        "height": "cinema",
+        "text_align": "left",
+        "video_url": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4",
+        "poster_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
+        "autoplay": true,
+        "show_controls": true,
+        "scrim_strength": 55,
+        "eyebrow": "Oceania — Chapter One",
+        "heading": "Born of the",
+        "heading_italic": "South Pacific",
+        "body": "<p>Follow the tide to where each piece began — the hands, the heritage and the horizon behind the Oceania collection.</p>",
+        "button_label": "Explore Oceania",
+        "link_label": "Watch the film"
+      }
+    },
     "story_artisans": {
       "type": "story",
       "settings": {
@@ -239,6 +263,7 @@
     "regions",
     "story",
     "featured",
+    "video_story",
     "story_artisans",
     "promises",
     "cta"

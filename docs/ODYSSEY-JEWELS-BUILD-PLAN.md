@@ -119,9 +119,10 @@ Mapped to the skeleton's folders. Items marked `@core` are the premium framework
 - [x] Account entry (ties to Rewards).
 
 ### 6.3 Homepage sections `@dev` (framework by `@core`)
-- [x] Hero (stock video + "Travel the World, Collect the World" — editorial layout, expedition metadata, staggered reveals).
+- [x] Hero (clean, premium Pandora-inspired full-bleed video — bottom-left composition, subtle scrim, elegant play/pause + mute controls, alignment/height/button-style options).
 - [ ] Interactive World Map section (**hero custom feature** — see §7.1).
 - [x] Featured drop (Oceania) — horizontal gallery rail with controls + progress line.
+- [x] Cinematic video storytelling section (`video-story`) — full-bleed overlay or split layout, autoplay/click-to-play, reusable for collection & brand stories.
 - [x] "How it works" / storytelling band — layered dual-image story sections + destination marquee + promises ledger.
 - [x] Featured artisans (dark story variant; to be backed by artisan metaobjects later).
 - [ ] Rewards teaser.
