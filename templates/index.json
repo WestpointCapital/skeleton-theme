@@ -16,7 +16,7 @@
         "poster_url": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=2400&q=80",
         "show_controls": true,
         "height": "tall",
-        "overlay_opacity": 10,
+        "overlay_opacity": 15,
         "scrim_strength": 60,
         "text_align": "left",
         "eyebrow": "The Oceania Collection",
