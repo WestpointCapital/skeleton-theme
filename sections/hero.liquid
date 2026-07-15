@@ -10,8 +10,10 @@
     assign poster = section.settings.poster_image | image_url: width: 2400
   endif
 
+  assign hero_video = section.settings.video
+
   assign has_video = false
-  if section.settings.video_url != blank
+  if hero_video != blank or section.settings.video_url != blank
     assign has_video = true
   endif
 %}
@@ -21,7 +23,20 @@
   style="--overlay: {{ section.settings.overlay_opacity }}%; --scrim: {{ section.settings.scrim_strength }}%;"
 >
   <div class="hero__media" {% if has_video %}data-media-video{% endif %}>
-    {% if has_video %}
+    {% if hero_video != blank %}
+      <video
+        class="hero__bg"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="{{ poster }}"
+      >
+        {% for source in hero_video.sources %}
+          <source src="{{ source.url }}" type="{{ source.mime_type }}">
+        {% endfor %}
+      </video>
+    {% elsif section.settings.video_url != blank %}
       <video
         class="hero__bg"
         autoplay
@@ -168,11 +183,12 @@
     margin: 0;
   }
   .hero__heading {
-    font-size: var(--text-hero);
+    font-size: clamp(2.1rem, 1.5rem + 2.4vw, 3.6rem);
     font-weight: 400;
-    line-height: 0.98;
+    line-height: 1.06;
+    letter-spacing: 0.004em;
     margin: 0;
-    text-shadow: 0 1px 40px rgba(10, 22, 40, 0.28);
+    text-shadow: 0 1px 32px rgba(10, 22, 40, 0.22);
   }
   .hero__heading em {
     display: block;
@@ -238,10 +254,16 @@
       "content": "Media"
     },
     {
+      "type": "video",
+      "id": "video",
+      "label": "Background video (upload)",
+      "info": "Upload or pick a Shopify-hosted video. Takes priority over the URL below."
+    },
+    {
       "type": "text",
       "id": "video_url",
       "label": "Background video URL (mp4)",
-      "info": "Leave empty to use the poster image only.",
+      "info": "Used only if no uploaded video is set. Leave empty for image only.",
       "default": "https://assets.mixkit.co/videos/preview/mixkit-waves-coming-to-the-beach-5016-large.mp4"
     },
     {

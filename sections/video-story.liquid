@@ -12,8 +12,10 @@
     assign poster = section.settings.poster_image | image_url: width: 2000
   endif
 
+  assign story_video = section.settings.video
+
   assign has_video = false
-  if section.settings.video_url != blank
+  if story_video != blank or section.settings.video_url != blank
     assign has_video = true
   endif
 %}
@@ -24,7 +26,19 @@
 >
   <div class="vstory__grid">
     <div class="vstory__media vstory--h-{{ section.settings.height }}" {% if has_video %}data-media-video{% endif %}>
-      {% if has_video %}
+      {% if story_video != blank %}
+        <video
+          class="vstory__bg"
+          {% if section.settings.autoplay %}autoplay muted loop{% endif %}
+          playsinline
+          preload="metadata"
+          poster="{{ poster }}"
+        >
+          {% for source in story_video.sources %}
+            <source src="{{ source.url }}" type="{{ source.mime_type }}">
+          {% endfor %}
+        </video>
+      {% elsif section.settings.video_url != blank %}
         <video
           class="vstory__bg"
           {% if section.settings.autoplay %}autoplay muted loop{% endif %}
@@ -295,9 +309,16 @@
       "content": "Media"
     },
     {
+      "type": "video",
+      "id": "video",
+      "label": "Video (upload)",
+      "info": "Upload or pick a Shopify-hosted video. Takes priority over the URL below."
+    },
+    {
       "type": "text",
       "id": "video_url",
       "label": "Video URL (mp4)",
+      "info": "Used only if no uploaded video is set.",
       "default": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4"
     },
     {

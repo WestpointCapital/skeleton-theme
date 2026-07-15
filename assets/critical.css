@@ -256,32 +256,36 @@ button.button {
   right: clamp(1.25rem, 0.5rem + 2vw, 2.75rem);
   bottom: clamp(1.25rem, 0.5rem + 2vw, 2.75rem);
   display: flex;
-  gap: 0.6rem;
+  gap: 1px;
   z-index: 3;
 }
 .media-controls__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.6rem;
+  height: 2.6rem;
   padding: 0;
   color: var(--color-contrast);
-  background: color-mix(in srgb, var(--color-navy) 32%, transparent);
-  border: 1px solid color-mix(in srgb, var(--color-contrast) 55%, transparent);
-  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-navy) 42%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-contrast) 35%, transparent);
+  border-radius: var(--style-border-radius-inputs);
   cursor: pointer;
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   transition: background-color var(--duration) var(--ease), border-color var(--duration) var(--ease);
 }
+/* Keep the pair reading as one refined unit */
+.media-controls__btn + .media-controls__btn {
+  border-left: none;
+}
 .media-controls__btn:hover {
-  background: color-mix(in srgb, var(--color-navy) 55%, transparent);
-  border-color: var(--color-contrast);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
 }
 .media-controls__icon {
-  width: 1.15rem;
-  height: 1.15rem;
+  width: 0.95rem;
+  height: 0.95rem;
 }
 /* Toggle icon visibility from the button's data-state */
 .media-controls__icon--play,
@@ -295,8 +299,8 @@ button.button {
 
 @media (max-width: 749px) {
   .media-controls__btn {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.4rem;
+    height: 2.4rem;
   }
 }
 
