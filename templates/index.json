@@ -21,8 +21,8 @@
         "scrim_strength": 60,
         "text_align": "left",
         "eyebrow": "The Oceania Collection",
-        "heading": "Travel the world,",
-        "heading_italic": "collect the world",
+        "heading": "Collect the world",
+        "heading_italic": "One piece at a time",
         "subheading": "Rare, one-of-a-kind treasures gathered from artisans across the globe.",
         "button_label": "Shop the collection",
         "button_url": "",
@@ -137,37 +137,13 @@
         "link_url": ""
       }
     },
-    "story": {
-      "type": "story",
-      "settings": {
-        "chapter": "01",
-        "vertical_label": "The Odyssey Journal — Chapter 01",
-        "image_url": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1600&q=80",
-        "image_2_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/53/fe/ff/24/1b/v1_E10/E10BGVG6.jpg?w=1600&cf_fit=scale-down&q=85&format=auto&s=85d2124cbd83092632878d32f1ffb88eb0a45aaad67c813f5c7d9bc343934491",
-        "visual_caption": "Gold work — hand finished, one of one",
-        "media_position": "left",
-        "dark": false,
-        "eyebrow": "Our philosophy",
-        "heading": "Every jewel",
-        "heading_italic": "tells a story",
-        "body": "<p>We travel to the far corners of the world to work directly with master artisans. Each piece we bring home is one of a kind — shaped by the hands, heritage and horizon of the place it came from. When it's gone, it's gone.</p>",
-        "stat_1_value": "07",
-        "stat_1_label": "Regions to explore",
-        "stat_2_value": "1/1",
-        "stat_2_label": "Every piece unique",
-        "stat_3_value": "200",
-        "stat_3_label": "Pieces in first drop",
-        "button_label": "Read our story",
-        "button_url": ""
-      }
-    },
     "featured": {
       "type": "featured",
       "blocks": {
         "f1": {
           "type": "piece",
           "settings": {
-            "image_url": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=80",
+            "image_url": "https://lh3.google.com/u/0/d/1sBu0kVtw7UFzbYQv7_SA2Ic86sd03y5C=w2850-h1676-iv1?auditContext=prefetch",
             "badge": "One of a kind",
             "region": "Oceania",
             "title": "Coral Tide Ring",
@@ -235,8 +211,33 @@
         "link_url": ""
       }
     },
+    "story": {
+      "type": "story",
+      "settings": {
+        "chapter": "01",
+        "vertical_label": "The Odyssey Journal — Chapter 01",
+        "image_url": "https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=1600&q=80",
+        "image_2_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/53/fe/ff/24/1b/v1_E10/E10BGVG6.jpg?w=1600&cf_fit=scale-down&q=85&format=auto&s=85d2124cbd83092632878d32f1ffb88eb0a45aaad67c813f5c7d9bc343934491",
+        "visual_caption": "Gold work — hand finished, one of one",
+        "media_position": "left",
+        "dark": false,
+        "eyebrow": "Our philosophy",
+        "heading": "Every jewel",
+        "heading_italic": "tells a story",
+        "body": "<p>We travel to the far corners of the world to work directly with master artisans. Each piece we bring home is one of a kind — shaped by the hands, heritage and horizon of the place it came from. When it's gone, it's gone.</p>",
+        "stat_1_value": "07",
+        "stat_1_label": "Regions to explore",
+        "stat_2_value": "1/1",
+        "stat_2_label": "Every piece unique",
+        "stat_3_value": "200",
+        "stat_3_label": "Pieces in first drop",
+        "button_label": "Read our story",
+        "button_url": ""
+      }
+    },
     "video_story": {
       "type": "video-story",
+      "custom_css": [],
       "settings": {
         "layout": "overlay",
         "height": "cinema",
