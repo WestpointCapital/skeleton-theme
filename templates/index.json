@@ -1,348 +1,281 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "atlas_hero": {
+      "type": "atlas-hero",
       "settings": {
-        "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_awa_be_essence_motion_film06_10s_16x9_Gemini/mp4_720p",
-        "video_mobile_url": "",
-        "poster_url": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=2400&q=80",
-        "show_controls": true,
-        "height": "tall",
-        "overlay_opacity": 15,
-        "scrim_strength": 60,
-        "text_align": "left",
-        "eyebrow": "The Oceania Collection",
-        "heading": "Collect the world",
-        "heading_italic": "One piece at a time",
-        "subheading": "Rare, one-of-a-kind treasures gathered from artisans across the globe.",
-        "button_label": "Shop the collection",
-        "button_url": "",
-        "button_style": "solid",
-        "link_label": "Our story",
-        "link_url": ""
+        "kicker": "Odyssey Jewels · Cartographic Gallery",
+        "heading": "Objects of place.",
+        "text": "<p>Jewels gathered along the world’s living routes, each one mapped to the hands and horizon that shaped it.</p>",
+        "button_label": "Enter the atlas",
+        "button_link": "",
+        "secondary_label": "Trace the route",
+        "secondary_link": "",
+        "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg",
+        "image_alt": "Handcrafted jewellery photographed on natural stone",
+        "plate_label": "Field image · South Pacific",
+        "caption": "A singular object, documented at origin",
+        "latitude": "17° 32′ S",
+        "longitude": "149° 34′ W",
+        "edition": "V2 / 2026"
       }
     },
-    "marquee": {
-      "type": "marquee",
+    "atlas_regions": {
+      "type": "atlas-regions",
       "blocks": {
-        "m1": {
-          "type": "item",
-          "settings": {
-            "text": "Oceania"
-          }
-        },
-        "m2": {
-          "type": "item",
-          "settings": {
-            "text": "Every jewel tells a story"
-          }
-        },
-        "m3": {
-          "type": "item",
-          "settings": {
-            "text": "Asia"
-          }
-        },
-        "m4": {
-          "type": "item",
-          "settings": {
-            "text": "One of a kind"
-          }
-        },
-        "m5": {
-          "type": "item",
-          "settings": {
-            "text": "The Founders Collection"
-          }
-        },
-        "m6": {
-          "type": "item",
-          "settings": {
-            "text": "Artisan made"
-          }
-        }
-      },
-      "block_order": [
-        "m1",
-        "m2",
-        "m3",
-        "m4",
-        "m5",
-        "m6"
-      ],
-      "settings": {
-        "dark": false,
-        "speed": 45
-      }
-    },
-    "regions": {
-      "type": "regions",
-      "blocks": {
-        "r1": {
+        "oceania": {
           "type": "region",
           "settings": {
-            "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80",
-            "status": "Available now",
             "title": "Oceania",
-            "subtitle": "Treasures of the South Pacific",
-            "meta": "First drop — 200 pieces",
-            "cta": "Discover",
+            "coordinates": "17° 32′ S · 149° 34′ W",
+            "status": "Open route",
+            "description": "Pearl, shell and silver objects shaped across the islands of the South Pacific.",
+            "fallback_image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85",
+            "link_label": "Enter region",
             "link": ""
           }
         },
-        "r2": {
+        "asia": {
           "type": "region",
           "settings": {
-            "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=80",
-            "status": "By invitation",
-            "title": "The Founders Collection",
-            "subtitle": "Rare pieces for our earliest collectors",
-            "meta": "Private access",
-            "cta": "Enquire",
-            "link": ""
-          }
-        },
-        "r3": {
-          "type": "region",
-          "settings": {
-            "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1400&q=80",
-            "status": "Coming soon",
             "title": "Asia",
-            "subtitle": "Along the ancient trade routes",
-            "meta": "Region in progress",
-            "cta": "Join the waitlist",
+            "coordinates": "13° 45′ N · 100° 30′ E",
+            "status": "Route forming",
+            "description": "Ancient metalwork routes, carved stones and contemporary ateliers from coast to highland.",
+            "fallback_image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1800&q=85",
+            "link_label": "Preview region",
+            "link": ""
+          }
+        },
+        "north": {
+          "type": "region",
+          "settings": {
+            "title": "The North",
+            "coordinates": "68° 12′ N · 16° 06′ E",
+            "status": "Field research",
+            "description": "A coming chapter of quiet forms, mineral colour and work made under long northern light.",
+            "fallback_image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=85",
+            "link_label": "Join field notes",
             "link": ""
           }
         }
       },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3"
-      ],
+      "block_order": ["oceania", "asia", "north"],
       "settings": {
-        "eyebrow": "The regions",
-        "heading": "Where in the world",
-        "heading_italic": "will you begin?",
-        "link_label": "All regions",
-        "link_url": ""
+        "eyebrow": "Region index · 01—07",
+        "heading": "Navigate by origin.",
+        "intro": "<p>Select a coordinate to enter its landscape, meet its makers and view the objects found there.</p>"
       }
     },
-    "featured": {
-      "type": "featured",
+    "atlas_collection": {
+      "type": "atlas-collection",
       "blocks": {
-        "f2": {
-          "type": "piece",
+        "object_1": {
+          "type": "object",
           "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa43ef7/MeBlaZ9fcF1eV-EpztFDK_C7MMfBhB.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Peach Baroque Pearl Necklace",
-            "price": "$980",
+            "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a355/1KvGspbVz7FB-vNaVmuMs_1PMtu5Fl.jpg",
+            "fallback_title": "Dragon Head Garnet Bangle",
+            "fallback_price": "$1,200",
+            "origin": "Oceania · 17° S",
+            "badge": "One of one",
             "link": ""
           }
         },
-        "f1": {
-          "type": "piece",
+        "object_2": {
+          "type": "object",
           "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa2a355/1KvGspbVz7FB-vNaVmuMs_1PMtu5Fl.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Silver Bangle W Dragon Heads & Red Garnets",
-            "price": "$1,200",
+            "fallback_image_url": "https://v3b.fal.media/files/b/0aa43ef7/MeBlaZ9fcF1eV-EpztFDK_C7MMfBhB.jpg",
+            "fallback_title": "Peach Baroque Pearl Necklace",
+            "fallback_price": "$980",
+            "origin": "Oceania · 16° S",
+            "badge": "Field selection",
             "link": ""
           }
         },
-        "f3": {
-          "type": "piece",
+        "object_3": {
+          "type": "object",
           "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa2a035/_vPx06A9yHfRFH2-_-MfC_T6W1QA3Z.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Silver Rope Necklace With Silver Heart",
-            "price": "$1,540",
+            "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a035/_vPx06A9yHfRFH2-_-MfC_T6W1QA3Z.jpg",
+            "fallback_title": "Silver Rope Heart Necklace",
+            "fallback_price": "$1,540",
+            "origin": "Oceania · 18° S",
+            "badge": "One of one",
             "link": ""
           }
         },
-        "f4": {
-          "type": "piece",
+        "object_4": {
+          "type": "object",
           "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa43e65/UYxn4eeG2gPYcD3XVIq2y_kulxxVs7.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Pink Pearl Stud Earrings",
-            "price": "$760",
-            "link": ""
-          }
-        },
-        "f5": {
-          "type": "piece",
-          "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa43dde/Xj5y88Yz1T0TS7lnAg4tC_g6xrYfnK.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Red Howlite Silver Earrings",
-            "price": "$1,880",
+            "fallback_image_url": "https://v3b.fal.media/files/b/0aa43e65/UYxn4eeG2gPYcD3XVIq2y_kulxxVs7.jpg",
+            "fallback_title": "Pink Pearl Stud Earrings",
+            "fallback_price": "$760",
+            "origin": "Oceania · 15° S",
+            "badge": "Field selection",
             "link": ""
           }
         }
       },
-      "block_order": [
-        "f2",
-        "f1",
-        "f3",
-        "f4",
-        "f5"
-      ],
+      "block_order": ["object_1", "object_2", "object_3", "object_4"],
       "settings": {
-        "eyebrow": "The first drop",
-        "heading": "Oceania",
-        "heading_italic": "Collection",
-        "link_label": "View the full collection",
-        "link_url": ""
+        "eyebrow": "Collected objects · Current field selection",
+        "heading": "Jewels with coordinates.",
+        "legend_one": "Available",
+        "legend_two": "One of one",
+        "sold_label": "Archived",
+        "footer_note": "All objects are documented and dispatched with provenance notes.",
+        "link_label": "View complete catalogue",
+        "link": ""
       }
     },
-    "story": {
-      "type": "story",
-      "settings": {
-        "chapter": "01",
-        "vertical_label": "The Odyssey Journal — Chapter 01",
-        "image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg",
-        "image_2_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/53/fe/ff/24/1b/v1_E10/E10BGVG6.jpg?w=1600&cf_fit=scale-down&q=85&format=auto&s=85d2124cbd83092632878d32f1ffb88eb0a45aaad67c813f5c7d9bc343934491",
-        "visual_caption": "Gold work — hand finished, one of one",
-        "media_position": "left",
-        "dark": false,
-        "eyebrow": "Our philosophy",
-        "heading": "Every jewel",
-        "heading_italic": "tells a story",
-        "body": "<p>We travel to the far corners of the world to work directly with master artisans. Each piece we bring home is one of a kind — shaped by the hands, heritage and horizon of the place it came from. When it's gone, it's gone.</p>",
-        "stat_1_value": "07",
-        "stat_1_label": "Regions to explore",
-        "stat_2_value": "1/1",
-        "stat_2_label": "Every piece unique",
-        "stat_3_value": "200",
-        "stat_3_label": "Pieces in first drop",
-        "button_label": "Read our story",
-        "button_url": ""
-      }
-    },
-    "video_story": {
-      "type": "video-story",
-      "custom_css": [],
-      "settings": {
-        "layout": "overlay",
-        "height": "cinema",
-        "media_position": "left",
-        "text_align": "left",
-        "dark": true,
-        "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_con_be_ocean_motion_film02_10s_16x9_Gemini/mp4_480p",
-        "video_mobile_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_con_be_ocean_motion_film02_10s_16x9_Gemini/mp4_480p",
-        "poster_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
-        "autoplay": true,
-        "show_controls": true,
-        "scrim_strength": 55,
-        "eyebrow": "Oceania — Chapter One",
-        "heading": "Born of the",
-        "heading_italic": "South Pacific",
-        "body": "<p>Follow the tide to where each piece began — the hands, the heritage and the horizon behind the Oceania collection.</p>",
-        "button_label": "Explore Oceania",
-        "button_url": "",
-        "link_label": "Watch the film",
-        "link_url": ""
-      }
-    },
-    "story_artisans": {
-      "type": "story",
-      "settings": {
-        "chapter": "02",
-        "vertical_label": "The Odyssey Journal — Chapter 02",
-        "image_url": "https://v3b.fal.media/files/b/0aa43ef7/MeBlaZ9fcF1eV-EpztFDK_C7MMfBhB.jpg",
-        "image_2_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/c5/c9/dd/ab/42/v1_E10/E106A9NY.jpg?w=800&cf_fit=scale-down&q=85&format=auto&s=64c9ceadfaa3bc0b2dec15753cd338845a015b366237552a5da1d7d0c623eafd",
-        "visual_caption": "Pearl necklaces — worn the island way",
-        "media_position": "right",
-        "dark": true,
-        "eyebrow": "The makers",
-        "heading": "Meet the",
-        "heading_italic": "artisans",
-        "body": "<p>Behind every treasure is a person and a place. We put their names, their cities and their craft at the heart of the story — because you're not just collecting jewellery, you're collecting the world.</p>",
-        "stat_1_value": "12",
-        "stat_1_label": "Master artisans",
-        "stat_2_value": "05",
-        "stat_2_label": "Islands of Oceania",
-        "stat_3_value": "",
-        "stat_3_label": "",
-        "button_label": "Meet the makers",
-        "button_url": ""
-      }
-    },
-    "promises": {
-      "type": "promises",
+    "atlas_notes": {
+      "type": "atlas-field-notes",
       "blocks": {
-        "p1": {
-          "type": "promise",
+        "trace_1": {
+          "type": "note",
           "settings": {
-            "title": "One of a kind",
-            "text": "Every piece is unique. When it's gone, it's gone forever."
+            "meta": "Trace point 01 · Material",
+            "heading": "Gathered with intent",
+            "text": "<p>Natural materials are selected in small quantities and recorded before the first cut is made.</p>"
           }
         },
-        "p2": {
-          "type": "promise",
+        "trace_2": {
+          "type": "note",
           "settings": {
-            "title": "Artisan made",
-            "text": "Crafted by master makers in their homeland, never mass-produced."
+            "meta": "Trace point 02 · Hand",
+            "heading": "The maker remains visible",
+            "text": "<p>Tool marks, irregular edges and subtle variations are preserved as evidence of a human process.</p>"
           }
         },
-        "p3": {
-          "type": "promise",
+        "trace_3": {
+          "type": "note",
           "settings": {
-            "title": "Worldwide delivery",
-            "text": "Complimentary, fully insured shipping across the globe."
+            "meta": "Trace point 03 · Passage",
+            "heading": "A record for the next keeper",
+            "text": "<p>Origin, material and workshop notes accompany each object so its route never becomes anonymous.</p>"
           }
         }
       },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3"
-      ],
+      "block_order": ["trace_1", "trace_2", "trace_3"],
       "settings": {
-        "eyebrow": "The Odyssey standard",
-        "dark": false
+        "eyebrow": "Field notes · Provenance ledger",
+        "heading": "The record travels with the object.",
+        "intro": "<p>Every jewel enters our atlas with a documented route: material, maker, place and the marks left by hand.</p>",
+        "fallback_image_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/c5/c9/dd/ab/42/v1_E10/E106A9NY.jpg?w=1200&cf_fit=scale-down&q=85&format=auto&s=64c9ceadfaa3bc0b2dec15753cd338845a015b366237552a5da1d7d0c623eafd",
+        "image_alt": "Jeweller shaping an object by hand",
+        "image_caption": "Workshop record · Hammering and finishing · 16:42 local time",
+        "stamp_top": "Verified origin",
+        "stamp_bottom": "Odyssey archive",
+        "link_label": "Read our sourcing charter",
+        "link": ""
       }
     },
-    "cta": {
-      "type": "cta-banner",
+    "atlas_artisans": {
+      "type": "atlas-artisans",
+      "blocks": {
+        "artisan_1": {
+          "type": "artisan",
+          "settings": {
+            "name": "Tehani",
+            "place": "Raiatea",
+            "practice": "Pearl setting · 22 years",
+            "text": "<p>Her settings follow the small irregularities of each pearl, preserving the character the lagoon gave it.</p>",
+            "link_label": "Open field portrait",
+            "link": ""
+          }
+        },
+        "artisan_2": {
+          "type": "artisan",
+          "settings": {
+            "name": "Matiu",
+            "place": "Aotearoa",
+            "practice": "Carving · Second generation",
+            "text": "<p>Material, story and intended wearer are considered together before a line is drawn or a surface touched.</p>",
+            "link_label": "Open field portrait",
+            "link": ""
+          }
+        }
+      },
+      "block_order": ["artisan_1", "artisan_2"],
       "settings": {
-        "video_url": "",
-        "image_url": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=2400&q=80",
-        "overlay_opacity": 45,
-        "eyebrow": "The odyssey begins",
-        "heading": "Begin your",
-        "heading_italic": "collection",
-        "subheading": "The first region has landed. Claim a piece of Oceania before it's gone forever.",
-        "button_label": "Shop the first drop",
-        "button_url": ""
+        "eyebrow": "People / Place / Practice",
+        "heading": "Made where the map becomes personal.",
+        "intro": "<p>Our atlas is not a list of destinations. It is a record of relationships built slowly, workshop by workshop.</p>",
+        "fallback_image_url": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=2000&q=85",
+        "image_alt": "Coastal landscape near an artisan workshop",
+        "coordinates": "16° 30′ S · 151° 45′ W",
+        "caption": "The lagoon road to the workshop · Society Islands"
+      }
+    },
+    "atlas_journal": {
+      "type": "atlas-journal",
+      "blocks": {
+        "entry_1": {
+          "type": "entry",
+          "settings": {
+            "fallback_image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1400&q=85",
+            "fallback_title": "The lagoon as a material archive",
+            "excerpt": "On light, nacre and the changing character of pearls raised in moving water.",
+            "date": "30.07.2026",
+            "category": "Field notes",
+            "issue": "Dispatch 01",
+            "link": ""
+          }
+        },
+        "entry_2": {
+          "type": "entry",
+          "settings": {
+            "fallback_image_url": "https://images.unsplash.com/photo-1459908676235-d5f02a50184b?auto=format&fit=crop&w=1400&q=85",
+            "fallback_title": "Why the tool mark stays",
+            "excerpt": "A workshop conversation about finish, imperfection and the evidence of hand.",
+            "date": "18.07.2026",
+            "category": "Workshop",
+            "issue": "Dispatch 02",
+            "link": ""
+          }
+        },
+        "entry_3": {
+          "type": "entry",
+          "settings": {
+            "fallback_image_url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85",
+            "fallback_title": "The next coordinate: north",
+            "excerpt": "A first route sketch for a chapter shaped by mineral colour and long light.",
+            "date": "02.07.2026",
+            "category": "Release log",
+            "issue": "Route 03",
+            "link": ""
+          }
+        }
+      },
+      "block_order": ["entry_1", "entry_2", "entry_3"],
+      "settings": {
+        "eyebrow": "Journal / Dispatches / Releases",
+        "heading": "New entries from the field.",
+        "read_label": "Read dispatch",
+        "link_label": "Open the journal",
+        "link": ""
+      }
+    },
+    "atlas_signup": {
+      "type": "atlas-signup",
+      "settings": {
+        "eyebrow": "Join the next route",
+        "heading": "Receive coordinates before release.",
+        "text": "<p>Private field dispatches, first access to singular objects and invitations to new regional chapters.</p>",
+        "email_label": "Your email address",
+        "placeholder": "collector@example.com",
+        "button_label": "Join the atlas",
+        "success_message": "Your coordinates are recorded. Welcome to the atlas.",
+        "coordinate": "59° 54′ N · 10° 45′ E",
+        "note": "No noise. Only meaningful dispatches."
       }
     }
   },
   "order": [
-    "hero",
-    "marquee",
-    "regions",
-    "featured",
-    "story",
-    "video_story",
-    "story_artisans",
-    "promises",
-    "cta"
+    "atlas_hero",
+    "atlas_regions",
+    "atlas_collection",
+    "atlas_notes",
+    "atlas_artisans",
+    "atlas_journal",
+    "atlas_signup"
   ]
 }

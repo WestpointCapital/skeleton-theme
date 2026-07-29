@@ -1,3 +1,7 @@
+{% doc %}
+  Renders canonical, search, social, and structured metadata for the current page.
+{% enddoc %}
+
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -7,99 +11,117 @@
   assign og_url = canonical_url | default: request.origin
   assign og_type = 'website'
   assign og_description = page_description | default: shop.description | default: shop.name
+  assign social_image = page_image
+  assign social_image_alt = page_image.alt | default: og_title
+  assign currency_code = localization.country.currency.iso_code
+  assign brand_logo = shop.brand.logo
 
   if request.page_type == 'product'
     assign og_type = 'product'
+    assign social_image = product.featured_media.preview_image | default: page_image
+    assign social_image_alt = social_image.alt | default: product.title
   elsif request.page_type == 'article'
     assign og_type = 'article'
+    assign social_image = article.image | default: page_image
+    assign social_image_alt = social_image.alt | default: article.title
   elsif request.page_type == 'password'
     assign og_url = request.origin
   endif
 %}
 
-<meta
-  property="og:site_name"
-  content="{{ shop.name }}"
->
-<meta
-  property="og:url"
-  content="{{ og_url }}"
->
-<meta
-  property="og:title"
-  content="{{ og_title | escape }}"
->
-<meta
-  property="og:type"
-  content="{{ og_type }}"
->
-<meta
-  property="og:description"
-  content="{{ og_description | escape }}"
->
+<meta property="og:site_name" content="{{ shop.name | escape }}">
+<meta property="og:url" content="{{ og_url }}">
+<meta property="og:title" content="{{ og_title | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:description" content="{{ og_description | escape }}">
+<meta property="og:locale" content="{{ request.locale.iso_code | replace: '-', '_' }}">
 
-{%- if page_image -%}
-  <meta
-    property="og:image"
-    content="http:{{ page_image | image_url }}"
-  >
-  <meta
-    property="og:image:secure_url"
-    content="https:{{ page_image | image_url }}"
-  >
-  <meta
-    property="og:image:width"
-    content="{{ page_image.width }}"
-  >
-  <meta
-    property="og:image:height"
-    content="{{ page_image.height }}"
-  >
+{%- if social_image -%}
+  <meta property="og:image" content="https:{{ social_image | image_url: width: 1600 }}">
+  <meta property="og:image:secure_url" content="https:{{ social_image | image_url: width: 1600 }}">
+  <meta property="og:image:width" content="{{ social_image.width }}">
+  <meta property="og:image:height" content="{{ social_image.height }}">
+  <meta property="og:image:alt" content="{{ social_image_alt | escape }}">
 {%- endif -%}
 
 {%- if request.page_type == 'product' -%}
   <script type="application/ld+json">
     {{ product | structured_data }}
   </script>
-
-  <meta
-    property="og:price:amount"
-    content="{{ product.price | money_without_currency | strip_html }}"
-  >
-  <meta
-    property="og:price:currency"
-    content="{{ cart.currency.iso_code }}"
-  >
+  <meta property="product:price:amount" content="{{ product.price | money_without_currency | strip_html }}">
+  <meta property="product:price:currency" content="{{ currency_code }}">
+  <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+{%- elsif request.page_type == 'article' -%}
+  <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%:z' }}">
+  <meta property="article:modified_time" content="{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%:z' }}">
+  <meta property="article:author" content="{{ article.author | escape }}">
+  {% for tag in article.tags %}
+    <meta property="article:tag" content="{{ tag | escape }}">
+  {% endfor %}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ article.title | json }},
+      "description": {{ article.excerpt_or_content | strip_html | truncate: 300 | json }},
+      "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%:z' | json }},
+      "dateModified": {{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S%:z' | json }},
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": {{ canonical_url | json }}
+      },
+      "author": {
+        "@type": "Person",
+        "name": {{ article.author | json }}
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }}
+        {% if brand_logo != blank %},
+          "logo": {
+            "@type": "ImageObject",
+            "url": {{ brand_logo | image_url: width: 600 | prepend: 'https:' | json }}
+          }
+        {% endif %}
+      }
+      {% if social_image %},
+        "image": {{ social_image | image_url: width: 1600 | prepend: 'https:' | json }}
+      {% endif %}
+    }
+  </script>
+{%- elsif request.page_type != 'password' and request.page_type != 'gift_card' -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      "url": {{ shop.url | json }}
+      {% if shop.description != blank %},
+        "description": {{ shop.description | strip_html | json }}
+      {% endif %}
+      {% if brand_logo != blank %},
+        "logo": {{ brand_logo | image_url: width: 600 | prepend: 'https:' | json }}
+      {% endif %}
+    }
+  </script>
 {%- endif -%}
 
-<meta
-  name="twitter:card"
-  content="summary_large_image"
->
-<meta
-  name="twitter:title"
-  content="{{ og_title | escape }}"
->
-<meta
-  name="twitter:description"
-  content="{{ og_description | escape }}"
->
+<meta name="twitter:card" content="{% if social_image %}summary_large_image{% else %}summary{% endif %}">
+<meta name="twitter:title" content="{{ og_title | escape }}">
+<meta name="twitter:description" content="{{ og_description | escape }}">
+{% if social_image %}
+  <meta name="twitter:image" content="https:{{ social_image | image_url: width: 1600 }}">
+  <meta name="twitter:image:alt" content="{{ social_image_alt | escape }}">
+{% endif %}
 
 <title>
-  {{ page_title }}
-  {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
-  {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+  {{ page_title | default: shop.name | escape }}
+  {%- if current_tags %} &ndash; {{ current_tags | join: ', ' | escape }}{% endif -%}
+  {%- if current_page != 1 %} &ndash; {{ current_page }}{% endif -%}
   {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
 </title>
 
-<link
-  rel="canonical"
-  href="{{ canonical_url }}"
->
+<link rel="canonical" href="{{ canonical_url }}">
 
-{% if page_description %}
-  <meta
-    name="description"
-    content="{{ page_description | escape }}"
-  >
-{% endif %}
+<meta name="description" content="{{ og_description | escape }}">
+<meta name="robots" content="{% if request.page_type == 'search' %}noindex,follow{% else %}index,follow{% endif %}">

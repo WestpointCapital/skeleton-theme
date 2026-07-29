@@ -56,6 +56,64 @@ templates/   index, product, collection, list-collections, blog, article,
 - Essential CSS lives in `assets/critical.css`.
 - JSON templates + section/block schemas so merchants can customize.
 
+### V2 Cartographic Gallery Status — July 2026
+
+V2 is a complete alternate concept for client presentation. It preserves the V1 brand palette (Navy `#0E1E33`, Rose `#B76E79`, Soft Rose `#E7CFC9`, Pearl `#FAF7F2`, Ink `#12263F`) while replacing composition, typography rhythm, interaction language, and every core storefront path.
+
+#### Foundation
+- [x] Global design tokens retained from V1 palette with luminous gallery spacing/motion in `snippets/css-variables.liquid` and `assets/critical.css`.
+- [x] Theme version set to `2.0.0` in `config/settings_schema.json`.
+- [x] Accessible layout shell with skip link, main landmark, header/footer groups, and cart drawer mount in `layout/theme.liquid`.
+- [x] Asymmetric sticky header, announcement coordinates, transparent homepage overlay, and dialog mobile menu in `sections/header.liquid`.
+- [x] Lighter editorial footer with newsletter, link columns, coordinates, and payment icons in `sections/footer.liquid`.
+- [x] Shared `assets/theme.js` behaviors: scroll reveals, header state, responsive video, menu/cart dialogs, AJAX add-to-cart, Theme Editor re-init, reduced-motion respect.
+
+#### Homepage
+- [x] New homepage composition in `templates/index.json`: hero → regions atlas → featured objects → field notes → artisans → journal → signup.
+- [x] `atlas-hero` sculptural product/media hero with route-line detail.
+- [x] `atlas-regions` interactive region index with tabbed map panels.
+- [x] `atlas-collection` catalog-aware featured objects with product pickers and presentation fallbacks.
+- [x] `atlas-field-notes`, `atlas-artisans`, `atlas-journal`, and `atlas-signup` storytelling modules.
+
+#### Commerce
+- [x] Shared primitives: `snippets/product-card.liquid`, `snippets/price.liquid`.
+- [x] AJAX cart drawer (`sections/cart-drawer.liquid`) with inventory-native availability.
+- [x] Product page rebuild: `product.media` gallery, sticky purchase panel, variants, provenance metafield hooks, accordions, dynamic checkout, recommendations.
+- [x] Collection PLP with region-story header, storefront filters, sorting, responsive grid, and pagination.
+- [x] Collections index as atlas gateway.
+- [x] Cart page and search results restyled for the gallery system.
+
+#### Supporting pages
+- [x] Page, blog, article, comments, 404, password, and gift card redesigned for V2.
+- [x] Expanded meta tags / structured data in `snippets/meta-tags.liquid`.
+- [x] English storefront locales expanded for cart, search, gift card, password, blog, and accessibility strings.
+
+#### Still dependent on store / client
+- [ ] Real catalog wiring for homepage product/collection pickers and CTA URLs.
+- [ ] Region/country/city/artisan metaobjects populated and approved.
+- [ ] Final logo, photography, and owned video assets replacing presentation fallbacks.
+- [ ] Merchant static page content (About, Artisans, Returns/Repair, Contact, FAQ).
+- [ ] World map, rewards, referral/affiliate apps (roadmap features, not V2 presentation blockers).
+
+---
+
+### V2 Supporting Pages Status — July 2026
+
+This status is intentionally limited to theme-level supporting-page work completed in V2. Catalog data, metafields/metaobjects, merchant content, app configuration, and store-dependent setup remain open.
+
+- [x] Refined generic page presentation for merchant-authored static content.
+- [x] Journal-style blog index with responsive editorial cards, article fallbacks, empty state, and pagination.
+- [x] Long-form article presentation with responsive media, editorial typography, tags, and journal navigation.
+- [x] Accessible article comments with labeled inputs, help text, error/status announcements, moderation messaging, and pagination.
+- [x] Branded cartographic 404 state with collection and home recovery paths.
+- [x] Premium password landing with merchant-selectable logo/background, branded fallbacks, and accessible password access.
+- [x] Polished gift card presentation with Brand API logo fallback, wallet pass, expiry state, and store return action.
+- [x] Expanded canonical, search, Open Graph, X/Twitter, article, organization, and Shopify product structured metadata.
+- [x] Repaired English storefront/schema locale JSON and added supporting-page translation keys.
+- [ ] Populate and approve merchant-authored static page content (About, Artisans, Returns/Repair, Contact, FAQ).
+- [ ] Supply final logo/background imagery and store password message in Shopify.
+- [ ] Verify social previews and structured data against the production domain, catalog, and Shopify Brand settings.
+
 ---
 
 ## 4. Information Architecture
@@ -109,7 +167,7 @@ Mapped to the skeleton's folders. Items marked `@core` are the premium framework
 ### 6.1 Global / Layout `@core`
 - [ ] `layout/theme.liquid` — add skip links, header/footer groups, cart drawer mount, structured-data hooks, GTM/analytics slot. *(theme.js reveal/header system wired in)*
 - [x] `snippets/css-variables.liquid` — full token set (Navy/Rose, spacing, fluid type scale, motion).
-- [ ] `snippets/meta-tags.liquid` — Open Graph, Twitter, canonical, JSON-LD org/product.
+- [x] `snippets/meta-tags.liquid` — Open Graph, Twitter, canonical, JSON-LD org/product.
 - [x] `assets/critical.css` — base grid, typography, buttons, eyebrows/meta-labels, scroll-reveal system.
 
 ### 6.2 Header & Navigation `@core`
@@ -146,12 +204,12 @@ Mapped to the skeleton's folders. Items marked `@core` are the premium framework
 
 ### 6.6 Supporting pages `@dev`
 - [ ] Collections index (`collections.liquid`) as a "regions of the world" gateway.
-- [ ] Blog + article templates (storytelling / SEO content).
+- [x] Blog + article templates (storytelling / SEO content).
 - [ ] Cart page + drawer parity.
 - [ ] Search results with facets.
 - [ ] Account pages (rewards, referrals, personal map).
 - [ ] Static: About, Artisans, Returns/Repair policy, Contact, FAQ.
-- [ ] 404, password/coming-soon (branded).
+- [x] 404, password/coming-soon (branded).
 
 ### 6.7 Reusable blocks/snippets `@core`
 - [ ] `product-card` snippet (with region tag, one-of-a-kind flag).

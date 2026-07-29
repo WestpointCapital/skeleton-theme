@@ -14,9 +14,34 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "",
+        "tagline": "Travel the world, collect the world",
+        "blurb": "One-of-a-kind treasures gathered from artisans across the globe. Each piece carries the story of where it came from.",
+        "show_newsletter": true,
+        "newsletter_title": "Dispatches from the collecting road",
+        "newsletter_placeholder": "Your email address",
+        "coordinates": "40.7128° N · 74.0060° W",
         "show_payment_icons": true
-      }
+      },
+      "blocks": {
+        "explore": {
+          "type": "menu",
+          "settings": {
+            "title": "Explore",
+            "menu": "footer"
+          }
+        },
+        "service": {
+          "type": "menu",
+          "settings": {
+            "title": "Services",
+            "menu": "footer"
+          }
+        }
+      },
+      "block_order": [
+        "explore",
+        "service"
+      ]
     }
   },
   "order": [

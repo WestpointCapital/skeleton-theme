@@ -1,0 +1,217 @@
+<dialog
+  class="oj-cart-drawer"
+  data-cart-drawer
+  id="CartDrawer-{{ section.id }}"
+  aria-labelledby="CartDrawerTitle-{{ section.id }}"
+  aria-hidden="true"
+>
+  <div class="oj-cart-drawer__panel" tabindex="-1">
+    <header>
+      <div>
+        <p>{{ section.settings.kicker }}</p>
+        <h2 id="CartDrawerTitle-{{ section.id }}">{{ 'cart.title' | t }}</h2>
+      </div>
+      <button type="button" data-cart-close aria-label="{{ 'cart.close' | t }}">×</button>
+    </header>
+
+    {% if cart.item_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post">
+        <div class="oj-cart-drawer__items">
+          {% for item in cart.items %}
+            <article class="oj-cart-drawer__item">
+              <a href="{{ item.url }}">
+                {% if item.image %}
+                  {{ item.image | image_url: width: 300 | image_tag: widths: '140, 220, 300', sizes: '90px', loading: 'lazy', alt: item.image.alt }}
+                {% endif %}
+              </a>
+              <div>
+                <h3><a href="{{ item.url }}">{{ item.product.title | escape }}</a></h3>
+                {% unless item.product.has_only_default_variant %}
+                  <p>{{ item.variant.title | escape }}</p>
+                {% endunless %}
+                <label for="DrawerQuantity-{{ item.key | handleize }}">{{ 'cart.quantity' | t }}</label>
+                <input
+                  id="DrawerQuantity-{{ item.key | handleize }}"
+                  type="number"
+                  name="updates[]"
+                  value="{{ item.quantity }}"
+                  min="0"
+                  inputmode="numeric"
+                >
+                <a href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}</a>
+              </div>
+              <span>{{ item.final_line_price | money }}</span>
+            </article>
+          {% endfor %}
+        </div>
+        <footer>
+          <div>
+            <span>{{ 'cart.subtotal' | t }}</span>
+            <strong>{{ cart.total_price | money_with_currency }}</strong>
+          </div>
+          <button type="submit" name="update">{{ 'cart.update' | t }}</button>
+          <button type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+          <a href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
+        </footer>
+      </form>
+    {% else %}
+      <div class="oj-cart-drawer__empty">
+        <p>{{ 'cart.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}">{{ 'cart.continue_shopping' | t }}</a>
+      </div>
+    {% endif %}
+  </div>
+</dialog>
+
+{% stylesheet %}
+  .oj-cart-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 120;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: var(--color-foreground);
+    background: transparent;
+  }
+
+  .oj-cart-drawer::backdrop {
+    background: color-mix(in srgb, var(--color-navy) 48%, transparent);
+  }
+
+  .oj-cart-drawer:not([open]) {
+    display: none;
+  }
+
+  .oj-cart-drawer__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: min(34rem, 100%);
+    height: 100%;
+    overflow: auto;
+    padding: 1.5rem;
+    background: var(--color-background);
+    box-shadow: -1rem 0 4rem color-mix(in srgb, var(--color-navy) 18%, transparent);
+  }
+
+  .oj-cart-drawer__panel > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-foreground) 20%, transparent);
+  }
+
+  .oj-cart-drawer header p {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .oj-cart-drawer header h2 {
+    margin: 0.25rem 0 0;
+    font-size: 2.4rem;
+  }
+
+  .oj-cart-drawer header button {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  .oj-cart-drawer__item {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-foreground) 15%, transparent);
+  }
+
+  .oj-cart-drawer__item img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .oj-cart-drawer__item h3 {
+    margin: 0 0 0.4rem;
+    font-size: 1rem;
+  }
+
+  .oj-cart-drawer__item a {
+    color: inherit;
+  }
+
+  .oj-cart-drawer__item label {
+    display: block;
+    font-size: 0.75rem;
+  }
+
+  .oj-cart-drawer__item input {
+    width: 4rem;
+    min-height: 2.4rem;
+    margin: 0.25rem 0 0.6rem;
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 28%, transparent);
+    background: transparent;
+  }
+
+  .oj-cart-drawer footer {
+    padding-top: 1.5rem;
+  }
+
+  .oj-cart-drawer footer > div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 1.15rem;
+  }
+
+  .oj-cart-drawer footer button,
+  .oj-cart-drawer footer > a,
+  .oj-cart-drawer__empty a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 3rem;
+    margin-top: 0.7rem;
+    border: 1px solid var(--color-navy);
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .oj-cart-drawer footer button[name='checkout'],
+  .oj-cart-drawer__empty a {
+    background: var(--color-navy);
+    color: var(--color-contrast);
+  }
+
+  .oj-cart-drawer__empty {
+    padding: 3rem 0;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "kicker",
+      "label": "Kicker",
+      "default": "Your field case"
+    }
+  ]
+}
+{% endschema %}

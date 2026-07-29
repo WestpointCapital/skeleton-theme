@@ -1,0 +1,205 @@
+<section id="AtlasJournal-{{ section.id }}" class="atlas-journal">
+  <header class="atlas-journal__header">
+    <div>
+      <p>{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    {% if section.settings.link_label != blank %}
+      <a href="{{ section.settings.link | default: routes.root_url }}">{{ section.settings.link_label }} <span aria-hidden="true">↗</span></a>
+    {% endif %}
+  </header>
+
+  <div class="atlas-journal__grid">
+    {% for block in section.blocks %}
+      {% liquid
+        assign journal_article = block.settings.article
+        assign story_title = block.settings.fallback_title
+        assign story_url = block.settings.link
+        assign story_image = block.settings.image
+        assign story_excerpt = block.settings.excerpt
+        assign story_date = block.settings.date
+        if journal_article != blank
+          assign story_title = journal_article.title
+          assign story_url = journal_article.url
+          assign story_image = journal_article.image
+          assign story_excerpt = journal_article.excerpt_or_content | strip_html | truncate: 150
+          assign story_date = journal_article.published_at | date: '%d.%m.%Y'
+        endif
+      %}
+      <article class="atlas-journal__entry" {{ block.shopify_attributes }}>
+        <a class="atlas-journal__media" href="{{ story_url | default: routes.root_url }}" aria-label="{{ story_title | escape }}">
+          {% if story_image != blank %}
+            {{ story_image | image_url: width: 1200 | image_tag: loading: 'lazy', widths: '500, 800, 1000, 1200', sizes: '(min-width: 900px) 33vw, 100vw', alt: story_title }}
+          {% elsif block.settings.fallback_image_url != blank %}
+            <img src="{{ block.settings.fallback_image_url }}" alt="{{ story_title | escape }}" width="1000" height="760" loading="lazy">
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag }}
+          {% endif %}
+          <span>{{ block.settings.issue }}</span>
+        </a>
+        <div class="atlas-journal__meta">
+          <span>{{ story_date }}</span>
+          <span>{{ block.settings.category }}</span>
+        </div>
+        <h3><a href="{{ story_url | default: routes.root_url }}">{{ story_title }}</a></h3>
+        <p>{{ story_excerpt }}</p>
+        <a class="atlas-journal__read" href="{{ story_url | default: routes.root_url }}">{{ section.settings.read_label }} <span aria-hidden="true">→</span></a>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+{% style %}
+  #AtlasJournal-{{ section.id }} {
+    padding: var(--section-spacing) max(var(--page-margin), calc((100vw - var(--page-width)) / 2));
+    color: var(--color-contrast);
+    background: var(--color-navy);
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 2rem;
+    margin-bottom: clamp(3rem, 6vw, 6rem);
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__header p {
+    margin: 0 0 1rem;
+    color: var(--color-accent-soft);
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__header h2 {
+    max-width: 12ch;
+    margin: 0;
+    font-size: clamp(2.8rem, 5vw, 5.8rem);
+    font-weight: 400;
+    line-height: .92;
+    letter-spacing: -.04em;
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__header > a,
+  #AtlasJournal-{{ section.id }} .atlas-journal__read {
+    color: inherit;
+    font-size: .65rem;
+    letter-spacing: .11em;
+    text-decoration: none;
+    text-transform: uppercase;
+    border-bottom: 1px solid currentColor;
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.5rem, 3vw, 3.5rem);
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__entry:nth-child(2) {
+    margin-top: clamp(2rem, 6vw, 7rem);
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__media {
+    position: relative;
+    display: block;
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+    color: inherit;
+    background: color-mix(in srgb, var(--color-navy) 82%, var(--color-contrast));
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__media :is(img, svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: .86;
+    transition: transform .7s var(--ease), opacity .4s ease;
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__media:hover img {
+    transform: scale(1.035);
+    opacity: 1;
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__media span {
+    position: absolute;
+    top: .75rem;
+    left: .75rem;
+    padding: .5rem .6rem;
+    color: var(--color-foreground);
+    background: var(--color-background);
+    font-size: .58rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    color: color-mix(in srgb, var(--color-contrast) 58%, transparent);
+    font-size: .58rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__entry h3 {
+    margin: 1.15rem 0 .75rem;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    font-weight: 400;
+    line-height: 1;
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__entry h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+  #AtlasJournal-{{ section.id }} .atlas-journal__entry > p {
+    margin: 0 0 1.25rem;
+    color: color-mix(in srgb, var(--color-contrast) 68%, transparent);
+    font-size: .88rem;
+    line-height: 1.65;
+  }
+  @media (max-width: 899px) {
+    #AtlasJournal-{{ section.id }} .atlas-journal__grid {
+      grid-template-columns: 1fr;
+    }
+    #AtlasJournal-{{ section.id }} .atlas-journal__entry:nth-child(2) {
+      margin-top: 0;
+    }
+    #AtlasJournal-{{ section.id }} .atlas-journal__entry + .atlas-journal__entry {
+      padding-top: 2rem;
+      border-top: 1px solid color-mix(in srgb, var(--color-contrast) 20%, transparent);
+    }
+  }
+  @media (max-width: 599px) {
+    #AtlasJournal-{{ section.id }} .atlas-journal__header {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Atlas journal",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Journal / Dispatches / Releases" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "New entries from the field." },
+    { "type": "text", "id": "read_label", "label": "Article link label", "default": "Read dispatch" },
+    { "type": "text", "id": "link_label", "label": "Archive link label", "default": "Open the journal" },
+    { "type": "url", "id": "link", "label": "Archive link" }
+  ],
+  "blocks": [
+    {
+      "type": "entry",
+      "name": "Journal entry",
+      "settings": [
+        { "type": "article", "id": "article", "label": "Article" },
+        { "type": "image_picker", "id": "image", "label": "Fallback Shopify image" },
+        { "type": "url", "id": "fallback_image_url", "label": "Demo image URL" },
+        { "type": "text", "id": "fallback_title", "label": "Fallback title", "default": "Notes from the edge of the map" },
+        { "type": "textarea", "id": "excerpt", "label": "Fallback excerpt", "default": "A field dispatch tracing the landscape, material and people behind the latest objects in the gallery." },
+        { "type": "text", "id": "date", "label": "Fallback date", "default": "30.07.2026" },
+        { "type": "text", "id": "category", "label": "Category", "default": "Field notes" },
+        { "type": "text", "id": "issue", "label": "Issue label", "default": "Dispatch 01" },
+        { "type": "url", "id": "link", "label": "Fallback link" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{ "name": "Atlas journal", "blocks": [{ "type": "entry" }, { "type": "entry" }, { "type": "entry" }] }]
+}
+{% endschema %}

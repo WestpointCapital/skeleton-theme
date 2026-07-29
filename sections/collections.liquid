@@ -1,55 +1,147 @@
-{% comment %}
-  This section is used in the list-collections template to render a list of
-  collections.
+<section class="oj-atlas">
+  <header class="oj-atlas__header">
+    <p>{{ section.settings.kicker }}</p>
+    <h1>{{ 'collections.title' | t }}</h1>
+    <div>{{ section.settings.introduction }}</div>
+  </header>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
-{% endcomment %}
-
-<h1>{{ 'collections.title' | t }}</h1>
-
-<div
-  class="collections {{ section.settings.grid_item_width }}"
-  style="--grid-gap: {{ section.settings.grid_gap }}px"
->
-  {% for collection in collections %}
-    <a class="collection-card" href="{{ collection.url }}">
-      {% if collection.featured_image %}
-        {% render 'image',
-          class: 'collection-card__image',
-          image: collection.featured_image,
-          width: 600,
-          height: 600,
-          crop: 'center'
-        %}
-      {% endif %}
-
-      <div class="collection-card__content">
-        <p>{{ collection.title }}</p>
-
-        {% if collection.description %}
-          <p>{{ collection.description | strip_html | truncatewords: 15 }}</p>
-        {% endif %}
-      </div>
-    </a>
-  {% endfor %}
-</div>
+  {% paginate collections by section.settings.collections_per_page %}
+    <div class="oj-atlas__grid">
+      {% for collection in collections %}
+        <a class="oj-atlas-card" href="{{ collection.url }}">
+          <div class="oj-atlas-card__media">
+            {% if collection.featured_image %}
+              {{
+                collection.featured_image
+                | image_url: width: 1200
+                | image_tag:
+                  widths: '480, 720, 960, 1200',
+                  sizes: '(min-width: 900px) 50vw, 100vw',
+                  loading: 'lazy',
+                  alt: collection.featured_image.alt
+              }}
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag: 'oj-atlas-card__placeholder' }}
+            {% endif %}
+            <span class="oj-atlas-card__index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          </div>
+          <div class="oj-atlas-card__content">
+            <p class="oj-atlas-card__count">{{ collection.products_count }} {{ section.settings.objects_label }}</p>
+            <h2>{{ collection.title }}</h2>
+            {% if collection.description != blank %}
+              <p>{{ collection.description | strip_html | truncatewords: 24 }}</p>
+            {% endif %}
+            <span>{{ section.settings.explore_label }} →</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+    <nav class="oj-atlas__pagination" aria-label="{{ section.settings.pagination_label }}">
+      {{ paginate | default_pagination }}
+    </nav>
+  {% endpaginate %}
+</section>
 
 {% stylesheet %}
-  .collections {
+  .oj-atlas {
+    padding: clamp(3rem, 8vw, 8rem) clamp(1rem, 5vw, 5rem);
+    color: var(--color-foreground);
+  }
+
+  .oj-atlas__header {
+    max-width: 62rem;
+    margin-bottom: clamp(3rem, 8vw, 8rem);
+  }
+
+  .oj-atlas__header > p {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .oj-atlas__header h1 {
+    margin: 0.35rem 0 1.5rem;
+    font-size: clamp(4rem, 11vw, 11rem);
+    line-height: 0.83;
+  }
+
+  .oj-atlas__header div {
+    max-width: 42rem;
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    line-height: 1.6;
+  }
+
+  .oj-atlas__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(var(--collection-card-size), 100%), 1fr));
-    gap: var(--grid-gap);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(2rem, 5vw, 6rem);
   }
-  .collections--compact {
-    --collection-card-size: 160px;
+
+  .oj-atlas-card {
+    color: inherit;
+    text-decoration: none;
   }
-  .collections--full {
-    --collection-card-size: 280px;
+
+  .oj-atlas-card:nth-child(even) {
+    margin-top: 10vw;
   }
-  .collection-card {
-    display: flex;
-    flex-direction: column;
+
+  .oj-atlas-card__media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--color-foreground-12);
+  }
+
+  .oj-atlas-card__media img,
+  .oj-atlas-card__placeholder {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 600ms ease;
+  }
+
+  .oj-atlas-card:hover .oj-atlas-card__media img {
+    transform: scale(1.025);
+  }
+
+  .oj-atlas-card__index {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0.45rem 0.6rem;
+    background: var(--color-background);
+  }
+
+  .oj-atlas-card__content {
+    padding: 1.25rem 0;
+  }
+
+  .oj-atlas-card__content h2 {
+    margin: 0.3rem 0 0.8rem;
+    font-size: clamp(2rem, 4vw, 4.5rem);
+    line-height: 1;
+  }
+
+  .oj-atlas-card__count {
+    margin: 0;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+  }
+
+  .oj-atlas__pagination {
+    margin-top: 5rem;
+    text-align: center;
+  }
+
+  @media (max-width: 700px) {
+    .oj-atlas__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .oj-atlas-card:nth-child(even) {
+      margin-top: 0;
+    }
   }
 {% endstylesheet %}
 
@@ -57,26 +149,12 @@
 {
   "name": "t:general.collections_grid",
   "settings": [
-    {
-      "type": "select",
-      "id": "grid_item_width",
-      "label": "t:labels.grid_item_width",
-      "options": [
-        { "value": "collections--compact", "label": "t:options.size.small" },
-        { "value": "collections--full", "label": "t:options.size.large" }
-      ],
-      "default": "collections--full"
-    },
-    {
-      "type": "range",
-      "id": "grid_gap",
-      "label": "t:labels.grid_gap",
-      "min": 0,
-      "max": 50,
-      "step": 5,
-      "unit": "px",
-      "default": 10
-    }
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Atlas of objects" },
+    { "type": "richtext", "id": "introduction", "label": "Introduction", "default": "<p>Navigate a world of singular jewels, charted by place, material, and the hands that made them.</p>" },
+    { "type": "range", "id": "collections_per_page", "label": "Collections per page", "min": 4, "max": 24, "step": 2, "default": 12 },
+    { "type": "text", "id": "objects_label", "label": "Product count label", "default": "objects" },
+    { "type": "text", "id": "explore_label", "label": "Link label", "default": "Explore territory" },
+    { "type": "text", "id": "pagination_label", "label": "Pagination label", "default": "Atlas pages" }
   ],
   "presets": [{ "name": "t:general.collections_grid" }]
 }

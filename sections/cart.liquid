@@ -1,37 +1,294 @@
-{% comment %}
-  This section is used in the cart template to render /cart page with an
-  overview of the items in customer's cart.
+<section class="oj-cart">
+  <header class="oj-cart__header">
+    <p>{{ section.settings.kicker }}</p>
+    <h1>{{ 'cart.title' | t }}</h1>
+    {% if cart.item_count > 0 %}
+      <span>{{ cart.item_count }} {{ section.settings.objects_label }}</span>
+    {% endif %}
+  </header>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
-{% endcomment %}
+  {% if cart.item_count > 0 %}
+    <form class="oj-cart__form" action="{{ routes.cart_url }}" method="post">
+      <div class="oj-cart__items">
+        {% for item in cart.items %}
+          <article class="oj-cart-item">
+            <a class="oj-cart-item__media" href="{{ item.url }}">
+              {% if item.image %}
+                {% render 'image', class: 'oj-cart-item__image', image: item.image, width: 500, height: 625, crop: 'center' %}
+              {% endif %}
+            </a>
+            <div class="oj-cart-item__details">
+              {% if item.product.vendor != blank %}
+                <p class="oj-cart-item__vendor">{{ item.product.vendor }}</p>
+              {% endif %}
+              <h2><a href="{{ item.url }}">{{ item.product.title }}</a></h2>
+              {% unless item.product.has_only_default_variant %}
+                <p>{{ item.variant.title }}</p>
+              {% endunless %}
+              {% for property in item.properties %}
+                {% assign property_first = property.first | slice: 0 %}
+                {% if property.last != blank and property_first != '_' %}
+                  <p>{{ property.first }}: {{ property.last }}</p>
+                {% endif %}
+              {% endfor %}
+              {% if item.selling_plan_allocation %}
+                <p>{{ item.selling_plan_allocation.selling_plan.name }}</p>
+              {% endif %}
+              <a class="oj-cart-item__remove" href="{{ item.url_to_remove }}">{{ 'cart.remove' | t }}</a>
+            </div>
+            <div class="oj-cart-item__quantity">
+              <label for="Quantity-{{ item.key | handleize }}">{{ section.settings.quantity_label }}</label>
+              <input
+                id="Quantity-{{ item.key | handleize }}"
+                type="number"
+                name="updates[]"
+                value="{{ item.quantity }}"
+                min="0"
+                inputmode="numeric"
+              >
+            </div>
+            <div class="oj-cart-item__price">
+              {% if item.original_line_price > item.final_line_price %}
+                <s>{{ item.original_line_price | money }}</s>
+              {% endif %}
+              <span>{{ item.final_line_price | money }}</span>
+              {% for discount in item.line_level_discount_allocations %}
+                <small>{{ discount.discount_application.title }} (−{{ discount.amount | money }})</small>
+              {% endfor %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
 
-<h1>{{ 'cart.title' | t }}</h1>
+      <aside class="oj-cart__summary">
+        {% if section.settings.show_note %}
+          <label for="CartNote-{{ section.id }}">{{ section.settings.note_label }}</label>
+          <textarea id="CartNote-{{ section.id }}" name="note">{{ cart.note }}</textarea>
+        {% endif %}
+        <div class="oj-cart__subtotal">
+          <span>{{ section.settings.subtotal_label }}</span>
+          <strong>{{ cart.total_price | money_with_currency }}</strong>
+        </div>
+        {% if cart.cart_level_discount_applications.size > 0 %}
+          {% for discount in cart.cart_level_discount_applications %}
+            <p>{{ discount.title }} (−{{ discount.total_allocated_amount | money }})</p>
+          {% endfor %}
+        {% endif %}
+        <p class="oj-cart__tax-note">{{ section.settings.tax_note }}</p>
+        <div class="oj-cart__actions">
+          <button type="submit" name="update">{{ 'cart.update' | t }}</button>
+          <button type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+        </div>
+      </aside>
+    </form>
+  {% else %}
+    <div class="oj-cart__empty">
+      <p>{{ section.settings.empty_label }}</p>
+      <a href="{{ routes.all_products_collection_url }}">{{ section.settings.continue_label }}</a>
+    </div>
+  {% endif %}
+</section>
 
-<form action="{{ routes.cart_url }}" method="post">
-  <table>
-    {% for item in cart.items %}
-      <tr>
-        <td>
-          {% render 'image', image: item.image, url: item.url %}
-        </td>
-        <td>
-          <p>{{ item.product.title }}</p>
-          {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-        </td>
-        <td>
-          <input type="text" name="updates[]" value="{{ item.quantity }}">
-          <input type="submit" value="{{ 'cart.update' | t }}">
-        </td>
-      </tr>
-    {% endfor %}
-  </table>
+{% stylesheet %}
+  .oj-cart {
+    padding: clamp(3rem, 8vw, 8rem) clamp(1rem, 5vw, 5rem);
+    color: var(--color-foreground);
+  }
 
-  <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
-</form>
+  .oj-cart__header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: clamp(3rem, 7vw, 7rem);
+  }
+
+  .oj-cart__header p {
+    flex-basis: 100%;
+    margin: 0;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .oj-cart__header h1 {
+    margin: 0;
+    font-size: clamp(4rem, 11vw, 11rem);
+    line-height: 0.83;
+  }
+
+  .oj-cart__form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 25rem);
+    gap: clamp(2rem, 6vw, 7rem);
+    align-items: start;
+  }
+
+  .oj-cart-item {
+    display: grid;
+    grid-template-columns: 10rem minmax(0, 1fr) 6rem 8rem;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid color-mix(in srgb, var(--color-foreground) 20%, transparent);
+  }
+
+  .oj-cart-item__media {
+    display: block;
+    aspect-ratio: 4 / 5;
+    background: var(--color-foreground-12);
+  }
+
+  .oj-cart-item__media img,
+  .oj-cart-item__media .image,
+  .oj-cart-item__media .image > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .oj-cart-item h2 {
+    margin: 0.25rem 0 0.65rem;
+    font-size: 1.25rem;
+  }
+
+  .oj-cart-item h2 a,
+  .oj-cart-item__remove {
+    color: inherit;
+  }
+
+  .oj-cart-item__vendor {
+    margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .oj-cart-item__quantity label {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 0.75rem;
+  }
+
+  .oj-cart-item__quantity input {
+    width: 100%;
+    min-height: 2.8rem;
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 28%, transparent);
+    background: transparent;
+    padding: 0.5rem;
+  }
+
+  .oj-cart-item__price {
+    display: grid;
+    align-content: start;
+    justify-items: end;
+  }
+
+  .oj-cart__summary {
+    position: sticky;
+    top: 7rem;
+    padding: 2rem;
+    background: var(--color-foreground-12);
+  }
+
+  .oj-cart__summary label,
+  .oj-cart__summary textarea {
+    display: block;
+    width: 100%;
+  }
+
+  .oj-cart__summary textarea {
+    min-height: 7rem;
+    margin: 0.5rem 0 1.5rem;
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 28%, transparent);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .oj-cart__subtotal {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.5rem 0;
+    border-block: 1px solid color-mix(in srgb, var(--color-foreground) 20%, transparent);
+    font-size: 1.15rem;
+  }
+
+  .oj-cart__tax-note {
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+
+  .oj-cart__actions {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 1.5rem;
+  }
+
+  .oj-cart__actions button,
+  .oj-cart__empty a {
+    min-height: 3.3rem;
+    border: 1px solid var(--color-navy);
+    border-radius: 0;
+    padding: 0.8rem 1.2rem;
+    background: transparent;
+    color: inherit;
+  }
+
+  .oj-cart__actions button[name='checkout'],
+  .oj-cart__empty a {
+    background: var(--color-navy);
+    color: var(--color-contrast);
+  }
+
+  .oj-cart__empty {
+    max-width: 34rem;
+    font-size: 1.2rem;
+  }
+
+  .oj-cart__empty a {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  @media (max-width: 900px) {
+    .oj-cart__form {
+      grid-template-columns: 1fr;
+    }
+
+    .oj-cart__summary {
+      position: static;
+    }
+  }
+
+  @media (max-width: 650px) {
+    .oj-cart-item {
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+    }
+
+    .oj-cart-item__quantity {
+      grid-column: 2;
+    }
+
+    .oj-cart-item__price {
+      grid-column: 2;
+      justify-items: start;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.cart",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Your field case" },
+    { "type": "text", "id": "objects_label", "label": "Item count label", "default": "objects selected" },
+    { "type": "text", "id": "quantity_label", "label": "Quantity label", "default": "Quantity" },
+    { "type": "text", "id": "subtotal_label", "label": "Subtotal label", "default": "Subtotal" },
+    { "type": "text", "id": "tax_note", "label": "Tax note", "default": "Taxes and shipping are calculated at checkout." },
+    { "type": "checkbox", "id": "show_note", "label": "Show order note", "default": true },
+    { "type": "text", "id": "note_label", "label": "Note label", "default": "Notes for the expedition" },
+    { "type": "text", "id": "empty_label", "label": "Empty cart label", "default": "Your field case is waiting for its first discovery." },
+    { "type": "text", "id": "continue_label", "label": "Continue label", "default": "Enter the gallery" }
+  ]
 }
 {% endschema %}

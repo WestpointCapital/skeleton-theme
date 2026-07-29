@@ -1,13 +1,79 @@
-{% comment %}
-  This section is used in the page template to render store pages like About us
-  or Contact us.
+<article class="page-shell section-spacing">
+  <header class="page-shell__header" data-reveal>
+    <p class="eyebrow eyebrow--rule">{{ 'page.eyebrow' | t }}</p>
+    <h1>{{ page.title | escape }}</h1>
+    <div class="page-shell__coordinates meta-label" aria-hidden="true">
+      {{ 'page.coordinates' | t }}
+    </div>
+  </header>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/page
-{% endcomment %}
+  <div class="page-shell__content rte" data-reveal>
+    {{ page.content }}
+  </div>
+</article>
 
-<h1>{{ page.title }}</h1>
+{% stylesheet %}
+  .page-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+    gap: clamp(3rem, 8vw, 9rem);
+    align-items: start;
+  }
 
-{{ page.content }}
+  .page-shell__header {
+    position: sticky;
+    top: 8rem;
+    padding-top: var(--space-sm);
+  }
+
+  .page-shell__header h1 {
+    margin-top: var(--space-md);
+    font-size: var(--text-4xl);
+  }
+
+  .page-shell__coordinates {
+    margin-top: var(--space-lg);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .page-shell__content {
+    max-width: 46rem;
+    font-size: var(--text-lg);
+  }
+
+  .page-shell__content > * + * {
+    margin-top: 1.35em;
+  }
+
+  .page-shell__content :is(h2, h3, h4) {
+    margin-top: 2em;
+  }
+
+  .page-shell__content :is(img, blockquote) {
+    margin-block: var(--space-xl);
+  }
+
+  .page-shell__content blockquote {
+    padding: var(--space-md) 0 var(--space-md) var(--space-lg);
+    border-left: 1px solid var(--color-accent);
+    font-family: var(--font-heading--family);
+    font-size: var(--text-2xl);
+    font-style: italic;
+    line-height: 1.25;
+  }
+
+  @media (max-width: 749px) {
+    .page-shell {
+      grid-template-columns: 1fr;
+      gap: var(--space-xl);
+    }
+
+    .page-shell__header {
+      position: static;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

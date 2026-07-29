@@ -1,23 +1,53 @@
 {
   "404": {
     "title": "404",
-    "not_found": "Page not found.",
-    "back_to_shopping": "Back to shopping"
+    "eyebrow": "Coordinates unknown",
+    "not_found": "This path has left the map.",
+    "description": "The destination may have moved, but there are still remarkable pieces waiting to be discovered.",
+    "back_to_shopping": "Explore the collection",
+    "back_home": "Return home"
   },
   "blog": {
     "article_comments": "Comments",
-    "article_metadata_html": "{{ date }} by {{ author }}",
+    "back_to_journal": "Back to the journal",
+    "by_author": "By {{ author }}",
+    "comment_email_help": "Your email address will not be published.",
     "comment_form_body": "Comment",
     "comment_form_email": "Email",
+    "comment_form_help": "Fields marked as required must be completed.",
     "comment_form_name": "Name",
-    "comment_form_submit": "Post",
-    "comment_form_title": "Add a comment"
+    "comment_form_submit": "Post comment",
+    "comment_form_title": "Join the conversation",
+    "comment_moderated": "Thank you. Your comment has been submitted for review.",
+    "comment_success": "Thank you. Your comment is now part of the conversation.",
+    "comments_count": "{{ count }} comments",
+    "continue_exploring": "Continue exploring",
+    "conversation_eyebrow": "Field notes",
+    "dispatch": "Dispatch",
+    "empty_eyebrow": "The archive",
+    "empty_text": "New dispatches from the world of remarkable jewellery will appear here.",
+    "empty_title": "Stories are being gathered.",
+    "eyebrow": "The Odyssey Journal",
+    "introduction": "Field notes, artisan portraits, and stories gathered along the route.",
+    "placeholder_mark": "OJ",
+    "read_story": "Read the story",
+    "story_details": "Story details",
+    "tags": "Topics"
   },
   "cart": {
     "checkout": "Checkout",
+    "close": "Close cart",
+    "continue_shopping": "Enter the gallery",
+    "empty": "Your field case is waiting for its first discovery.",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
     "title": "Cart",
     "update": "Update",
-    "remove": "Remove"
+    "view_cart": "View full cart"
+  },
+  "collections": {
+    "title": "Collections"
   },
   "customers": {
     "login": {
@@ -27,26 +57,55 @@
       "title": "Login"
     }
   },
-  "collections": {
-    "title": "Collections"
+  "general": {
+    "close_menu": "Close menu",
+    "email": "Email address",
+    "newsletter_success": "Thank you — your journey begins here.",
+    "open_menu": "Open menu",
+    "pagination": "Pagination",
+    "regular_price": "Regular price",
+    "sale_price": "Sale price",
+    "skip_to_content": "Skip to content"
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
     "card": "Gift card",
+    "code_label": "Gift card code",
+    "eyebrow": "A gift for the journey",
     "expired": "This gift card has expired",
     "expires_on": "Expires on {{ expires_on }}",
-    "use_at_checkout": "Use this gift card at checkout"
+    "shop_now": "Explore Odyssey Jewels",
+    "tagline": "Travel the world, collect the world",
+    "use_at_checkout": "Present this code at checkout to continue the journey."
+  },
+  "page": {
+    "coordinates": "Odyssey Jewels · Field archive",
+    "eyebrow": "Odyssey Jewels"
   },
   "password": {
-    "title": "This shop is private",
+    "enter": "Enter",
+    "eyebrow": "A new journey is taking shape",
+    "footer": "Every jewel tells a story",
+    "message": "We are charting a collection of remarkable jewels and the places, hands, and histories behind them.",
+    "open_form": "Enter with a password",
     "password": "Password",
-    "enter": "Enter"
+    "signature": "Travel the World, Collect the World.",
+    "title": "The next chapter is almost here."
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "collected": "Collected",
+      "from_price": "From",
+      "quantity": "Quantity",
+      "sold_out": "Sold out"
+    }
   },
   "search": {
-    "title": "Search",
-    "placeholder": "Search articles, pages, or products",
-    "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
-    "results_for_html": "{{ count }} results found for {{ terms }}"
+    "placeholder": "Search jewels, stories, or places",
+    "results_for_html": "{{ count }} results found for {{ terms }}",
+    "submit": "Search",
+    "title": "Search"
   }
 }

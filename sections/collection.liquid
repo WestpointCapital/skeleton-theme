@@ -1,47 +1,308 @@
-{% comment %}
-  This section is used in the collection template to render collection page
-  listing all products within a collection.
+<section class="oj-collection" data-collection-root style="--oj-columns: 4;">
+  <header class="oj-collection__header">
+    <div>
+      <p class="oj-collection__kicker">{{ section.settings.kicker }}</p>
+      <h1>{{ collection.title }}</h1>
+      {% if collection.description != blank %}
+        <div class="oj-collection__story">{{ collection.description }}</div>
+      {% endif %}
+    </div>
+    {% if collection.image and section.settings.show_image %}
+      {{
+        collection.image
+        | image_url: width: 1400
+        | image_tag: widths: '600, 900, 1200, 1400', sizes: '(min-width: 900px) 45vw, 100vw', loading: 'eager'
+      }}
+    {% endif %}
+  </header>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
-{% endcomment %}
-
-<h1>{{ collection.title }}</h1>
-
-<div class="collection-products">
-  {% paginate collection.products by 20 %}
-    {% for product in collection.products %}
-      <div class="collection-product">
-        {% if product.featured_image %}
-          {% render 'image',
-            class: 'collection-product__image',
-            image: product.featured_image,
-            url: product.url,
-            width: 400,
-            height: 400,
-            crop: 'center'
-          %}
-        {% endif %}
-        <div class="collection-product__content">
-          <p>{{ product.title | escape | link_to: product.url }}</p>
-          <p>{{ product.price | money }}</p>
+  <form class="oj-facets" action="{{ collection.url }}" method="get">
+    <div class="oj-facets__top">
+      <details class="oj-facets__drawer">
+        <summary>{{ section.settings.filter_label }}{% if collection.filters.size > 0 %} ({{ collection.filters.size }}){% endif %}</summary>
+        <div class="oj-facets__panel">
+          {% for filter in collection.filters %}
+            <fieldset>
+              <legend>{{ filter.label }}</legend>
+              {% case filter.type %}
+                {% when 'boolean', 'list' %}
+                  {% for value in filter.values %}
+                    <label>
+                      <input
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        {% if value.active %}checked{% endif %}
+                        {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                      >
+                      <span>{{ value.label }} ({{ value.count }})</span>
+                    </label>
+                  {% endfor %}
+                {% when 'price_range' %}
+                  <div class="oj-facets__range">
+                    <label>
+                      <span>{{ section.settings.minimum_label }}</span>
+                      <input
+                        name="{{ filter.min_value.param_name }}"
+                        type="number"
+                        min="0"
+                        {% if filter.range_max %}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{% endif %}
+                        value="{{ filter.min_value.value | money_without_currency | replace: ',', '' }}"
+                      >
+                    </label>
+                    <label>
+                      <span>{{ section.settings.maximum_label }}</span>
+                      <input
+                        name="{{ filter.max_value.param_name }}"
+                        type="number"
+                        min="0"
+                        {% if filter.range_max %}max="{{ filter.range_max | money_without_currency | replace: ',', '' }}"{% endif %}
+                        value="{{ filter.max_value.value | money_without_currency | replace: ',', '' }}"
+                      >
+                    </label>
+                  </div>
+              {% endcase %}
+            </fieldset>
+          {% endfor %}
+          <button type="submit">{{ section.settings.apply_label }}</button>
         </div>
-      </div>
-    {% endfor %}
+      </details>
 
-    {{ paginate | default_pagination }}
+      <label class="oj-facets__sort" for="SortBy-{{ section.id }}">
+        <span>{{ section.settings.sort_label }}</span>
+        {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+        <select id="SortBy-{{ section.id }}" name="sort_by" data-sort-select>
+          {% for option in collection.sort_options %}
+            <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button class="oj-facets__sort-submit" type="submit">{{ section.settings.sort_label }}</button>
+    </div>
+
+    {% for filter in collection.filters %}
+      {% for value in filter.active_values %}
+        <a class="oj-facets__active" href="{{ value.url_to_remove }}">{{ value.label }} ×</a>
+      {% endfor %}
+      {% if filter.type == 'price_range' %}
+        {% if filter.min_value.value != nil or filter.max_value.value != nil %}
+          <a class="oj-facets__active" href="{{ filter.url_to_remove }}">{{ filter.label }} ×</a>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  </form>
+
+  {% paginate collection.products by section.settings.products_per_page %}
+    {% if collection.products_count > 0 %}
+      <div class="oj-collection__grid">
+        {% for product in collection.products %}
+          {% render 'product-card', product: product, show_vendor: section.settings.show_vendor, lazy: true %}
+        {% endfor %}
+      </div>
+      <nav class="oj-pagination" aria-label="{{ section.settings.pagination_label }}">
+        {{ paginate | default_pagination }}
+      </nav>
+    {% else %}
+      <p class="oj-collection__empty">{{ section.settings.empty_label }}</p>
+    {% endif %}
   {% endpaginate %}
-</div>
+</section>
+
+{% javascript %}
+  document.querySelectorAll('[data-sort-select]').forEach((select) => {
+    select.addEventListener('change', () => select.form.requestSubmit());
+  });
+{% endjavascript %}
 
 {% stylesheet %}
-  .collection-products {
+  .oj-collection {
+    padding: clamp(2rem, 5vw, 5rem);
+    color: var(--color-foreground);
+  }
+
+  .oj-collection__header {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.75fr);
+    gap: clamp(2rem, 6vw, 7rem);
+    align-items: end;
+    margin-bottom: clamp(3rem, 8vw, 8rem);
+  }
+
+  .oj-collection__header h1 {
+    margin: 0.3rem 0 1rem;
+    font-size: clamp(3rem, 8vw, 8rem);
+    line-height: 0.9;
+  }
+
+  .oj-collection__header img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .oj-collection__kicker {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .oj-collection__story {
+    max-width: 42rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .oj-facets {
+    margin-bottom: 2rem;
+    border-block: 1px solid color-mix(in srgb, var(--color-foreground) 20%, transparent);
+    padding: 1rem 0;
+  }
+
+  .oj-facets__top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .oj-facets summary {
+    cursor: pointer;
+  }
+
+  .oj-facets__drawer {
+    position: relative;
+  }
+
+  .oj-facets__panel {
+    position: absolute;
+    z-index: 5;
+    top: calc(100% + 1rem);
+    left: 0;
+    width: min(25rem, 90vw);
+    max-height: 70vh;
+    overflow: auto;
+    padding: 1.5rem;
+    background: var(--color-background);
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 25%, transparent);
+    box-shadow: 0 1rem 3rem color-mix(in srgb, var(--color-foreground) 16%, transparent);
+  }
+
+  .oj-facets fieldset {
+    border: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-foreground) 15%, transparent);
+    margin: 0 0 1.2rem;
+    padding: 0 0 1.2rem;
+  }
+
+  .oj-facets legend {
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+  }
+
+  .oj-facets fieldset label {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0.55rem 0;
+  }
+
+  .oj-facets__range {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .oj-facets__range label {
+    display: grid;
+  }
+
+  .oj-facets input,
+  .oj-facets select,
+  .oj-facets button {
+    min-height: 2.7rem;
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 30%, transparent);
+    border-radius: 0;
+    background: transparent;
+    color: inherit;
+  }
+
+  .oj-facets button {
+    padding: 0.6rem 1rem;
+  }
+
+  .oj-facets__sort {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .oj-facets__sort-submit {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  .oj-facets__active {
+    display: inline-block;
+    margin: 0.8rem 0.5rem 0 0;
+    color: inherit;
+  }
+
+  .oj-collection__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--oj-columns, 4), minmax(0, 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+  }
+
+  .oj-pagination {
+    margin-top: 3rem;
+    text-align: center;
+  }
+
+  .oj-pagination .page,
+  .oj-pagination .next,
+  .oj-pagination .prev {
+    display: inline-block;
+    padding: 0.6rem;
+  }
+
+  @media (max-width: 900px) {
+    .oj-collection__header {
+      grid-template-columns: 1fr;
+    }
+
+    .oj-collection__grid {
+      --oj-columns: 2;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .oj-collection {
+      padding-inline: 1rem;
+    }
+
+    .oj-collection__grid {
+      --oj-columns: 1;
+    }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.collection",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "The cartographic gallery" },
+    { "type": "checkbox", "id": "show_image", "label": "Show collection image", "default": true },
+    { "type": "checkbox", "id": "show_vendor", "label": "Show maker", "default": true },
+    { "type": "range", "id": "products_per_page", "label": "Products per page", "min": 8, "max": 40, "step": 4, "default": 20 },
+    { "type": "text", "id": "filter_label", "label": "Filter label", "default": "Refine the map" },
+    { "type": "text", "id": "sort_label", "label": "Sort label", "default": "Chart by" },
+    { "type": "text", "id": "minimum_label", "label": "Minimum price label", "default": "From" },
+    { "type": "text", "id": "maximum_label", "label": "Maximum price label", "default": "To" },
+    { "type": "text", "id": "apply_label", "label": "Apply label", "default": "Apply" },
+    { "type": "text", "id": "empty_label", "label": "Empty label", "default": "No jewels appear within these coordinates." },
+    { "type": "text", "id": "pagination_label", "label": "Pagination label", "default": "Collection pages" }
+  ]
 }
 {% endschema %}

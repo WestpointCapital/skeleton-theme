@@ -1,64 +1,406 @@
-{% comment %}
-  This section is used in the article template to render the article page, which
-  displays the full content of the blog post and can optionally include a
-  comments section for customers (not shown in this example).
+<article class="story">
+  <header class="story__header section-spacing" data-reveal>
+    <a class="story__back link-underline" href="{{ blog.url }}">{{ 'blog.back_to_journal' | t }}</a>
+    <p class="eyebrow eyebrow--rule">{{ blog.title | escape }}</p>
+    <h1>{{ article.title | escape }}</h1>
+    <div class="story__meta meta-label">
+      <span>{{ article.published_at | time_tag: format: 'date' }}</span>
+      <span>{{ 'blog.by_author' | t: author: article.author }}</span>
+    </div>
+  </header>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/article
-{% endcomment %}
+  {% if article.image %}
+    <figure class="story__hero full-width" data-reveal>
+      {{
+        article.image
+        | image_url: width: 2400
+        | image_tag:
+          widths: '750, 1100, 1500, 2000, 2400',
+          sizes: '100vw',
+          loading: 'eager',
+          class: 'story__hero-image',
+          alt: article.image.alt
+      }}
+    </figure>
+  {% endif %}
 
-{% if article.image %}
-  {{ article.image | image_url: width: 1000 | image_tag }}
-{% endif %}
-
-<h1>{{ article.title }}</h1>
-
-{% assign date = article.published_at | time_tag: format: 'date' %}
-<p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-
-{{ article.content }}
-
-{% if blog.comments_enabled? %}
-  <h2>{{ 'blog.article_comments' | t }}</h2>
-
-  <div id="comments">
-    {% paginate article.comments by 10 %}
-      {% for comment in article.comments %}
-        <div>
-          <p>{{ comment.author }}</p>
-          <p>
-            {{- comment.created_at | time_tag: format: 'date' -}}
-          </p>
-          <p>{{ comment.content }}</p>
-        </div>
-      {% endfor %}
-
-      {{ paginate | default_pagination: anchor: 'comments' }}
-    {% endpaginate %}
+  <div class="story__layout">
+    <aside class="story__rail" aria-label="{{ 'blog.story_details' | t }}">
+      <span class="meta-label">{{ 'blog.dispatch' | t }}</span>
+      <span class="story__rail-line" aria-hidden="true"></span>
+      {% if article.tags.size > 0 %}
+        <ul class="story__tags" aria-label="{{ 'blog.tags' | t }}">
+          {% for tag in article.tags %}
+            <li>{{ tag }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    </aside>
+    <div class="story__content rte" data-reveal>
+      {{ article.content }}
+    </div>
   </div>
 
-  {% form 'new_comment', article %}
-    <h2>{{ 'blog.comment_form_title' | t }}</h2>
+  <footer class="story__footer">
+    <p class="eyebrow">{{ 'blog.continue_exploring' | t }}</p>
+    <a class="button button--ghost" href="{{ blog.url }}">{{ 'blog.back_to_journal' | t }}</a>
+  </footer>
+</article>
 
-    {{ form.errors | default_errors }}
-
-    <div>
-      <label for="author">{{ 'blog.comment_form_name' | t }}</label>
-      <input type="text" name="comment[author]" id="author" value="{{ form.author }}" required>
+{% if blog.comments_enabled? %}
+  <section class="comments section-spacing" id="comments" aria-labelledby="comments-title">
+    <div class="comments__heading">
+      <div>
+        <p class="eyebrow eyebrow--rule">{{ 'blog.conversation_eyebrow' | t }}</p>
+        <h2 id="comments-title">{{ 'blog.article_comments' | t }}</h2>
+      </div>
+      <span class="meta-label">{{ 'blog.comments_count' | t: count: article.comments_count }}</span>
     </div>
 
-    <div>
-      <label for="email">{{ 'blog.comment_form_email' | t }}</label>
-      <input type="email" name="comment[email]" id="email" value="{{ form.email }}" required>
-    </div>
+    {% paginate article.comments by 10 %}
+      {% if article.comments_count > 0 %}
+        <ol class="comments__list">
+          {% for comment in article.comments %}
+            <li class="comment">
+              <header class="comment__header">
+                <strong>{{ comment.author | escape }}</strong>
+                {{ comment.created_at | time_tag: format: 'date', class: 'meta-label' }}
+              </header>
+              <div class="comment__body">{{ comment.content }}</div>
+            </li>
+          {% endfor %}
+        </ol>
+      {% endif %}
 
-    <div>
-      <label for="body">{{ 'blog.comment_form_body' | t }}</label>
-      <textarea name="comment[body]" id="body" required>{{ form.body }}</textarea>
-    </div>
+      {% if paginate.pages > 1 %}
+        <nav class="comments__pagination" aria-label="{{ 'general.pagination' | t }}">
+          {{ paginate | default_pagination: anchor: 'comments' }}
+        </nav>
+      {% endif %}
+    {% endpaginate %}
 
-    <input type="submit" value="{{ 'blog.comment_form_submit' | t }}">
-  {% endform %}
+    {% form 'new_comment', article, class: 'comment-form' %}
+      <div class="comment-form__heading">
+        <h3>{{ 'blog.comment_form_title' | t }}</h3>
+        <p id="comment-help">{{ 'blog.comment_form_help' | t }}</p>
+      </div>
+
+      {% if form.posted_successfully? %}
+        <p class="comment-form__status" role="status" tabindex="-1">
+          {% if blog.moderated? %}
+            {{ 'blog.comment_moderated' | t }}
+          {% else %}
+            {{ 'blog.comment_success' | t }}
+          {% endif %}
+        </p>
+      {% endif %}
+
+      {% if form.errors %}
+        <div class="comment-form__errors" role="alert" tabindex="-1">
+          {{ form.errors | default_errors }}
+        </div>
+      {% endif %}
+
+      <div class="comment-form__grid">
+        <div class="field">
+          <label for="comment-author">{{ 'blog.comment_form_name' | t }}</label>
+          <input
+            type="text"
+            name="comment[author]"
+            id="comment-author"
+            value="{{ form.author | escape }}"
+            autocomplete="name"
+            aria-describedby="comment-help"
+            required
+          >
+        </div>
+
+        <div class="field">
+          <label for="comment-email">{{ 'blog.comment_form_email' | t }}</label>
+          <input
+            type="email"
+            name="comment[email]"
+            id="comment-email"
+            value="{{ form.email | escape }}"
+            autocomplete="email"
+            aria-describedby="comment-email-help"
+            required
+          >
+          <span id="comment-email-help" class="field__help">{{ 'blog.comment_email_help' | t }}</span>
+        </div>
+
+        <div class="field field--full">
+          <label for="comment-body">{{ 'blog.comment_form_body' | t }}</label>
+          <textarea name="comment[body]" id="comment-body" rows="7" required>{{ form.body }}</textarea>
+        </div>
+      </div>
+
+      <button class="button" type="submit">{{ 'blog.comment_form_submit' | t }}</button>
+    {% endform %}
+  </section>
 {% endif %}
+
+{% stylesheet %}
+  .story {
+    display: block;
+  }
+
+  .story__header {
+    max-width: 70rem;
+    text-align: center;
+  }
+
+  .story__back {
+    margin-bottom: var(--space-xl);
+  }
+
+  .story__header h1 {
+    max-width: 18ch;
+    margin: var(--space-md) auto;
+    font-size: var(--text-4xl);
+  }
+
+  .story__meta {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    color: var(--color-foreground-50);
+  }
+
+  .story__hero {
+    max-height: 78svh;
+    overflow: hidden;
+  }
+
+  .story__hero-image {
+    width: 100%;
+    height: min(78svh, 62rem);
+    object-fit: cover;
+  }
+
+  .story__layout {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.35fr) minmax(0, 1fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    max-width: 62rem;
+    margin: var(--space-2xl) auto;
+  }
+
+  .story__rail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    align-items: flex-start;
+  }
+
+  .story__rail-line {
+    width: 1px;
+    height: 5rem;
+    background: var(--color-accent);
+  }
+
+  .story__tags {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: 0;
+    list-style: none;
+    font-size: var(--text-sm);
+  }
+
+  .story__content {
+    max-width: 44rem;
+    font-size: var(--text-lg);
+  }
+
+  .story__content > * + * {
+    margin-top: 1.4em;
+  }
+
+  .story__content > p:first-child::first-letter {
+    float: left;
+    margin: 0.08em 0.12em 0 0;
+    color: var(--color-accent);
+    font-family: var(--font-heading--family);
+    font-size: 4.5em;
+    line-height: 0.72;
+  }
+
+  .story__content :is(h2, h3) {
+    margin-top: 2em;
+  }
+
+  .story__content :is(img, blockquote) {
+    margin-block: var(--space-xl);
+  }
+
+  .story__content blockquote {
+    padding: var(--space-lg);
+    border-block: 1px solid var(--color-line);
+    font-family: var(--font-heading--family);
+    font-size: var(--text-2xl);
+    font-style: italic;
+    text-align: center;
+  }
+
+  .story__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-md);
+    margin-block: var(--space-2xl);
+    padding-block: var(--space-lg);
+    border-block: 1px solid var(--color-line);
+  }
+
+  .comments {
+    background: color-mix(in srgb, var(--color-navy) 4%, var(--color-background));
+  }
+
+  .comments__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+
+  .comments__heading h2 {
+    margin-top: var(--space-sm);
+  }
+
+  .comments__list {
+    padding: 0;
+    border-top: 1px solid var(--color-line);
+    list-style: none;
+  }
+
+  .comment {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.35fr) minmax(0, 1fr);
+    gap: var(--space-lg);
+    padding-block: var(--space-lg);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .comment__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .comment__body > * + * {
+    margin-top: 1em;
+  }
+
+  .comments__pagination {
+    margin-top: var(--space-lg);
+    text-align: center;
+  }
+
+  .comment-form {
+    max-width: 52rem;
+    margin-top: var(--space-2xl);
+    padding: var(--space-xl);
+    background: var(--color-background);
+    border: 1px solid var(--color-line);
+  }
+
+  .comment-form__heading {
+    margin-bottom: var(--space-lg);
+  }
+
+  .comment-form__heading h3 {
+    margin-bottom: var(--space-xs);
+  }
+
+  .comment-form__status,
+  .comment-form__errors {
+    margin-bottom: var(--space-md);
+    padding: var(--space-md);
+    border-left: 2px solid var(--color-accent);
+    background: var(--color-accent-soft);
+  }
+
+  .comment-form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .field--full {
+    grid-column: 1 / -1;
+  }
+
+  .field label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+  }
+
+  .field :is(input, textarea) {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    color: var(--color-foreground);
+    background: var(--color-background);
+    border: 1px solid var(--color-line);
+  }
+
+  .field :is(input, textarea):focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .field__help {
+    font-size: var(--text-xs);
+    color: var(--color-foreground-50);
+  }
+
+  @media (max-width: 749px) {
+    .story__layout {
+      grid-template-columns: 1fr;
+      margin-block: var(--space-xl);
+    }
+
+    .story__rail {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .story__rail-line {
+      width: 3rem;
+      height: 1px;
+    }
+
+    .story__tags {
+      flex-flow: row wrap;
+    }
+
+    .story__footer,
+    .comments__heading {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .comment {
+      grid-template-columns: 1fr;
+    }
+
+    .comment-form {
+      padding: var(--space-md);
+    }
+
+    .comment-form__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

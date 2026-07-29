@@ -1,50 +1,341 @@
-{% comment %}
-  This section is used in the product template to render product page with
-  media, content, and add-to-cart form.
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign region = product.metafields.custom.region.value
+  assign country = product.metafields.custom.country.value
+  assign city = product.metafields.custom.city.value
+  assign artisan = product.metafields.custom.artisan.value
+  assign story = product.metafields.custom.story.value
+%}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/product
-{% endcomment %}
-
-<div class="product-images">
-  {% for image in product.images %}
-    {% render 'image', class: 'product-image', image: image %}
-  {% endfor %}
-</div>
-
-<div class="product-info">
-  <h1>{{ product.title }}</h1>
-  <p>{{ product.price | money }}</p>
-  <p>{{ product.description }}</p>
-</div>
-
-<div class="product-form">
-  {% form 'product', product %}
-    {% assign current_variant = product.selected_or_first_available_variant %}
-
-    <select name="id">
-      {% for variant in product.variants %}
-        <option
-          value="{{ variant.id }}"
-          {% if variant == current_variant %}
-            selected="selected"
-          {% endif %}
-        >
-          {{ variant.title }} - {{ variant.price | money }}
-        </option>
+<section
+  class="oj-product"
+  data-product-root
+  data-section-id="{{ section.id }}"
+  data-available-label="{{ section.settings.available_label | escape }}"
+  data-add-label="{{ section.settings.add_label | escape }}"
+  data-sold-label="{{ section.settings.sold_label | escape }}"
+>
+  <div class="oj-product__gallery" aria-label="{{ section.settings.gallery_label | escape }}">
+    {% if product.media.size > 0 %}
+      {% for media in product.media %}
+        <figure class="oj-product__media" id="Media-{{ section.id }}-{{ media.id }}">
+          {% case media.media_type %}
+            {% when 'image' %}
+              {{
+                media.preview_image
+                | image_url: width: 1800
+                | image_tag:
+                  widths: '480, 720, 960, 1200, 1600, 1800',
+                  sizes: '(min-width: 990px) 60vw, 100vw',
+                  loading: 'lazy',
+                  alt: media.alt
+              }}
+            {% when 'video' %}
+              {{ media | media_tag: controls: true, image_size: '1200x' }}
+            {% when 'external_video' %}
+              {{ media | external_video_tag }}
+            {% when 'model' %}
+              {{ media | model_viewer_tag: reveal: 'interaction', toggleable: true }}
+          {% endcase %}
+        </figure>
       {% endfor %}
-    </select>
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'oj-product__placeholder' }}
+    {% endif %}
+  </div>
 
-    <input type="text" name="quantity" min="1" value="1">
+  <div class="oj-product__aside">
+    <div class="oj-product__sticky">
+      {% if product.vendor != blank and section.settings.show_vendor %}
+        <p class="oj-product__eyebrow">{{ product.vendor }}</p>
+      {% endif %}
+      <h1>{{ product.title }}</h1>
 
-    <input type="submit" value="Add to cart">
-    {{ form | payment_button }}
-  {% endform %}
-</div>
+      {% if region != blank or country != blank or city != blank %}
+        <p class="oj-product__location">
+          {% if city != blank %}{{ city }}{% endif %}
+          {% if region != blank %}{% if city != blank %}, {% endif %}{{ region }}{% endif %}
+          {% if country != blank %}{% if city != blank or region != blank %} · {% endif %}{{ country }}{% endif %}
+        </p>
+      {% endif %}
+
+      {% render 'price', item: current_variant, class: 'oj-product__price' %}
+
+      <p class="oj-product__availability" data-product-availability aria-live="polite">
+        {% if current_variant.available %}
+          {{ section.settings.available_label }}
+        {% else %}
+          {{ section.settings.sold_label }}
+        {% endif %}
+      </p>
+
+      {% if artisan != blank %}
+        <p class="oj-product__artisan">{{ section.settings.artisan_label }} {{ artisan }}</p>
+      {% endif %}
+
+      {% form 'product', product, class: 'oj-product-form', data-product-form: '' %}
+        {% unless product.has_only_default_variant %}
+          <label for="Variant-{{ section.id }}">{{ section.settings.variant_label }}</label>
+          <select id="Variant-{{ section.id }}" name="id" data-variant-select>
+            {% for variant in product.variants %}
+              <option
+                value="{{ variant.id }}"
+                data-price="{{ variant.price | money | escape }}"
+                data-compare-price="{{ variant.compare_at_price | money | escape }}"
+                data-available="{{ variant.available }}"
+                {% if variant == current_variant %}selected{% endif %}
+              >
+                {{ variant.title }}{% unless variant.available %} — {{ section.settings.sold_label }}{% endunless %}
+              </option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+        {% endunless %}
+
+        <label for="Quantity-{{ section.id }}">{{ section.settings.quantity_label }}</label>
+        <input id="Quantity-{{ section.id }}" type="number" name="quantity" min="1" value="1" inputmode="numeric">
+
+        <button type="submit" name="add" data-add-to-cart {% unless current_variant.available %}disabled{% endunless %}>
+          <span data-add-label>
+            {% if current_variant.available %}{{ section.settings.add_label }}{% else %}{{ section.settings.sold_label }}{% endif %}
+          </span>
+        </button>
+
+        {% if current_variant.available and section.settings.show_dynamic_checkout %}
+          {{ form | payment_button }}
+        {% endif %}
+      {% endform %}
+
+      {% if product.description != blank %}
+        <details open>
+          <summary>{{ section.settings.description_label }}</summary>
+          <div class="oj-product__rte">{{ product.description }}</div>
+        </details>
+      {% endif %}
+
+      {% if story != blank %}
+        <details>
+          <summary>{{ section.settings.story_label }}</summary>
+          <div class="oj-product__rte">{{ story | metafield_tag }}</div>
+        </details>
+      {% endif %}
+
+      {% for block in section.blocks %}
+        <details {{ block.shopify_attributes }}>
+          <summary>{{ block.settings.heading }}</summary>
+          <div class="oj-product__rte">{{ block.settings.content }}</div>
+        </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% javascript %}
+  (() => {
+    const init = (root) => {
+      if (root.dataset.productReady === 'true') return;
+      root.dataset.productReady = 'true';
+      const select = root.querySelector('[data-variant-select]');
+      if (!select) return;
+      const button = root.querySelector('[data-add-to-cart]');
+      const addLabel = root.querySelector('[data-add-label]');
+      const availability = root.querySelector('[data-product-availability]');
+      const currentPrice = root.querySelector('[data-current-price]');
+      const comparePrice = root.querySelector('[data-compare-price]');
+      const availableLabel = root.dataset.availableLabel;
+      const availableAddLabel = root.dataset.addLabel;
+      const soldLabel = root.dataset.soldLabel;
+
+      select.addEventListener('change', () => {
+        const option = select.selectedOptions[0];
+        const available = option.dataset.available === 'true';
+        if (currentPrice) currentPrice.textContent = option.dataset.price;
+        if (comparePrice) {
+          comparePrice.textContent = option.dataset.comparePrice;
+          comparePrice.hidden = !option.dataset.comparePrice || option.dataset.comparePrice === option.dataset.price;
+        }
+        button.disabled = !available;
+        addLabel.textContent = available ? availableAddLabel : soldLabel;
+        availability.textContent = available ? availableLabel : soldLabel;
+        const url = new URL(window.location.href);
+        url.searchParams.set('variant', option.value);
+        window.history.replaceState({}, '', url);
+      });
+    };
+
+    document.querySelectorAll('[data-product-root]').forEach(init);
+  })();
+{% endjavascript %}
+
+{% stylesheet %}
+  .oj-product {
+    display: grid;
+    grid-template-columns: minmax(0, 3fr) minmax(20rem, 2fr);
+    color: var(--color-foreground);
+  }
+
+  .oj-product__gallery {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    background: color-mix(in srgb, var(--color-accent-soft) 55%, var(--color-foreground-12));
+  }
+
+  .oj-product__media {
+    margin: 0;
+    background: var(--color-foreground-12);
+  }
+
+  .oj-product__media img,
+  .oj-product__media video,
+  .oj-product__media iframe,
+  .oj-product__media model-viewer,
+  .oj-product__placeholder {
+    display: block;
+    width: 100%;
+    min-height: 32rem;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .oj-product__aside {
+    padding: clamp(2rem, 6vw, 6rem) clamp(1.5rem, 5vw, 5rem);
+  }
+
+  .oj-product__sticky {
+    position: sticky;
+    top: 7rem;
+    max-width: 34rem;
+  }
+
+  .oj-product h1 {
+    margin: 0.25rem 0 0.8rem;
+    font-size: clamp(2rem, 4vw, 4.5rem);
+    line-height: 0.98;
+  }
+
+  .oj-product__eyebrow,
+  .oj-product__location,
+  .oj-product__availability,
+  .oj-product__artisan {
+    color: var(--color-foreground-50);
+  }
+
+  .oj-product__eyebrow {
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .oj-product__price {
+    margin: 1rem 0;
+    font-size: 1.2rem;
+  }
+
+  .oj-product-form {
+    display: grid;
+    gap: 0.7rem;
+    margin: 2rem 0;
+  }
+
+  .oj-product-form label {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .oj-product-form select,
+  .oj-product-form input,
+  .oj-product-form button {
+    width: 100%;
+    min-height: 3.2rem;
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 32%, transparent);
+    border-radius: 0;
+    padding: 0.8rem 1rem;
+    background: transparent;
+    color: inherit;
+  }
+
+  .oj-product-form button {
+    border-color: var(--color-foreground);
+    background: var(--color-navy);
+    color: var(--color-contrast);
+    cursor: pointer;
+  }
+
+  .oj-product-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .oj-product details {
+    border-top: 1px solid color-mix(in srgb, var(--color-foreground) 18%, transparent);
+  }
+
+  .oj-product summary {
+    padding: 1rem 0;
+    cursor: pointer;
+  }
+
+  .oj-product__rte {
+    padding: 0 0 1.5rem;
+  }
+
+  @media (max-width: 900px) {
+    .oj-product {
+      grid-template-columns: 1fr;
+    }
+
+    .oj-product__gallery {
+      grid-auto-flow: column;
+      grid-auto-columns: 88%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+
+    .oj-product__media {
+      scroll-snap-align: start;
+    }
+
+    .oj-product__media img,
+    .oj-product__media video,
+    .oj-product__media iframe,
+    .oj-product__media model-viewer {
+      min-height: 70vh;
+    }
+
+    .oj-product__sticky {
+      position: static;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.product",
-  "settings": [],
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show maker", "default": true },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout", "default": true },
+    { "type": "text", "id": "gallery_label", "label": "Gallery label", "default": "Product gallery" },
+    { "type": "text", "id": "variant_label", "label": "Variant label", "default": "Select an edition" },
+    { "type": "text", "id": "quantity_label", "label": "Quantity label", "default": "Quantity" },
+    { "type": "text", "id": "add_label", "label": "Add button label", "default": "Add to cart" },
+    { "type": "text", "id": "available_label", "label": "Available label", "default": "Available" },
+    { "type": "text", "id": "sold_label", "label": "Sold label", "default": "Collected" },
+    { "type": "text", "id": "artisan_label", "label": "Artisan label", "default": "Crafted by" },
+    { "type": "text", "id": "description_label", "label": "Description label", "default": "Details" },
+    { "type": "text", "id": "story_label", "label": "Story label", "default": "Provenance" }
+  ],
+  "blocks": [
+    {
+      "type": "details",
+      "name": "Details",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Care and materials" },
+        { "type": "richtext", "id": "content", "label": "Content" }
+      ]
+    }
+  ],
   "disabled_on": {
     "groups": ["header", "footer"]
   }

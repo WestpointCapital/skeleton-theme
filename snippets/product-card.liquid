@@ -1,0 +1,111 @@
+{% doc %}
+  Renders an accessible product card for commerce grids.
+  @param {product} product - Product represented by the card
+  @param {boolean} [show_vendor] - Whether to show the product vendor
+  @param {boolean} [show_excerpt] - Whether to show a short description
+  @param {boolean} [lazy] - Whether the image should lazy load
+{% enddoc %}
+
+{% liquid
+  assign card_image = product.featured_media.preview_image | default: product.featured_image
+  assign loading = 'eager'
+  if lazy
+    assign loading = 'lazy'
+  endif
+%}
+
+<article class="oj-product-card">
+  <a class="oj-product-card__media" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {% if card_image %}
+      {{
+        card_image
+        | image_url: width: 900
+        | image_tag:
+          widths: '320, 480, 640, 900',
+          sizes: '(min-width: 990px) 25vw, (min-width: 600px) 50vw, 100vw',
+          loading: loading,
+          alt: card_image.alt
+      }}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'oj-product-card__placeholder' }}
+    {% endif %}
+    {% unless product.available %}
+      <span class="oj-product-card__badge">Collected</span>
+    {% endunless %}
+  </a>
+  <div class="oj-product-card__body">
+    {% if show_vendor and product.vendor != blank %}
+      <p class="oj-product-card__eyebrow">{{ product.vendor }}</p>
+    {% endif %}
+    <h3 class="oj-product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {% render 'price', item: product %}
+    {% if show_excerpt and product.description != blank %}
+      <p class="oj-product-card__excerpt">{{ product.description | strip_html | truncatewords: 18 }}</p>
+    {% endif %}
+  </div>
+</article>
+
+{% stylesheet %}
+  .oj-product-card {
+    position: relative;
+    min-width: 0;
+  }
+
+  .oj-product-card__media {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    background: var(--color-foreground-12);
+    aspect-ratio: 4 / 5;
+  }
+
+  .oj-product-card__media img,
+  .oj-product-card__placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 500ms ease;
+  }
+
+  .oj-product-card__media:hover img {
+    transform: scale(1.025);
+  }
+
+  .oj-product-card__badge {
+    position: absolute;
+    inset: 1rem auto auto 1rem;
+    padding: 0.45rem 0.7rem;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .oj-product-card__body {
+    padding: 1rem 0 1.7rem;
+  }
+
+  .oj-product-card__eyebrow,
+  .oj-product-card__excerpt {
+    margin: 0 0 0.45rem;
+    color: var(--color-foreground-50);
+  }
+
+  .oj-product-card__eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .oj-product-card__title {
+    margin: 0 0 0.45rem;
+    font: inherit;
+    font-size: 1.05rem;
+  }
+
+  .oj-product-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+{% endstylesheet %}

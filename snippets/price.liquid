@@ -1,0 +1,34 @@
+{% doc %}
+  Renders a product or variant price with compare-at pricing.
+  @param {object} item - Product or variant whose price is displayed
+  @param {string} [class] - Optional wrapper class
+{% enddoc %}
+
+{% liquid
+  assign price = item.price
+  assign compare_at_price = item.compare_at_price
+%}
+
+<span class="oj-price {{ class }}" data-product-price>
+  {% if compare_at_price > price %}
+    <span class="visually-hidden">{{ 'general.regular_price' | t }}</span>
+    <s data-compare-price>{{ compare_at_price | money }}</s>
+    <span class="visually-hidden">{{ 'general.sale_price' | t }}</span>
+  {% else %}
+    <s data-compare-price hidden></s>
+  {% endif %}
+  <span data-current-price>{{ price | money }}</span>
+</span>
+
+{% stylesheet %}
+  .oj-price {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: baseline;
+  }
+
+  .oj-price s {
+    opacity: 0.55;
+  }
+{% endstylesheet %}

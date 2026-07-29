@@ -13,10 +13,18 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "announcement": "Complimentary worldwide shipping — Every jewel tells a story",
+        "menu": "main-menu",
+        "transparent_on_home": true,
+        "coordinate_west": "40.7128° N · 74.0060° W",
+        "coordinate_east": "51.5072° N · 0.1276° W",
+        "menu_overlay_label": "Odyssey Jewels · Field Index",
+        "menu_overlay_footer": "Travel the world — Collect the world"
+      }
     }
   },
   "order": [
     "header"
-  ],
+  ]
 }

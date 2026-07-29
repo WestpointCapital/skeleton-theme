@@ -1,0 +1,277 @@
+{% liquid
+  assign hero_image = section.settings.image
+  assign hero_alt = section.settings.image_alt | default: section.settings.heading
+%}
+
+<section id="AtlasHero-{{ section.id }}" class="atlas-hero">
+  <div class="atlas-hero__content">
+    <div class="atlas-hero__route" aria-hidden="true">
+      <span></span>
+      <svg viewBox="0 0 320 180" fill="none">
+        <path d="M-10 145C36 116 48 34 104 49c43 12 23 77 73 76 49-1 64-93 153-91" pathLength="1"/>
+        <circle cx="104" cy="49" r="4"/>
+        <circle cx="177" cy="125" r="4"/>
+      </svg>
+    </div>
+    <div class="atlas-hero__copy">
+      {% if section.settings.kicker != blank %}
+        <p class="atlas-hero__kicker">{{ section.settings.kicker }}</p>
+      {% endif %}
+      <h1>{{ section.settings.heading }}</h1>
+      {% if section.settings.text != blank %}
+        <div class="atlas-hero__text">{{ section.settings.text }}</div>
+      {% endif %}
+      <div class="atlas-hero__actions">
+        {% if section.settings.button_label != blank %}
+          <a class="atlas-hero__button" href="{{ section.settings.button_link | default: routes.all_products_collection_url }}">
+            {{ section.settings.button_label }}
+            <span aria-hidden="true">↗</span>
+          </a>
+        {% endif %}
+        {% if section.settings.secondary_label != blank %}
+          <a class="atlas-hero__text-link" href="{{ section.settings.secondary_link | default: '#AtlasRegions' }}">{{ section.settings.secondary_label }}</a>
+        {% endif %}
+      </div>
+    </div>
+    <dl class="atlas-hero__coordinates">
+      <div><dt>Latitude</dt><dd>{{ section.settings.latitude }}</dd></div>
+      <div><dt>Longitude</dt><dd>{{ section.settings.longitude }}</dd></div>
+      <div><dt>Edition</dt><dd>{{ section.settings.edition }}</dd></div>
+    </dl>
+  </div>
+
+  <div class="atlas-hero__visual">
+    <div class="atlas-hero__media">
+      {% if section.settings.video != blank %}
+        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true, image_size: '1400x' }}
+      {% elsif hero_image != blank %}
+        {{ hero_image | image_url: width: 1800 | image_tag: loading: 'eager', fetchpriority: 'high', widths: '600, 900, 1200, 1800', sizes: '(min-width: 900px) 52vw, 100vw', alt: hero_alt }}
+      {% elsif section.settings.fallback_image_url != blank %}
+        <img src="{{ section.settings.fallback_image_url }}" alt="{{ hero_alt | escape }}" width="1200" height="1500" loading="eager" fetchpriority="high">
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'atlas-hero__placeholder' }}
+      {% endif %}
+    </div>
+    <div class="atlas-hero__plate" aria-hidden="true">
+      <span>{{ section.settings.plate_label }}</span>
+      <b></b>
+    </div>
+    <p class="atlas-hero__caption">{{ section.settings.caption }}</p>
+  </div>
+</section>
+
+{% style %}
+  #AtlasHero-{{ section.id }} {
+    min-height: min(860px, calc(100svh - 5rem));
+    display: grid;
+    grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+    background: var(--color-background);
+    color: var(--color-foreground);
+    border-bottom: 1px solid var(--color-line);
+    overflow: hidden;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    padding: clamp(3rem, 6vw, 7rem) clamp(1.25rem, 5vw, 5.5rem) clamp(2rem, 4vw, 4rem);
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__copy {
+    position: relative;
+    z-index: 1;
+    max-width: 38rem;
+    margin-block: auto;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__kicker {
+    margin: 0 0 1.5rem;
+    font-size: .7rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+  }
+  #AtlasHero-{{ section.id }} h1 {
+    max-width: 10ch;
+    margin: 0;
+    font-size: clamp(3.2rem, 7.2vw, 7.8rem);
+    font-weight: 400;
+    line-height: .88;
+    letter-spacing: -.055em;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__text {
+    max-width: 34rem;
+    margin-top: 2rem;
+    font-size: clamp(.95rem, 1.2vw, 1.12rem);
+    line-height: 1.65;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 2.25rem;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__button,
+  #AtlasHero-{{ section.id }} .atlas-hero__text-link {
+    color: inherit;
+    font-size: .72rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__button {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 13rem;
+    gap: 2rem;
+    padding: 1rem 1.15rem;
+    color: var(--color-contrast);
+    background: var(--color-navy);
+    border: 1px solid var(--color-navy);
+    transition: background .25s ease, color .25s ease;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__button:hover {
+    color: var(--color-navy);
+    background: transparent;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__text-link {
+    border-bottom: 1px solid currentColor;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__coordinates {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 3rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-line);
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__coordinates div {
+    display: grid;
+    gap: .35rem;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__coordinates dt {
+    font-size: .58rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: .55;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__coordinates dd {
+    margin: 0;
+    font-size: .75rem;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__route {
+    position: absolute;
+    inset: 4% -5% auto 28%;
+    color: var(--color-accent);
+    opacity: .35;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__route svg {
+    width: 100%;
+    overflow: visible;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__route path {
+    stroke: currentColor;
+    stroke-width: 1;
+    stroke-dasharray: .015 .025;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__route circle {
+    fill: var(--color-background);
+    stroke: currentColor;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__visual {
+    position: relative;
+    min-height: 38rem;
+    margin: clamp(1rem, 2vw, 2rem);
+    overflow: hidden;
+    background: var(--color-navy);
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__media,
+  #AtlasHero-{{ section.id }} .atlas-hero__media :is(img, video, svg) {
+    width: 100%;
+    height: 100%;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__media :is(img, video) {
+    display: block;
+    object-fit: cover;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__plate {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .7rem .85rem;
+    color: var(--color-contrast);
+    background: color-mix(in srgb, var(--color-navy) 78%, transparent);
+    backdrop-filter: blur(8px);
+    font-size: .62rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__plate b {
+    width: .4rem;
+    height: .4rem;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+  #AtlasHero-{{ section.id }} .atlas-hero__caption {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    max-width: 16rem;
+    margin: 0;
+    color: var(--color-contrast);
+    font-size: .65rem;
+    line-height: 1.5;
+    letter-spacing: .08em;
+    text-align: right;
+    text-transform: uppercase;
+  }
+  @media (max-width: 899px) {
+    #AtlasHero-{{ section.id }} {
+      grid-template-columns: 1fr;
+    }
+    #AtlasHero-{{ section.id }} .atlas-hero__content {
+      min-height: 36rem;
+      padding: 4rem var(--page-margin) 2rem;
+    }
+    #AtlasHero-{{ section.id }} .atlas-hero__visual {
+      min-height: 72svh;
+      margin: 0 var(--page-margin) var(--page-margin);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #AtlasHero-{{ section.id }} video {
+      display: none;
+    }
+  }
+{% endstyle %}
+
+{% schema %}
+{
+  "name": "Atlas hero",
+  "tag": "section",
+  "class": "atlas-section",
+  "settings": [
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Odyssey Jewels · Cartographic Gallery" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Objects of place." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Jewels gathered along the world’s living routes, each one mapped to the hands and horizon that shaped it.</p>" },
+    { "type": "text", "id": "button_label", "label": "Primary button label", "default": "Enter the atlas" },
+    { "type": "url", "id": "button_link", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary link label", "default": "Trace the route" },
+    { "type": "url", "id": "secondary_link", "label": "Secondary link" },
+    { "type": "video", "id": "video", "label": "Shopify-hosted video" },
+    { "type": "image_picker", "id": "image", "label": "Shopify image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Handcrafted jewellery photographed on natural stone" },
+    { "type": "url", "id": "fallback_image_url", "label": "Demo image URL" },
+    { "type": "text", "id": "plate_label", "label": "Media plate label", "default": "Field image · South Pacific" },
+    { "type": "text", "id": "caption", "label": "Media caption", "default": "A singular object, documented at origin" },
+    { "type": "text", "id": "latitude", "label": "Latitude", "default": "17° 32′ S" },
+    { "type": "text", "id": "longitude", "label": "Longitude", "default": "149° 34′ W" },
+    { "type": "text", "id": "edition", "label": "Edition", "default": "V2 / 2026" }
+  ],
+  "presets": [{ "name": "Atlas hero" }]
+}
+{% endschema %}

@@ -1,19 +1,134 @@
-{% comment %}
-  This section is used in the 404 template to render page shown when customers
-  enter an invalid store URL.
+<section class="lost-map full-width" aria-labelledby="lost-map-title">
+  <div class="lost-map__chart" aria-hidden="true">
+    <span class="lost-map__latitude lost-map__latitude--one"></span>
+    <span class="lost-map__latitude lost-map__latitude--two"></span>
+    <span class="lost-map__longitude lost-map__longitude--one"></span>
+    <span class="lost-map__longitude lost-map__longitude--two"></span>
+    <span class="lost-map__compass">N</span>
+  </div>
+  <div class="lost-map__content" data-reveal>
+    <p class="eyebrow eyebrow--rule">{{ '404.eyebrow' | t }}</p>
+    <p class="lost-map__code" aria-hidden="true">{{ '404.title' | t }}</p>
+    <h1 id="lost-map-title">{{ '404.not_found' | t }}</h1>
+    <p class="lost-map__text">{{ '404.description' | t }}</p>
+    <div class="lost-map__actions">
+      <a class="button button--on-dark" href="{{ routes.all_products_collection_url }}">
+        {{ '404.back_to_shopping' | t }}
+      </a>
+      <a class="link-underline" href="{{ routes.root_url }}">{{ '404.back_home' | t }}</a>
+    </div>
+  </div>
+</section>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/404
-{% endcomment %}
+{% stylesheet %}
+  .lost-map {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 76svh;
+    padding: var(--section-spacing) var(--page-margin);
+    overflow: hidden;
+    color: var(--color-contrast);
+    background: var(--color-navy);
+  }
 
-<h1>{{ '404.title' | t }}</h1>
+  .lost-map__chart {
+    position: absolute;
+    inset: 0;
+    opacity: 0.2;
+  }
 
-<p>
-  {{ '404.not_found' | t }}
-</p>
+  .lost-map__chart span:not(.lost-map__compass) {
+    position: absolute;
+    display: block;
+    border: 1px solid var(--color-accent-soft);
+    border-radius: 50%;
+  }
 
-<a href="{{ routes.all_products_collection_url }}">
-  {{ '404.back_to_shopping' | t }}
-</a>
+  .lost-map__latitude {
+    left: 50%;
+    width: 110vw;
+    height: 35vh;
+    transform: translateX(-50%);
+  }
+
+  .lost-map__latitude--one {
+    top: 9%;
+  }
+
+  .lost-map__latitude--two {
+    bottom: 9%;
+  }
+
+  .lost-map__longitude {
+    top: 50%;
+    width: 35vw;
+    height: 110vh;
+    transform: translateY(-50%);
+  }
+
+  .lost-map__longitude--one {
+    left: 16%;
+  }
+
+  .lost-map__longitude--two {
+    right: 16%;
+  }
+
+  .lost-map__compass {
+    position: absolute;
+    top: var(--space-lg);
+    left: 50%;
+    font-family: var(--font-heading--family);
+    font-size: var(--text-lg);
+    transform: translateX(-50%);
+  }
+
+  .lost-map__content {
+    position: relative;
+    z-index: 1;
+    max-width: 48rem;
+    text-align: center;
+  }
+
+  .lost-map .eyebrow {
+    color: var(--color-accent-soft);
+  }
+
+  .lost-map__code {
+    margin-top: var(--space-md);
+    color: var(--color-accent);
+    font-family: var(--font-heading--family);
+    font-size: var(--text-hero);
+    font-style: italic;
+    line-height: 0.85;
+  }
+
+  .lost-map h1 {
+    margin-top: var(--space-sm);
+  }
+
+  .lost-map__text {
+    max-width: 42ch;
+    margin: var(--space-md) auto 0;
+    color: color-mix(in srgb, var(--color-contrast) 72%, transparent);
+    font-size: var(--text-lg);
+  }
+
+  .lost-map__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+  }
+
+  @media (max-width: 749px) {
+    .lost-map__actions {
+      flex-direction: column;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

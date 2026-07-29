@@ -1,31 +1,215 @@
-{% comment %}
-  This section is used in the blog template to render the blog page listing all
-  articles within a blog.
-
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/blog
-{% endcomment %}
-
-<h1>{{ blog.title }}</h1>
-
-{% paginate blog.articles by 5 %}
-  {% for article in blog.articles %}
+<section class="journal section-spacing">
+  <header class="journal__header" data-reveal>
     <div>
-      {% if article.image %}
-        {{ article.image | image_url: width: 1000 | image_tag }}
-      {% endif %}
-      <h2>
-        {{ article.title | link_to: article.url }}
-      </h2>
-      {% assign date = article.published_at | time_tag: format: 'date' %}
-      <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-      <p>{{ article.excerpt }}</p>
+      <p class="eyebrow eyebrow--rule">{{ 'blog.eyebrow' | t }}</p>
+      <h1>{{ blog.title | escape }}</h1>
     </div>
-  {% endfor %}
+    <p class="journal__introduction measure">{{ 'blog.introduction' | t }}</p>
+  </header>
 
-  {%- if paginate.pages > 1 -%}
-    {{- paginate | default_pagination -}}
-  {%- endif -%}
-{% endpaginate %}
+  {% paginate blog.articles by 9 %}
+    {% if blog.articles_count > 0 %}
+      <div class="journal__grid">
+        {% for article in blog.articles %}
+          <article class="journal-card" data-reveal style="--reveal-delay: {{ forloop.index0 | times: 0.06 }}s">
+            <a class="journal-card__media" href="{{ article.url }}" aria-label="{{ article.title | escape }}">
+              {% if article.image %}
+                {{
+                  article.image
+                  | image_url: width: 1200
+                  | image_tag:
+                    widths: '360, 540, 720, 960, 1200',
+                    sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw',
+                    loading: 'lazy',
+                    class: 'journal-card__image',
+                    alt: article.image.alt
+                }}
+              {% else %}
+                <span class="journal-card__placeholder" aria-hidden="true">
+                  <span>{{ 'blog.placeholder_mark' | t }}</span>
+                </span>
+              {% endif %}
+            </a>
+            <div class="journal-card__body">
+              <div class="journal-card__meta meta-label">
+                <span>{{ article.published_at | time_tag: format: 'date' }}</span>
+                {% if article.tags.size > 0 %}
+                  <span>{{ article.tags.first }}</span>
+                {% endif %}
+              </div>
+              <h2><a href="{{ article.url }}">{{ article.title | escape }}</a></h2>
+              <div class="journal-card__excerpt">
+                {% if article.excerpt != blank %}
+                  {{ article.excerpt | strip_html | truncatewords: 28 }}
+                {% else %}
+                  {{ article.content | strip_html | truncatewords: 28 }}
+                {% endif %}
+              </div>
+              <a class="link-underline" href="{{ article.url }}">{{ 'blog.read_story' | t }}</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="journal__empty text-center">
+        <p class="eyebrow">{{ 'blog.empty_eyebrow' | t }}</p>
+        <h2>{{ 'blog.empty_title' | t }}</h2>
+        <p>{{ 'blog.empty_text' | t }}</p>
+      </div>
+    {% endif %}
+
+    {% if paginate.pages > 1 %}
+      <nav class="journal__pagination" aria-label="{{ 'general.pagination' | t }}">
+        {{ paginate | default_pagination }}
+      </nav>
+    {% endif %}
+  {% endpaginate %}
+</section>
+
+{% stylesheet %}
+  .journal__header {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: var(--space-xl);
+    align-items: end;
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .journal__header h1 {
+    margin-top: var(--space-md);
+  }
+
+  .journal__introduction {
+    justify-self: end;
+    font-size: var(--text-lg);
+  }
+
+  .journal__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--space-xl) var(--space-md);
+  }
+
+  .journal-card {
+    grid-column: span 4;
+  }
+
+  .journal-card:nth-child(5n + 1),
+  .journal-card:nth-child(5n + 2) {
+    grid-column: span 6;
+  }
+
+  .journal-card__media {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    background: var(--color-navy);
+  }
+
+  .journal-card:nth-child(5n + 1) .journal-card__media,
+  .journal-card:nth-child(5n + 2) .journal-card__media {
+    aspect-ratio: 16 / 10;
+  }
+
+  .journal-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1s var(--ease);
+  }
+
+  .journal-card__media:hover .journal-card__image {
+    transform: scale(1.025);
+  }
+
+  .journal-card__placeholder {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    color: var(--color-accent-soft);
+    background:
+      linear-gradient(135deg, transparent 49.8%, color-mix(in srgb, var(--color-accent-soft) 22%, transparent) 50%, transparent 50.2%),
+      var(--color-navy);
+  }
+
+  .journal-card__placeholder span {
+    font-family: var(--font-heading--family);
+    font-size: var(--text-3xl);
+    font-style: italic;
+  }
+
+  .journal-card__body {
+    padding-top: var(--space-md);
+  }
+
+  .journal-card__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    color: var(--color-foreground-50);
+  }
+
+  .journal-card h2 {
+    margin-block: var(--space-sm);
+    font-size: var(--text-2xl);
+  }
+
+  .journal-card h2 a {
+    text-decoration: none;
+  }
+
+  .journal-card__excerpt {
+    margin-bottom: var(--space-md);
+  }
+
+  .journal__empty {
+    padding: var(--space-3xl) var(--space-md);
+    border: 1px solid var(--color-line);
+  }
+
+  .journal__empty h2 {
+    margin-block: var(--space-sm);
+  }
+
+  .journal__pagination {
+    margin-top: var(--space-2xl);
+    text-align: center;
+  }
+
+  @media (max-width: 989px) {
+    .journal-card,
+    .journal-card:nth-child(5n + 1),
+    .journal-card:nth-child(5n + 2) {
+      grid-column: span 6;
+    }
+
+    .journal-card__media,
+    .journal-card:nth-child(5n + 1) .journal-card__media,
+    .journal-card:nth-child(5n + 2) .journal-card__media {
+      aspect-ratio: 4 / 5;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .journal__header {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .journal__introduction {
+      justify-self: start;
+    }
+
+    .journal-card,
+    .journal-card:nth-child(5n + 1),
+    .journal-card:nth-child(5n + 2) {
+      grid-column: 1 / -1;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {

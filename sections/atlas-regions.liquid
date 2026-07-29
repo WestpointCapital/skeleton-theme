@@ -1,0 +1,317 @@
+<span id="AtlasRegions" class="atlas-regions-anchor" aria-hidden="true"></span>
+<section id="AtlasRegions-{{ section.id }}" class="atlas-regions" data-atlas-regions>
+  <header class="atlas-regions__header">
+    <div>
+      <p class="atlas-regions__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    {% if section.settings.intro != blank %}
+      <div class="atlas-regions__intro">{{ section.settings.intro }}</div>
+    {% endif %}
+  </header>
+
+  <div class="atlas-regions__body">
+    <div class="atlas-regions__map">
+      <svg class="atlas-regions__topography" viewBox="0 0 900 620" fill="none" aria-hidden="true">
+        <path d="M-44 478C85 370 102 126 270 131c134 5 94 225 244 214 115-9 146-196 388-206"/>
+        <path d="M-61 522C99 425 118 177 278 176c119-1 101 216 237 212 151-5 161-190 410-195"/>
+        <path d="M-77 570C100 482 163 242 306 229c112-10 99 195 225 202 142 8 210-152 413-153"/>
+        <path d="M15 63C179 30 248 87 316 68c101-28 156-91 296-52 87 24 145 69 283 37"/>
+      </svg>
+      <span class="atlas-regions__axis atlas-regions__axis--x" aria-hidden="true"></span>
+      <span class="atlas-regions__axis atlas-regions__axis--y" aria-hidden="true"></span>
+      {% for block in section.blocks %}
+        <article class="atlas-regions__panel{% if forloop.first %} is-active{% endif %}" id="AtlasRegionPanel-{{ section.id }}-{{ forloop.index0 }}" data-atlas-panel {% unless forloop.first %}hidden{% endunless %}>
+          <div class="atlas-regions__media">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1500', sizes: '(min-width: 900px) 62vw, 100vw', alt: block.settings.title }}
+            {% elsif block.settings.fallback_image_url != blank %}
+              <img src="{{ block.settings.fallback_image_url }}" alt="{{ block.settings.title | escape }}" width="1400" height="900" loading="lazy">
+            {% else %}
+              {{ 'lifestyle-2' | placeholder_svg_tag }}
+            {% endif %}
+          </div>
+          <div class="atlas-regions__panel-card">
+            <span>{{ block.settings.coordinates }}</span>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.description }}</p>
+            {% if block.settings.link_label != blank %}
+              <a href="{{ block.settings.link | default: routes.all_products_collection_url }}">{{ block.settings.link_label }} <span aria-hidden="true">↗</span></a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <div class="atlas-regions__index" role="tablist" aria-label="{{ section.settings.heading | escape }}">
+      {% for block in section.blocks %}
+        <button
+          class="atlas-regions__tab{% if forloop.first %} is-active{% endif %}"
+          type="button"
+          role="tab"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-controls="AtlasRegionPanel-{{ section.id }}-{{ forloop.index0 }}"
+          data-atlas-tab="{{ forloop.index0 }}"
+          {{ block.shopify_attributes }}
+        >
+          <span class="atlas-regions__number">{{ forloop.index | prepend: '0' }}</span>
+          <span class="atlas-regions__tab-title">{{ block.settings.title }}</span>
+          <span class="atlas-regions__status">{{ block.settings.status }}</span>
+          <span class="atlas-regions__mark" aria-hidden="true">⌖</span>
+        </button>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% style %}
+  #AtlasRegions-{{ section.id }} {
+    padding: var(--section-spacing) max(var(--page-margin), calc((100vw - var(--page-width)) / 2));
+    color: var(--color-contrast);
+    background: var(--color-navy);
+    overflow: hidden;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__header {
+    display: grid;
+    grid-template-columns: 1fr minmax(17rem, .42fr);
+    gap: 3rem;
+    align-items: end;
+    margin-bottom: clamp(2.5rem, 5vw, 5rem);
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__eyebrow {
+    margin: 0 0 1rem;
+    color: var(--color-accent-soft);
+    font-size: .68rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  #AtlasRegions-{{ section.id }} h2 {
+    max-width: 10ch;
+    margin: 0;
+    font-size: clamp(2.8rem, 6vw, 6.6rem);
+    font-weight: 400;
+    line-height: .92;
+    letter-spacing: -.045em;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__intro {
+    color: color-mix(in srgb, var(--color-contrast) 70%, transparent);
+    line-height: 1.7;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(17rem, .7fr);
+    gap: clamp(1.5rem, 4vw, 5rem);
+    align-items: stretch;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__map {
+    position: relative;
+    min-height: clamp(31rem, 56vw, 45rem);
+    border: 1px solid color-mix(in srgb, var(--color-contrast) 20%, transparent);
+    overflow: hidden;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__topography {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__topography path {
+    stroke: color-mix(in srgb, var(--color-contrast) 38%, transparent);
+    stroke-width: 1;
+    stroke-dasharray: 3 8;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__axis {
+    position: absolute;
+    z-index: 2;
+    background: color-mix(in srgb, var(--color-contrast) 22%, transparent);
+    pointer-events: none;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__axis--x {
+    top: 50%;
+    inset-inline: 0;
+    height: 1px;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__axis--y {
+    left: 50%;
+    inset-block: 0;
+    width: 1px;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__panel {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity .45s ease;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__panel.is-active {
+    opacity: 1;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__panel[hidden] {
+    display: block;
+    visibility: hidden;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__media,
+  #AtlasRegions-{{ section.id }} .atlas-regions__media :is(img, svg) {
+    width: 100%;
+    height: 100%;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__media :is(img, svg) {
+    display: block;
+    object-fit: cover;
+    opacity: .66;
+    filter: saturate(.7);
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__panel-card {
+    position: absolute;
+    z-index: 3;
+    left: clamp(1rem, 3vw, 2.5rem);
+    bottom: clamp(1rem, 3vw, 2.5rem);
+    max-width: 22rem;
+    padding: 1.5rem;
+    color: var(--color-foreground);
+    background: var(--color-background);
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__panel-card > span {
+    font-size: .62rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    opacity: .55;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__panel-card h3 {
+    margin: .75rem 0;
+    font-size: clamp(1.8rem, 3vw, 3.2rem);
+    font-weight: 400;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__panel-card p {
+    margin: 0 0 1rem;
+    font-size: .88rem;
+    line-height: 1.6;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__panel-card a {
+    color: inherit;
+    font-size: .68rem;
+    letter-spacing: .11em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__index {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid color-mix(in srgb, var(--color-contrast) 22%, transparent);
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__tab {
+    display: grid;
+    grid-template-columns: 2rem 1fr auto 1.5rem;
+    gap: 1rem;
+    align-items: center;
+    min-height: 6.5rem;
+    padding: 1rem 0;
+    color: color-mix(in srgb, var(--color-contrast) 55%, transparent);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--color-contrast) 22%, transparent);
+    text-align: left;
+    cursor: pointer;
+    transition: color .25s ease, padding .25s ease;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__tab:hover,
+  #AtlasRegions-{{ section.id }} .atlas-regions__tab.is-active {
+    color: var(--color-contrast);
+    padding-inline: .75rem;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__number,
+  #AtlasRegions-{{ section.id }} .atlas-regions__status {
+    font-size: .62rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__tab-title {
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.45rem, 2.4vw, 2.2rem);
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__status {
+    text-align: right;
+  }
+  #AtlasRegions-{{ section.id }} .atlas-regions__mark {
+    color: var(--color-accent);
+    font-size: 1.2rem;
+    opacity: 0;
+  }
+  #AtlasRegions-{{ section.id }} .is-active .atlas-regions__mark {
+    opacity: 1;
+  }
+  @media (max-width: 899px) {
+    #AtlasRegions-{{ section.id }} .atlas-regions__header,
+    #AtlasRegions-{{ section.id }} .atlas-regions__body {
+      grid-template-columns: 1fr;
+    }
+    #AtlasRegions-{{ section.id }} .atlas-regions__map {
+      min-height: 34rem;
+    }
+    #AtlasRegions-{{ section.id }} .atlas-regions__index {
+      order: -1;
+    }
+    #AtlasRegions-{{ section.id }} .atlas-regions__tab {
+      min-height: 4.5rem;
+    }
+  }
+{% endstyle %}
+
+<script>
+  (() => {
+    const root = document.getElementById('AtlasRegions-{{ section.id }}');
+    if (!root || root.dataset.ready === 'true') return;
+    root.dataset.ready = 'true';
+    const tabs = [...root.querySelectorAll('[data-atlas-tab]')];
+    const panels = [...root.querySelectorAll('[data-atlas-panel]')];
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((item, itemIndex) => {
+          const active = itemIndex === index;
+          item.classList.toggle('is-active', active);
+          item.setAttribute('aria-selected', String(active));
+          panels[itemIndex].hidden = !active;
+          panels[itemIndex].classList.toggle('is-active', active);
+        });
+      });
+      tab.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+        event.preventDefault();
+        const direction = event.key === 'ArrowDown' ? 1 : -1;
+        tabs[(index + direction + tabs.length) % tabs.length].focus();
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Atlas regions",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Region index · 01—07" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Navigate by origin." },
+    { "type": "richtext", "id": "intro", "label": "Introduction", "default": "<p>Select a coordinate to enter its landscape, meet its makers and view the objects found there.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "region",
+      "name": "Region",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Region name", "default": "Oceania" },
+        { "type": "text", "id": "coordinates", "label": "Coordinates", "default": "17° 32′ S · 149° 34′ W" },
+        { "type": "text", "id": "status", "label": "Status", "default": "Open route" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Pearl, shell and silver objects shaped across the islands of the South Pacific." },
+        { "type": "image_picker", "id": "image", "label": "Shopify image" },
+        { "type": "url", "id": "fallback_image_url", "label": "Demo image URL" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Enter region" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "max_blocks": 7,
+  "presets": [{ "name": "Atlas regions", "blocks": [{ "type": "region" }, { "type": "region" }, { "type": "region" }] }]
+}
+{% endschema %}

@@ -1,17 +1,13 @@
 {% style %}
-  {% # Load all body font variations with display: swap %}
   {{ settings.type_primary_font | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-
-  {% # Load heading font variations %}
   {{ settings.type_heading_font | font_face: font_display: 'swap' }}
   {{ settings.type_heading_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
   {{ settings.type_heading_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
 
   :root {
-    /* Typography */
     --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
     --font-primary--style: {{ settings.type_primary_font.style }};
     --font-primary--weight: {{ settings.type_primary_font.weight }};
@@ -20,34 +16,26 @@
     --font-heading--weight: {{ settings.type_heading_font.weight }};
     --tracking-heading: {{ settings.type_heading_tracking }}px;
     --tracking-eyebrow: {{ settings.type_eyebrow_tracking }}px;
-
-    /* Type scale (fluid) */
-    --text-xs: 0.75rem;
+    --text-xs: 0.6875rem;
     --text-sm: 0.875rem;
     --text-base: 1rem;
     --text-lg: 1.125rem;
-    --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-    --text-2xl: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
-    --text-3xl: clamp(2rem, 1.5rem + 2.4vw, 3.25rem);
-    --text-4xl: clamp(2.6rem, 1.8rem + 4vw, 5rem);
-    --text-hero: clamp(3rem, 2rem + 6vw, 7rem);
-
-    /* Layout */
+    --text-xl: clamp(1.25rem, 1.08rem + 0.7vw, 1.625rem);
+    --text-2xl: clamp(1.75rem, 1.35rem + 1.6vw, 2.625rem);
+    --text-3xl: clamp(2.25rem, 1.55rem + 2.8vw, 3.75rem);
+    --text-4xl: clamp(3rem, 1.8rem + 4.8vw, 5.75rem);
+    --text-hero: clamp(3.75rem, 2rem + 7vw, 8rem);
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
-
-    /* Spacing scale */
-    --space-2xs: 0.5rem;
-    --space-xs: 0.75rem;
-    --space-sm: 1rem;
-    --space-md: 1.5rem;
-    --space-lg: 2.5rem;
-    --space-xl: 4rem;
-    --space-2xl: 6rem;
-    --space-3xl: 9rem;
-    --section-spacing: clamp(4rem, 2rem + 7vw, 9rem);
-
-    /* Colors */
+    --space-2xs: clamp(0.4rem, 0.35rem + 0.2vw, 0.5rem);
+    --space-xs: clamp(0.7rem, 0.62rem + 0.3vw, 0.875rem);
+    --space-sm: clamp(1rem, 0.85rem + 0.5vw, 1.25rem);
+    --space-md: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+    --space-lg: clamp(2.5rem, 1.8rem + 2.2vw, 3.75rem);
+    --space-xl: clamp(4rem, 2.6rem + 4.5vw, 6.5rem);
+    --space-2xl: clamp(6rem, 3.5rem + 7vw, 10rem);
+    --space-3xl: clamp(8rem, 4rem + 10vw, 14rem);
+    --section-spacing: clamp(5.5rem, 3rem + 8vw, 11rem);
     --color-background: {{ settings.background_color }};
     --color-foreground: {{ settings.foreground_color }};
     --color-navy: {{ settings.color_navy }};
@@ -57,14 +45,14 @@
     --color-foreground-50: color-mix(in srgb, var(--color-foreground) 50%, transparent);
     --color-foreground-12: color-mix(in srgb, var(--color-foreground) 12%, transparent);
     --color-line: color-mix(in srgb, var(--color-foreground) 14%, transparent);
-
-    /* Shape & motion */
+    --color-map-line: color-mix(in srgb, var(--color-accent) 30%, transparent);
+    --color-luminous: color-mix(in srgb, var(--color-accent-soft) 36%, transparent);
     --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
     --duration: 0.6s;
+    --focus-ring: 0 0 0 3px var(--color-background), 0 0 0 5px var(--color-accent);
   }
 
-  /* Tighter gutters on phones (never wider than the desktop setting) */
   @media (max-width: 749px) {
     :root {
       --page-margin: {{ settings.min_page_margin | at_most: 20 }}px;
