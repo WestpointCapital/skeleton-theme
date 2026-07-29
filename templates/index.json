@@ -6,15 +6,15 @@
         "kicker": "Odyssey Jewels",
         "heading": "Collect the world",
         "heading_italic": "One piece at a time.",
-        "text": "<p>Jewels gathered along the world’s living routes, each one mapped to the hands and horizon that shaped it.</p>",
-        "button_label": "Explore the collection",
+        "text": "<p>Jewellery chosen from makers around the world, with each piece reflecting the materials, traditions and character of where it was made.</p>",
+        "button_label": "Shop jewellery",
         "button_link": "",
-        "secondary_label": "Browse by region",
+        "secondary_label": "Explore by place",
         "secondary_link": "",
         "video_url": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4",
         "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg",
         "image_alt": "Handcrafted jewellery photographed on natural stone",
-        "caption": "Documented at origin"
+        "caption": "Made by hand, found around the world"
       }
     },
     "atlas_regions": {
@@ -25,10 +25,10 @@
           "settings": {
             "title": "Oceania",
             "coordinates": "17° 32′ S · 149° 34′ W",
-            "status": "Open route",
-            "description": "Pearl, shell and silver objects shaped across the islands of the South Pacific.",
+            "status": "Now available",
+            "description": "Pearls, shell and silver jewellery made across the islands of the South Pacific.",
             "fallback_image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85",
-            "link_label": "Enter region",
+            "link_label": "Shop Oceania",
             "link": ""
           }
         },
@@ -37,10 +37,10 @@
           "settings": {
             "title": "Asia",
             "coordinates": "13° 45′ N · 100° 30′ E",
-            "status": "Route forming",
-            "description": "Ancient metalwork routes, carved stones and contemporary ateliers from coast to highland.",
+            "status": "Coming soon",
+            "description": "Carved stones, fine metalwork and contemporary jewellery from makers across Asia.",
             "fallback_image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1800&q=85",
-            "link_label": "Preview region",
+            "link_label": "Explore Asia",
             "link": ""
           }
         },
@@ -49,10 +49,10 @@
           "settings": {
             "title": "The North",
             "coordinates": "68° 12′ N · 16° 06′ E",
-            "status": "Field research",
-            "description": "A coming chapter of quiet forms, mineral colour and work made under long northern light.",
+            "status": "In development",
+            "description": "Sculptural forms, mineral colour and jewellery shaped by the landscapes of the north.",
             "fallback_image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=85",
-            "link_label": "Join field notes",
+            "link_label": "Discover the North",
             "link": ""
           }
         }
@@ -60,8 +60,8 @@
       "block_order": ["oceania", "asia", "north"],
       "settings": {
         "eyebrow": "Regions",
-        "heading": "Navigate by origin.",
-        "intro": "<p>Select a region to enter its landscape, meet its makers and view the objects found there.</p>"
+        "heading": "Discover jewellery by place.",
+        "intro": "<p>From island pearls to hand-worked silver and carved stone, explore each collection through the places and people behind it.</p>"
       }
     },
     "atlas_collection": {
@@ -74,7 +74,7 @@
             "fallback_title": "Dragon Head Garnet Bangle",
             "fallback_price": "$1,200",
             "origin": "Oceania",
-            "badge": "One of one",
+            "badge": "One of a kind",
             "link": ""
           }
         },
@@ -96,7 +96,7 @@
             "fallback_title": "Silver Rope Heart Necklace",
             "fallback_price": "$1,540",
             "origin": "Oceania",
-            "badge": "One of one",
+            "badge": "One of a kind",
             "link": ""
           }
         },
@@ -115,10 +115,10 @@
       "block_order": ["object_1", "object_2", "object_3", "object_4"],
       "settings": {
         "eyebrow": "Current selection",
-        "heading": "Jewels with coordinates.",
-        "sold_label": "Archived",
-        "footer_note": "All objects are documented and dispatched with provenance notes.",
-        "link_label": "View complete catalogue",
+        "heading": "Pieces from around the world.",
+        "sold_label": "Sold out",
+        "footer_note": "Selected for their beauty, craftsmanship and connection to place.",
+        "link_label": "Shop all jewellery",
         "link": ""
       }
     },
@@ -128,37 +128,37 @@
         "trace_1": {
           "type": "note",
           "settings": {
-            "meta": "Trace point 01 · Material",
-            "heading": "Gathered with intent",
-            "text": "<p>Natural materials are selected in small quantities and recorded before the first cut is made.</p>"
+            "meta": "Materials",
+            "heading": "Chosen for character",
+            "text": "<p>We look for pearls, stones and metals with natural variation—details that make every finished piece feel individual.</p>"
           }
         },
         "trace_2": {
           "type": "note",
           "settings": {
-            "meta": "Trace point 02 · Hand",
-            "heading": "The maker remains visible",
-            "text": "<p>Tool marks, irregular edges and subtle variations are preserved as evidence of a human process.</p>"
+            "meta": "Craftsmanship",
+            "heading": "Made by hand",
+            "text": "<p>Small variations and subtle tool marks are part of the beauty. They show the hand of the person who made the piece.</p>"
           }
         },
         "trace_3": {
           "type": "note",
           "settings": {
-            "meta": "Trace point 03 · Passage",
-            "heading": "A record for the next keeper",
-            "text": "<p>Origin, material and workshop notes accompany each object so its route never becomes anonymous.</p>"
+            "meta": "Origin",
+            "heading": "A story worth knowing",
+            "text": "<p>We share what we know about the materials, maker and place behind each piece, so its story can travel with it.</p>"
           }
         }
       },
       "block_order": ["trace_1", "trace_2", "trace_3"],
       "settings": {
-        "eyebrow": "Field notes",
-        "heading": "The record travels with the object.",
-        "intro": "<p>Every jewel enters our atlas with a documented route: material, maker, place and the marks left by hand.</p>",
+        "eyebrow": "Behind the jewellery",
+        "heading": "Every piece begins somewhere.",
+        "intro": "<p>We choose jewellery for more than its beauty. The materials, the maker and the place it comes from all matter.</p>",
         "fallback_image_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/c5/c9/dd/ab/42/v1_E10/E106A9NY.jpg?w=1200&cf_fit=scale-down&q=85&format=auto&s=64c9ceadfaa3bc0b2dec15753cd338845a015b366237552a5da1d7d0c623eafd",
-        "image_alt": "Jeweller shaping an object by hand",
-        "image_caption": "Workshop record · Hammering and finishing",
-        "link_label": "Read our sourcing charter",
+        "image_alt": "Jeweller shaping a piece by hand",
+        "image_caption": "At the maker’s bench",
+        "link_label": "How we choose our jewellery",
         "link": ""
       }
     },
@@ -171,8 +171,8 @@
             "name": "Tehani",
             "place": "Raiatea",
             "practice": "Pearl setting · 22 years",
-            "text": "<p>Her settings follow the small irregularities of each pearl, preserving the character the lagoon gave it.</p>",
-            "link_label": "Open field portrait",
+            "text": "<p>Tehani works with the natural shape of every pearl, creating settings that preserve the character it developed in the lagoon.</p>",
+            "link_label": "Meet Tehani",
             "link": ""
           }
         },
@@ -182,21 +182,21 @@
             "name": "Matiu",
             "place": "Aotearoa",
             "practice": "Carving · Second generation",
-            "text": "<p>Material, story and intended wearer are considered together before a line is drawn or a surface touched.</p>",
-            "link_label": "Open field portrait",
+            "text": "<p>Before Matiu begins carving, he considers the material, the story it carries and the person who may one day wear it.</p>",
+            "link_label": "Meet Matiu",
             "link": ""
           }
         }
       },
       "block_order": ["artisan_1", "artisan_2"],
       "settings": {
-        "eyebrow": "People / Place / Practice",
-        "heading": "Made where the map becomes personal.",
-        "intro": "<p>Our atlas is not a list of destinations. It is a record of relationships built slowly, workshop by workshop.</p>",
+        "eyebrow": "Meet the makers",
+        "heading": "Made by people, not production lines.",
+        "intro": "<p>We work with independent jewellers and small workshops, building relationships that let us understand how—and why—each piece is made.</p>",
         "fallback_image_url": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=2000&q=85",
         "image_alt": "Coastal landscape near an artisan workshop",
         "coordinates": "16° 30′ S · 151° 45′ W",
-        "caption": "The lagoon road to the workshop · Society Islands"
+        "caption": "On the way to the workshop · Society Islands"
       }
     },
     "atlas_journal": {
@@ -206,11 +206,11 @@
           "type": "entry",
           "settings": {
             "fallback_image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1400&q=85",
-            "fallback_title": "The lagoon as a material archive",
-            "excerpt": "On light, nacre and the changing character of pearls raised in moving water.",
+            "fallback_title": "How the lagoon shapes a pearl",
+            "excerpt": "A closer look at the light, water and time behind the colour and character of every pearl.",
             "date": "30.07.2026",
-            "category": "Field notes",
-            "issue": "Dispatch 01",
+            "category": "Pearls",
+            "issue": "Story 01",
             "link": ""
           }
         },
@@ -218,11 +218,11 @@
           "type": "entry",
           "settings": {
             "fallback_image_url": "https://images.unsplash.com/photo-1459908676235-d5f02a50184b?auto=format&fit=crop&w=1400&q=85",
-            "fallback_title": "Why the tool mark stays",
-            "excerpt": "A workshop conversation about finish, imperfection and the evidence of hand.",
+            "fallback_title": "The beauty of the maker’s mark",
+            "excerpt": "Why small variations and traces of the hand are worth keeping in a finished piece.",
             "date": "18.07.2026",
             "category": "Workshop",
-            "issue": "Dispatch 02",
+            "issue": "Story 02",
             "link": ""
           }
         },
@@ -230,35 +230,35 @@
           "type": "entry",
           "settings": {
             "fallback_image_url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85",
-            "fallback_title": "The next coordinate: north",
-            "excerpt": "A first route sketch for a chapter shaped by mineral colour and long light.",
+            "fallback_title": "Where we’re going next: the North",
+            "excerpt": "A first look at the makers, materials and landscapes inspiring our northern collection.",
             "date": "02.07.2026",
-            "category": "Release log",
-            "issue": "Route 03",
+            "category": "Coming soon",
+            "issue": "Story 03",
             "link": ""
           }
         }
       },
       "block_order": ["entry_1", "entry_2", "entry_3"],
       "settings": {
-        "eyebrow": "Journal / Dispatches / Releases",
-        "heading": "New entries from the field.",
-        "read_label": "Read dispatch",
-        "link_label": "Open the journal",
+        "eyebrow": "Stories from around the world",
+        "heading": "Places, people and jewellery.",
+        "read_label": "Read the story",
+        "link_label": "View all stories",
         "link": ""
       }
     },
     "atlas_signup": {
       "type": "atlas-signup",
       "settings": {
-        "eyebrow": "Join the next route",
-        "heading": "Receive coordinates before release.",
-        "text": "<p>Private field dispatches, first access to singular objects and invitations to new regional chapters.</p>",
+        "eyebrow": "Stay in touch",
+        "heading": "A world of jewellery, in your inbox.",
+        "text": "<p>Be the first to see new pieces, meet the makers behind them and hear where we’re travelling next.</p>",
         "email_label": "Your email address",
         "placeholder": "collector@example.com",
-        "button_label": "Join the atlas",
-        "success_message": "Your coordinates are recorded. Welcome to the atlas.",
-        "note": "No noise. Only meaningful dispatches."
+        "button_label": "Sign me up",
+        "success_message": "You’re on the list. We’ll be in touch soon.",
+        "note": "New jewellery and stories, sent occasionally."
       }
     }
   },

@@ -14,10 +14,10 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "tagline": "Travel the world, collect the world",
-        "blurb": "One-of-a-kind treasures gathered from artisans across the globe. Each piece carries the story of where it came from.",
+        "tagline": "Jewellery from around the world",
+        "blurb": "Jewellery chosen from independent makers around the world. Each piece is selected for its beauty, craftsmanship and connection to place.",
         "show_newsletter": true,
-        "newsletter_title": "Dispatches from the collecting road",
+        "newsletter_title": "New pieces and stories, from time to time",
         "newsletter_placeholder": "Your email address",
         "coordinates": "40.7128° N · 74.0060° W",
         "show_payment_icons": true
