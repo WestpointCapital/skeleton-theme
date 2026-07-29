@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "atlas_hero": {
@@ -11,9 +20,9 @@
         "button_link": "",
         "secondary_label": "Browse by region",
         "secondary_link": "",
-        "video_url": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4",
-        "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg",
+        "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_awa_be_essence_motion_film06_10s_16x9_Gemini/mp4_720p",
         "image_alt": "Handcrafted jewellery photographed on natural stone",
+        "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg",
         "caption": "Documented at origin"
       }
     },
@@ -57,7 +66,11 @@
           }
         }
       },
-      "block_order": ["oceania", "asia", "north"],
+      "block_order": [
+        "oceania",
+        "asia",
+        "north"
+      ],
       "settings": {
         "eyebrow": "Regions",
         "heading": "Navigate by origin.",
@@ -70,6 +83,7 @@
         "object_1": {
           "type": "object",
           "settings": {
+            "product": "",
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a355/1KvGspbVz7FB-vNaVmuMs_1PMtu5Fl.jpg",
             "fallback_title": "Dragon Head Garnet Bangle",
             "fallback_price": "$1,200",
@@ -81,6 +95,7 @@
         "object_2": {
           "type": "object",
           "settings": {
+            "product": "",
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa43ef7/MeBlaZ9fcF1eV-EpztFDK_C7MMfBhB.jpg",
             "fallback_title": "Peach Baroque Pearl Necklace",
             "fallback_price": "$980",
@@ -92,6 +107,7 @@
         "object_3": {
           "type": "object",
           "settings": {
+            "product": "",
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a035/_vPx06A9yHfRFH2-_-MfC_T6W1QA3Z.jpg",
             "fallback_title": "Silver Rope Heart Necklace",
             "fallback_price": "$1,540",
@@ -103,6 +119,7 @@
         "object_4": {
           "type": "object",
           "settings": {
+            "product": "",
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa43e65/UYxn4eeG2gPYcD3XVIq2y_kulxxVs7.jpg",
             "fallback_title": "Pink Pearl Stud Earrings",
             "fallback_price": "$760",
@@ -112,10 +129,16 @@
           }
         }
       },
-      "block_order": ["object_1", "object_2", "object_3", "object_4"],
+      "block_order": [
+        "object_1",
+        "object_2",
+        "object_3",
+        "object_4"
+      ],
       "settings": {
         "eyebrow": "Current selection",
         "heading": "Jewels with coordinates.",
+        "collection": "",
         "sold_label": "Archived",
         "footer_note": "All objects are documented and dispatched with provenance notes.",
         "link_label": "View complete catalogue",
@@ -150,7 +173,11 @@
           }
         }
       },
-      "block_order": ["trace_1", "trace_2", "trace_3"],
+      "block_order": [
+        "trace_1",
+        "trace_2",
+        "trace_3"
+      ],
       "settings": {
         "eyebrow": "Field notes",
         "heading": "The record travels with the object.",
@@ -188,7 +215,10 @@
           }
         }
       },
-      "block_order": ["artisan_1", "artisan_2"],
+      "block_order": [
+        "artisan_1",
+        "artisan_2"
+      ],
       "settings": {
         "eyebrow": "People / Place / Practice",
         "heading": "Made where the map becomes personal.",
@@ -205,6 +235,7 @@
         "entry_1": {
           "type": "entry",
           "settings": {
+            "article": "",
             "fallback_image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1400&q=85",
             "fallback_title": "The lagoon as a material archive",
             "excerpt": "On light, nacre and the changing character of pearls raised in moving water.",
@@ -217,6 +248,7 @@
         "entry_2": {
           "type": "entry",
           "settings": {
+            "article": "",
             "fallback_image_url": "https://images.unsplash.com/photo-1459908676235-d5f02a50184b?auto=format&fit=crop&w=1400&q=85",
             "fallback_title": "Why the tool mark stays",
             "excerpt": "A workshop conversation about finish, imperfection and the evidence of hand.",
@@ -229,6 +261,7 @@
         "entry_3": {
           "type": "entry",
           "settings": {
+            "article": "",
             "fallback_image_url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85",
             "fallback_title": "The next coordinate: north",
             "excerpt": "A first route sketch for a chapter shaped by mineral colour and long light.",
@@ -239,7 +272,11 @@
           }
         }
       },
-      "block_order": ["entry_1", "entry_2", "entry_3"],
+      "block_order": [
+        "entry_1",
+        "entry_2",
+        "entry_3"
+      ],
       "settings": {
         "eyebrow": "Journal / Dispatches / Releases",
         "heading": "New entries from the field.",
