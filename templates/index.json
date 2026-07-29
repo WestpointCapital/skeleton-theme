@@ -3,20 +3,18 @@
     "atlas_hero": {
       "type": "atlas-hero",
       "settings": {
-        "kicker": "Odyssey Jewels · Cartographic Gallery",
-        "heading": "Objects of place.",
+        "kicker": "Odyssey Jewels",
+        "heading": "Collect the world",
+        "heading_italic": "One piece at a time.",
         "text": "<p>Jewels gathered along the world’s living routes, each one mapped to the hands and horizon that shaped it.</p>",
-        "button_label": "Enter the atlas",
+        "button_label": "Explore the collection",
         "button_link": "",
-        "secondary_label": "Trace the route",
+        "secondary_label": "Browse by region",
         "secondary_link": "",
+        "video_url": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4",
         "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg",
         "image_alt": "Handcrafted jewellery photographed on natural stone",
-        "plate_label": "Field image · South Pacific",
-        "caption": "A singular object, documented at origin",
-        "latitude": "17° 32′ S",
-        "longitude": "149° 34′ W",
-        "edition": "V2 / 2026"
+        "caption": "Documented at origin"
       }
     },
     "atlas_regions": {
@@ -61,9 +59,9 @@
       },
       "block_order": ["oceania", "asia", "north"],
       "settings": {
-        "eyebrow": "Region index · 01—07",
+        "eyebrow": "Regions",
         "heading": "Navigate by origin.",
-        "intro": "<p>Select a coordinate to enter its landscape, meet its makers and view the objects found there.</p>"
+        "intro": "<p>Select a region to enter its landscape, meet its makers and view the objects found there.</p>"
       }
     },
     "atlas_collection": {
@@ -75,7 +73,7 @@
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a355/1KvGspbVz7FB-vNaVmuMs_1PMtu5Fl.jpg",
             "fallback_title": "Dragon Head Garnet Bangle",
             "fallback_price": "$1,200",
-            "origin": "Oceania · 17° S",
+            "origin": "Oceania",
             "badge": "One of one",
             "link": ""
           }
@@ -86,8 +84,8 @@
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa43ef7/MeBlaZ9fcF1eV-EpztFDK_C7MMfBhB.jpg",
             "fallback_title": "Peach Baroque Pearl Necklace",
             "fallback_price": "$980",
-            "origin": "Oceania · 16° S",
-            "badge": "Field selection",
+            "origin": "Oceania",
+            "badge": "",
             "link": ""
           }
         },
@@ -97,7 +95,7 @@
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a035/_vPx06A9yHfRFH2-_-MfC_T6W1QA3Z.jpg",
             "fallback_title": "Silver Rope Heart Necklace",
             "fallback_price": "$1,540",
-            "origin": "Oceania · 18° S",
+            "origin": "Oceania",
             "badge": "One of one",
             "link": ""
           }
@@ -108,18 +106,16 @@
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa43e65/UYxn4eeG2gPYcD3XVIq2y_kulxxVs7.jpg",
             "fallback_title": "Pink Pearl Stud Earrings",
             "fallback_price": "$760",
-            "origin": "Oceania · 15° S",
-            "badge": "Field selection",
+            "origin": "Oceania",
+            "badge": "",
             "link": ""
           }
         }
       },
       "block_order": ["object_1", "object_2", "object_3", "object_4"],
       "settings": {
-        "eyebrow": "Collected objects · Current field selection",
+        "eyebrow": "Current selection",
         "heading": "Jewels with coordinates.",
-        "legend_one": "Available",
-        "legend_two": "One of one",
         "sold_label": "Archived",
         "footer_note": "All objects are documented and dispatched with provenance notes.",
         "link_label": "View complete catalogue",
@@ -156,14 +152,12 @@
       },
       "block_order": ["trace_1", "trace_2", "trace_3"],
       "settings": {
-        "eyebrow": "Field notes · Provenance ledger",
+        "eyebrow": "Field notes",
         "heading": "The record travels with the object.",
         "intro": "<p>Every jewel enters our atlas with a documented route: material, maker, place and the marks left by hand.</p>",
         "fallback_image_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/c5/c9/dd/ab/42/v1_E10/E106A9NY.jpg?w=1200&cf_fit=scale-down&q=85&format=auto&s=64c9ceadfaa3bc0b2dec15753cd338845a015b366237552a5da1d7d0c623eafd",
         "image_alt": "Jeweller shaping an object by hand",
-        "image_caption": "Workshop record · Hammering and finishing · 16:42 local time",
-        "stamp_top": "Verified origin",
-        "stamp_bottom": "Odyssey archive",
+        "image_caption": "Workshop record · Hammering and finishing",
         "link_label": "Read our sourcing charter",
         "link": ""
       }
@@ -264,7 +258,6 @@
         "placeholder": "collector@example.com",
         "button_label": "Join the atlas",
         "success_message": "Your coordinates are recorded. Welcome to the atlas.",
-        "coordinate": "59° 54′ N · 10° 45′ E",
         "note": "No noise. Only meaningful dispatches."
       }
     }

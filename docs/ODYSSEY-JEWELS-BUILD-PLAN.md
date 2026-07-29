@@ -64,16 +64,17 @@ V2 is a complete alternate concept for client presentation. It preserves the V1 
 - [x] Global design tokens retained from V1 palette with luminous gallery spacing/motion in `snippets/css-variables.liquid` and `assets/critical.css`.
 - [x] Theme version set to `2.0.0` in `config/settings_schema.json`.
 - [x] Accessible layout shell with skip link, main landmark, header/footer groups, and cart drawer mount in `layout/theme.liquid`.
-- [x] Asymmetric sticky header, announcement coordinates, transparent homepage overlay, and dialog mobile menu in `sections/header.liquid`.
-- [x] Lighter editorial footer with newsletter, link columns, coordinates, and payment icons in `sections/footer.liquid`.
+- [x] Opaque Pearl sticky header with dialog mobile menu in `sections/header.liquid` (transparent overlay removed in Restraint Pass).
+- [x] Lighter editorial footer with newsletter, link columns, and payment icons in `sections/footer.liquid`.
 - [x] Shared `assets/theme.js` behaviors: scroll reveals, header state, responsive video, menu/cart dialogs, AJAX add-to-cart, Theme Editor re-init, reduced-motion respect.
 
 #### Homepage
 - [x] New homepage composition in `templates/index.json`: hero → regions atlas → featured objects → field notes → artisans → journal → signup.
-- [x] `atlas-hero` sculptural product/media hero with route-line detail.
-- [x] `atlas-regions` interactive region index with tabbed map panels.
-- [x] `atlas-collection` catalog-aware featured objects with product pickers and presentation fallbacks.
-- [x] `atlas-field-notes`, `atlas-artisans`, `atlas-journal`, and `atlas-signup` storytelling modules.
+- [x] `atlas-hero` 45/55 split: copy left, Shopify-hosted / URL video right, headline “Collect the world / One piece at a time.”
+- [x] `atlas-regions` interactive region index with quieter inactive states and no topographic overlay clutter.
+- [x] `atlas-collection` catalog-aware featured objects without crosshairs; open grid with clearer title/price hierarchy.
+- [x] `atlas-field-notes`, `atlas-artisans`, `atlas-journal`, and `atlas-signup` storytelling modules calmed in Restraint Pass.
+- [x] Persistent body graph-paper removed from `assets/critical.css`; cartographic lines reserved for isolated moments.
 
 #### Commerce
 - [x] Shared primitives: `snippets/product-card.liquid`, `snippets/price.liquid`.

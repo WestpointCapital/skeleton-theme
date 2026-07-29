@@ -15,12 +15,6 @@
         {% else %}
           {{ 'lifestyle-2' | placeholder_svg_tag }}
         {% endif %}
-        <svg viewBox="0 0 640 420" fill="none" aria-hidden="true">
-          <circle cx="475" cy="119" r="31"/>
-          <circle cx="475" cy="119" r="12"/>
-          <path d="M475 0v238M356 119h238"/>
-          <path d="M-20 368C105 314 194 354 296 287c87-57 141-166 364-178"/>
-        </svg>
       </div>
       <figcaption>
         <span>{{ section.settings.coordinates }}</span>
@@ -55,10 +49,10 @@
   }
   #AtlasArtisans-{{ section.id }} .atlas-artisans__header {
     display: grid;
-    grid-template-columns: .45fr 1fr .7fr;
-    gap: clamp(1.5rem, 4vw, 5rem);
+    grid-template-columns: .4fr 1fr .75fr;
+    gap: clamp(1.5rem, 4vw, 4rem);
     align-items: start;
-    margin-bottom: clamp(3rem, 6vw, 6rem);
+    margin-bottom: clamp(2.5rem, 5vw, 5rem);
   }
   #AtlasArtisans-{{ section.id }} .atlas-artisans__header > p {
     margin: .55rem 0 0;
@@ -67,12 +61,12 @@
     text-transform: uppercase;
   }
   #AtlasArtisans-{{ section.id }} .atlas-artisans__header h2 {
-    max-width: 10ch;
+    max-width: 12ch;
     margin: 0;
-    font-size: clamp(2.8rem, 5.5vw, 6.2rem);
+    font-size: clamp(2.5rem, 4.8vw, 5rem);
     font-weight: 400;
-    line-height: .92;
-    letter-spacing: -.045em;
+    line-height: .95;
+    letter-spacing: -.04em;
   }
   #AtlasArtisans-{{ section.id }} .atlas-artisans__header > div {
     line-height: 1.7;
@@ -92,22 +86,11 @@
     overflow: hidden;
     background: var(--color-navy);
   }
-  #AtlasArtisans-{{ section.id }} .atlas-artisans__media > :is(img, svg:first-child) {
+  #AtlasArtisans-{{ section.id }} .atlas-artisans__media > :is(img, svg) {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-  }
-  #AtlasArtisans-{{ section.id }} .atlas-artisans__media > svg:last-child {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-  }
-  #AtlasArtisans-{{ section.id }} .atlas-artisans__media > svg:last-child :is(path, circle) {
-    stroke: color-mix(in srgb, var(--color-contrast) 65%, transparent);
-    stroke-width: 1;
   }
   #AtlasArtisans-{{ section.id }} figcaption {
     display: flex;
@@ -127,7 +110,7 @@
     border-top: 1px solid var(--color-line);
   }
   #AtlasArtisans-{{ section.id }} .atlas-person {
-    padding: 1.5rem 0 2rem;
+    padding: 1.35rem 0 1.75rem;
     border-bottom: 1px solid var(--color-line);
   }
   #AtlasArtisans-{{ section.id }} .atlas-person__head {
@@ -140,10 +123,10 @@
     text-transform: uppercase;
   }
   #AtlasArtisans-{{ section.id }} .atlas-person h3 {
-    margin: 1.5rem 0 .4rem;
-    font-size: clamp(2rem, 3.4vw, 3.7rem);
+    margin: 1.15rem 0 .35rem;
+    font-size: clamp(1.8rem, 2.8vw, 2.8rem);
     font-weight: 400;
-    line-height: .95;
+    line-height: .98;
   }
   #AtlasArtisans-{{ section.id }} .atlas-person__practice {
     margin: 0 0 1.25rem;

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Odyssey V2 — Restraint Pass Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;1,400&family=Jost:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-navy: #0E1E33;
+      --color-accent: #B76E79;
+      --color-accent-soft: #E7CFC9;
+      --color-background: #FAF7F2;
+      --color-foreground: #12263F;
+      --color-contrast: #FAF7F2;
+      --color-line: color-mix(in srgb, var(--color-foreground) 12%, transparent);
+      --font-heading--family: "Cormorant", Georgia, serif;
+      --font-primary--family: "Jost", system-ui, sans-serif;
+      --page-margin: clamp(1rem, 4vw, 3rem);
+      --page-width: 1440px;
+      --section-spacing: clamp(4rem, 8vw, 8rem);
+      --header-height: 5.5rem;
+      --ease: cubic-bezier(.22, 1, .36, 1);
+      --duration: .35s;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-primary--family);
+      background: var(--color-background);
+      color: var(--color-foreground);
+      line-height: 1.65;
+    }
+    a { color: inherit; }
+    img, video { max-width: 100%; display: block; }
+    .atlas-header { position: sticky; top: 0; z-index: 10; color: var(--color-foreground); }
+    .atlas-header__announcement {
+      display: flex; align-items: center; justify-content: center; height: 2.25rem;
+      color: var(--color-contrast); background: var(--color-navy);
+      font-size: .625rem; letter-spacing: .18em; text-transform: uppercase;
+    }
+    .atlas-header__bar {
+      display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;
+      min-height: var(--header-height); padding-inline: var(--page-margin);
+      background: var(--color-background); border-bottom: 1px solid var(--color-line);
+    }
+    .atlas-header__nav { display: flex; gap: 1.5rem; font-size: .6875rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    .atlas-header__brand { text-align: center; font-family: var(--font-heading--family); font-size: 1.35rem; letter-spacing: .28em; text-transform: uppercase; text-decoration: none; }
+    .atlas-header__tools { display: flex; justify-content: flex-end; gap: 1.25rem; font-size: .625rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+    .atlas-hero {
+      min-height: min(820px, calc(100svh - 7.75rem));
+      display: grid; grid-template-columns: .45fr .55fr;
+      border-bottom: 1px solid var(--color-line); overflow: hidden;
+    }
+    .atlas-hero__content { display: flex; align-items: center; padding: clamp(3.5rem, 7vw, 7rem) clamp(1.5rem, 5vw, 5rem); }
+    .atlas-hero__kicker { margin: 0 0 1.75rem; font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; }
+    .atlas-hero h1 { margin: 0; font-family: var(--font-heading--family); font-size: clamp(3.4rem, 6.8vw, 6.8rem); font-weight: 400; line-height: .92; letter-spacing: -.045em; }
+    .atlas-hero h1 em { display: block; font-style: italic; }
+    .atlas-hero__text { max-width: 28rem; margin-top: 1.75rem; opacity: .78; }
+    .atlas-hero__actions { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2.5rem; align-items: center; }
+    .atlas-hero__button {
+      display: inline-flex; justify-content: space-between; min-width: 12.5rem; gap: 2rem;
+      padding: 1rem 1.15rem; color: var(--color-contrast); background: var(--color-navy);
+      font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; text-decoration: none;
+    }
+    .atlas-hero__text-link { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; border-bottom: 1px solid currentColor; text-decoration: none; }
+    .atlas-hero__visual { position: relative; background: var(--color-navy); min-height: 100%; }
+    .atlas-hero__visual video, .atlas-hero__visual img { width: 100%; height: 100%; object-fit: cover; min-height: 38rem; }
+    .atlas-hero__caption { position: absolute; right: 1.5rem; bottom: 1.5rem; margin: 0; color: var(--color-contrast); font-size: .62rem; letter-spacing: .1em; text-transform: uppercase; text-align: right; max-width: 14rem; }
+    .atlas-collection { padding: var(--section-spacing) var(--page-margin); }
+    .atlas-collection__header { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 3rem; }
+    .atlas-collection__header p { margin: 0 0 1rem; font-size: .68rem; letter-spacing: .16em; text-transform: uppercase; }
+    .atlas-collection__header h2 { margin: 0; font-family: var(--font-heading--family); font-size: clamp(2.6rem, 4.8vw, 5rem); font-weight: 400; line-height: .95; }
+    .atlas-collection__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+    .atlas-object__media { display: block; aspect-ratio: 4/5; overflow: hidden; background: #ddd; }
+    .atlas-object__media img { width: 100%; height: 100%; object-fit: cover; }
+    .atlas-object__meta { padding-top: 1.15rem; }
+    .atlas-object__meta p { margin: 0 0 .45rem; color: var(--color-accent); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; }
+    .atlas-object__meta h3 { margin: 0; font-family: var(--font-heading--family); font-size: 1.3rem; font-weight: 400; }
+    .atlas-object__price { display: block; margin-top: .65rem; font-size: .72rem; opacity: .72; }
+    .note { padding: 1rem var(--page-margin); font-size: .75rem; opacity: .6; border-top: 1px solid var(--color-line); }
+    @media (max-width: 899px) {
+      .atlas-hero { grid-template-columns: 1fr; }
+      .atlas-hero__visual { order: -1; }
+      .atlas-hero__visual video, .atlas-hero__visual img { min-height: 68svh; }
+      .atlas-collection__grid { grid-template-columns: repeat(2, 1fr); }
+      .atlas-header__nav { display: none; }
+    }
+    @media (max-width: 599px) {
+      .atlas-collection__header { flex-direction: column; align-items: start; }
+    }
+  </style>
+</head>
+<body>
+  <header class="atlas-header">
+    <div class="atlas-header__announcement"><p>Complimentary worldwide shipping — Every jewel tells a story</p></div>
+    <div class="atlas-header__bar">
+      <nav class="atlas-header__nav"><a>Oceania</a><a>Asia</a><a>The North</a><a>Journal</a></nav>
+      <a class="atlas-header__brand" href="#">Odyssey</a>
+      <div class="atlas-header__tools"><a>Search</a><a>Cart 0</a></div>
+    </div>
+  </header>
+
+  <section class="atlas-hero">
+    <div class="atlas-hero__content">
+      <div>
+        <p class="atlas-hero__kicker">Odyssey Jewels</p>
+        <h1>Collect the world<em>One piece at a time.</em></h1>
+        <div class="atlas-hero__text">Jewels gathered along the world’s living routes, each one mapped to the hands and horizon that shaped it.</div>
+        <div class="atlas-hero__actions">
+          <a class="atlas-hero__button" href="#">Explore the collection <span>↗</span></a>
+          <a class="atlas-hero__text-link" href="#">Browse by region</a>
+        </div>
+      </div>
+    </div>
+    <div class="atlas-hero__visual">
+      <video autoplay muted loop playsinline poster="https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4" type="video/mp4">
+      </video>
+      <p class="atlas-hero__caption">Documented at origin</p>
+    </div>
+  </section>
+
+  <section class="atlas-collection">
+    <header class="atlas-collection__header">
+      <div>
+        <p>Current selection</p>
+        <h2>Jewels with coordinates.</h2>
+      </div>
+      <a href="#" style="font-size:.65rem;letter-spacing:.11em;text-transform:uppercase;border-bottom:1px solid currentColor;text-decoration:none">View complete catalogue →</a>
+    </header>
+    <div class="atlas-collection__grid">
+      <article class="atlas-object">
+        <a class="atlas-object__media"><img src="https://v3b.fal.media/files/b/0aa2a355/1KvGspbVz7FB-vNaVmuMs_1PMtu5Fl.jpg" alt=""></a>
+        <div class="atlas-object__meta"><p>Oceania</p><h3>Dragon Head Garnet Bangle</h3><span class="atlas-object__price">$1,200</span></div>
+      </article>
+      <article class="atlas-object">
+        <a class="atlas-object__media"><img src="https://v3b.fal.media/files/b/0aa43ef7/MeBlaZ9fcF1eV-EpztFDK_C7MMfBhB.jpg" alt=""></a>
+        <div class="atlas-object__meta"><p>Oceania</p><h3>Peach Baroque Pearl Necklace</h3><span class="atlas-object__price">$980</span></div>
+      </article>
+      <article class="atlas-object">
+        <a class="atlas-object__media"><img src="https://v3b.fal.media/files/b/0aa2a035/_vPx06A9yHfRFH2-_-MfC_T6W1QA3Z.jpg" alt=""></a>
+        <div class="atlas-object__meta"><p>Oceania</p><h3>Silver Rope Heart Necklace</h3><span class="atlas-object__price">$1,540</span></div>
+      </article>
+      <article class="atlas-object">
+        <a class="atlas-object__media"><img src="https://v3b.fal.media/files/b/0aa43e65/UYxn4eeG2gPYcD3XVIq2y_kulxxVs7.jpg" alt=""></a>
+        <div class="atlas-object__meta"><p>Oceania</p><h3>Pink Pearl Stud Earrings</h3><span class="atlas-object__price">$760</span></div>
+      </article>
+    </div>
+  </section>
+  <p class="note">Static restraint-pass mock for layout verification (opaque Pearl nav, video-right hero, no crosshairs, open product grid).</p>
+</body>
+</html>

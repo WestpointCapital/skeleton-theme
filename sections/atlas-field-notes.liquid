@@ -9,12 +9,9 @@
         {{ 'lifestyle-1' | placeholder_svg_tag }}
       {% endif %}
     </div>
-    <div class="atlas-notes__stamp">
-      <span>{{ section.settings.stamp_top }}</span>
-      <b aria-hidden="true">⌾</b>
-      <span>{{ section.settings.stamp_bottom }}</span>
-    </div>
-    <p>{{ section.settings.image_caption }}</p>
+    {% if section.settings.image_caption != blank %}
+      <p>{{ section.settings.image_caption }}</p>
+    {% endif %}
   </div>
 
   <div class="atlas-notes__content">
@@ -48,8 +45,7 @@
     display: grid;
     grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
     color: var(--color-foreground);
-    background: color-mix(in srgb, var(--color-background) 96%, var(--color-accent-soft));
-    border-block: 1px solid var(--color-line);
+    background: var(--color-background);
   }
   #AtlasNotes-{{ section.id }} .atlas-notes__visual {
     position: sticky;
@@ -67,43 +63,20 @@
   #AtlasNotes-{{ section.id }} .atlas-notes__image :is(img, svg) {
     display: block;
     object-fit: cover;
-    opacity: .88;
+    opacity: .92;
   }
   #AtlasNotes-{{ section.id }} .atlas-notes__visual > p {
     position: absolute;
     left: 1.5rem;
     bottom: 1.5rem;
-    max-width: 17rem;
+    max-width: 16rem;
     margin: 0;
     color: var(--color-contrast);
-    font-size: .62rem;
+    font-size: .6rem;
     line-height: 1.5;
     letter-spacing: .1em;
     text-transform: uppercase;
-  }
-  #AtlasNotes-{{ section.id }} .atlas-notes__stamp {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    display: grid;
-    place-items: center;
-    width: 7.5rem;
-    aspect-ratio: 1;
-    padding: .7rem;
-    color: var(--color-contrast);
-    border: 1px solid color-mix(in srgb, var(--color-contrast) 65%, transparent);
-    border-radius: 50%;
-    text-align: center;
-  }
-  #AtlasNotes-{{ section.id }} .atlas-notes__stamp span {
-    font-size: .52rem;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-  }
-  #AtlasNotes-{{ section.id }} .atlas-notes__stamp b {
-    color: var(--color-accent-soft);
-    font-size: 1.5rem;
-    font-weight: 400;
+    text-shadow: 0 .35rem 1rem color-mix(in srgb, var(--color-navy) 50%, transparent);
   }
   #AtlasNotes-{{ section.id }} .atlas-notes__content {
     padding: var(--section-spacing) clamp(1.25rem, 6vw, 6.5rem);
@@ -115,12 +88,12 @@
     text-transform: uppercase;
   }
   #AtlasNotes-{{ section.id }} h2 {
-    max-width: 9ch;
+    max-width: 11ch;
     margin: 0;
-    font-size: clamp(2.8rem, 5.5vw, 6rem);
+    font-size: clamp(2.5rem, 4.8vw, 5rem);
     font-weight: 400;
-    line-height: .94;
-    letter-spacing: -.045em;
+    line-height: .96;
+    letter-spacing: -.04em;
   }
   #AtlasNotes-{{ section.id }} .atlas-notes__intro {
     max-width: 34rem;
@@ -135,9 +108,9 @@
   }
   #AtlasNotes-{{ section.id }} .atlas-notes__entries li {
     display: grid;
-    grid-template-columns: 3rem 1fr;
+    grid-template-columns: 2.5rem 1fr;
     gap: 1.25rem;
-    padding: 1.75rem 0;
+    padding: 1.5rem 0;
     border-bottom: 1px solid var(--color-line);
   }
   #AtlasNotes-{{ section.id }} .atlas-notes__entries li > span,
@@ -200,9 +173,7 @@
     { "type": "image_picker", "id": "image", "label": "Shopify image" },
     { "type": "url", "id": "fallback_image_url", "label": "Demo image URL" },
     { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "Jeweller shaping an object by hand" },
-    { "type": "text", "id": "image_caption", "label": "Image caption", "default": "Workshop record · Hammering and finishing · 16:42 local time" },
-    { "type": "text", "id": "stamp_top", "label": "Stamp top", "default": "Verified origin" },
-    { "type": "text", "id": "stamp_bottom", "label": "Stamp bottom", "default": "Odyssey archive" },
+    { "type": "text", "id": "image_caption", "label": "Image caption", "default": "Workshop record · Hammering and finishing" },
     { "type": "text", "id": "link_label", "label": "Link label", "default": "Read our sourcing charter" },
     { "type": "url", "id": "link", "label": "Link" }
   ],
