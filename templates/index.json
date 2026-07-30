@@ -36,7 +36,8 @@
             "coordinates": "17° 32′ S · 149° 34′ W",
             "status": "Now available",
             "description": "Pearls, shell and silver jewellery made across the islands of the South Pacific.",
-            "fallback_image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85",
+            "video_url": "https://cdn.static.amplience.net/pandora/_vid/2026q2d_platform_summer_awa_be_essence_motion_film06_10s_16x9_gemini/09e5dc76-3ff9-41e4-9bd4-62f4972c1817/video/c6519469-04f2-4b24-94e0-e5ff3fcc64e4.mp4",
+            "fallback_image_url": "",
             "link_label": "Shop Oceania",
             "link": ""
           }
@@ -48,6 +49,7 @@
             "coordinates": "13° 45′ N · 100° 30′ E",
             "status": "Coming soon",
             "description": "Carved stones, fine metalwork and contemporary jewellery from makers across Asia.",
+            "video_url": "",
             "fallback_image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1800&q=85",
             "link_label": "Explore Asia",
             "link": ""
@@ -60,6 +62,7 @@
             "coordinates": "68° 12′ N · 16° 06′ E",
             "status": "In development",
             "description": "Sculptural forms, mineral colour and jewellery shaped by the landscapes of the north.",
+            "video_url": "",
             "fallback_image_url": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1800&q=85",
             "link_label": "Discover the North",
             "link": ""
