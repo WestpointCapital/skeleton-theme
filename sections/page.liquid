@@ -1,17 +1,88 @@
-{% comment %}
-  This section is used in the page template to render store pages like About us
-  or Contact us.
+<section class="page-main section-spacing">
+  <header class="page-main__header">
+    {% if section.settings.eyebrow != blank %}
+      <p class="eyebrow eyebrow--rule">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <h1>{{ page.title }}</h1>
+  </header>
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/page
-{% endcomment %}
+  <div class="page-main__content rte">
+    {{ page.content }}
+  </div>
 
-<h1>{{ page.title }}</h1>
+  {% if section.blocks.size > 0 %}
+    <div class="page-main__accordions">
+      {% for block in section.blocks %}
+        <div {{ block.shopify_attributes }}>
+          {% render 'accordion',
+            title: block.settings.title,
+            content: block.settings.content,
+            open: block.settings.open
+          %}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</section>
 
-{{ page.content }}
+{% stylesheet %}
+  .page-main {
+    max-width: 46rem;
+    margin-inline: auto;
+  }
+  .page-main__header {
+    display: grid;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+  }
+  .page-main__header h1 {
+    font-weight: 400;
+  }
+  .page-main__content {
+    font-size: var(--text-lg);
+    line-height: 1.75;
+  }
+  .page-main__accordions {
+    margin-top: var(--space-xl);
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.page",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Odyssey Jewels"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Question",
+          "default": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Answer",
+          "default": "<p>Answer</p>"
+        },
+        {
+          "type": "checkbox",
+          "id": "open",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

@@ -80,6 +80,32 @@
     ]
   },
   {
+    "name": "Brand assets",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 40,
+        "max": 220,
+        "step": 5,
+        "unit": "px",
+        "label": "Logo width",
+        "default": 120
+      },
+      {
+        "type": "checkbox",
+        "id": "cart_drawer_enabled",
+        "label": "Enable cart drawer",
+        "default": true
+      }
+    ]
+  },
+  {
     "name": "t:general.colors",
     "settings": [
       {

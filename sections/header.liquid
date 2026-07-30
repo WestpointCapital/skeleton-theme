@@ -83,7 +83,21 @@
     </a>
 
     <div class="hdr__side hdr__side--right">
-      <a class="hdr__icon" href="{{ routes.search_url }}" aria-label="Search">
+      <div class="hdr__search" data-predictive-search>
+        <label class="visually-hidden" for="HeaderSearch-{{ section.id }}">{{ 'search.title' | t }}</label>
+        <input
+          id="HeaderSearch-{{ section.id }}"
+          class="hdr__search-input"
+          type="search"
+          name="q"
+          data-search-input
+          placeholder="{{ 'search.placeholder' | t }}"
+          autocomplete="off"
+        >
+        <div class="hdr__search-results" data-search-results hidden></div>
+      </div>
+
+      <a class="hdr__icon hdr__icon--search-mobile" href="{{ routes.search_url }}" aria-label="{{ 'search.title' | t }}">
         <svg viewBox="0 0 24 24" fill="none" width="20" height="20" aria-hidden="true">
           <circle cx="11" cy="11" r="7.25" stroke="currentColor"/>
           <path d="m20.5 20.5-4-4" stroke="currentColor" stroke-linecap="round"/>
@@ -96,14 +110,17 @@
         </shopify-account>
       {% endif %}
 
-      <a class="hdr__icon hdr__cart" href="{{ routes.cart_url }}" aria-label="Cart">
+      <a
+        class="hdr__icon hdr__cart"
+        href="{{ routes.cart_url }}"
+        aria-label="{{ 'cart.title' | t }}"
+        {% if settings.cart_drawer_enabled %}data-cart-open{% endif %}
+      >
         <svg viewBox="0 0 24 24" fill="none" width="20" height="20" aria-hidden="true">
           <path d="M5 8h14l-1.1 11.05a1.5 1.5 0 0 1-1.5 1.45H7.6a1.5 1.5 0 0 1-1.5-1.45L5 8Z" stroke="currentColor"/>
           <path d="M8.5 10.5V6.75a3.5 3.5 0 0 1 7 0v3.75" stroke="currentColor" stroke-linecap="round"/>
         </svg>
-        {% if cart.item_count > 0 %}
-          <span class="hdr__cart-count">{{ cart.item_count }}</span>
-        {% endif %}
+        <span class="hdr__cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
       </a>
     </div>
   </div>
@@ -293,6 +310,42 @@
     justify-content: center;
     padding: 0 0.2rem;
   }
+  .hdr__cart-count[hidden] {
+    display: none;
+  }
+
+  .hdr__search {
+    position: relative;
+    min-width: 12rem;
+  }
+  .hdr__search-input {
+    width: 100%;
+    padding: 0.55rem 0.85rem;
+    border: 1px solid color-mix(in srgb, currentcolor 22%, transparent);
+    background: color-mix(in srgb, var(--color-background) 18%, transparent);
+    color: inherit;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+  }
+  .hdr__search-input::placeholder {
+    color: color-mix(in srgb, currentcolor 55%, transparent);
+  }
+  .hdr__search-results {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    width: min(22rem, 80vw);
+    max-height: 70vh;
+    overflow: auto;
+    background: var(--color-background);
+    color: var(--color-foreground);
+    border: 1px solid var(--color-line);
+    box-shadow: 0 18px 50px color-mix(in srgb, var(--color-navy) 16%, transparent);
+    z-index: 20;
+  }
+  .hdr__icon--search-mobile {
+    display: none;
+  }
 
   /* Burger — two lines, elegant */
   .hdr__burger {
@@ -427,6 +480,12 @@
   @media (max-width: 989px) {
     .hdr__nav {
       display: none;
+    }
+    .hdr__search {
+      display: none;
+    }
+    .hdr__icon--search-mobile {
+      display: inline-flex;
     }
     .hdr__burger {
       display: flex;

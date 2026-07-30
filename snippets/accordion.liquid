@@ -1,0 +1,63 @@
+{% doc %}
+  Renders a single accessible accordion item.
+
+  @param {string} title - Accordion heading
+  @param {string} content - HTML body content
+  @param {boolean} [open] - Whether the item starts open
+  @param {string} [class] - Optional extra class
+
+  @example
+  {% render 'accordion', title: 'Shipping', content: shipping_html %}
+{% enddoc %}
+
+{% if title != blank and content != blank %}
+  <details class="accordion {{ class }}"{% if open %} open{% endif %}>
+    <summary class="accordion__summary">
+      <span>{{ title }}</span>
+      <svg class="accordion__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </summary>
+    <div class="accordion__content rte">
+      {{ content }}
+    </div>
+  </details>
+{% endif %}
+
+{% stylesheet %}
+  .accordion {
+    border-top: 1px solid var(--color-line);
+  }
+  .accordion:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+  .accordion__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-block: 1.15rem;
+    list-style: none;
+    cursor: pointer;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .accordion__summary::-webkit-details-marker {
+    display: none;
+  }
+  .accordion__icon {
+    transition: transform var(--duration) var(--ease);
+    flex-shrink: 0;
+  }
+  .accordion[open] .accordion__icon {
+    transform: rotate(180deg);
+  }
+  .accordion__content {
+    padding-bottom: 1.25rem;
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: color-mix(in srgb, var(--color-foreground) 82%, transparent);
+  }
+{% endstylesheet %}

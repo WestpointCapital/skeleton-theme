@@ -1,0 +1,230 @@
+{% comment %}
+  AJAX cart drawer — luxury slide-over using native cart APIs.
+{% endcomment %}
+
+{% if settings.cart_drawer_enabled %}
+  <dialog
+    class="cart-drawer full-width"
+    data-cart-drawer
+    data-section-id="{{ section.id }}"
+    data-item-count="{{ cart.item_count }}"
+    aria-label="{{ 'cart.drawer_title' | t }}"
+  >
+    <div class="cart-drawer__panel">
+      <div class="cart-drawer__head">
+        <div>
+          <p class="eyebrow">{{ 'cart.drawer_title' | t }}</p>
+          <h2 class="cart-drawer__title">{{ 'cart.title' | t }}</h2>
+        </div>
+        <button type="button" class="cart-drawer__close" data-cart-close aria-label="{{ 'accessibility.close' | t }}">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+            <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      {% if cart.item_count == 0 %}
+        <div class="cart-drawer__empty">
+          <h3>{{ 'cart.empty' | t }}</h3>
+          <p>{{ 'cart.empty_subtext' | t }}</p>
+          <a class="button" href="{{ routes.all_products_collection_url }}" data-cart-close>
+            {{ 'general.continue_shopping' | t }}
+          </a>
+        </div>
+      {% else %}
+        <ul class="cart-drawer__items">
+          {% for item in cart.items %}
+            <li class="cart-drawer__item">
+              <a class="cart-drawer__media" href="{{ item.url }}">
+                {% if item.image %}
+                  {{
+                    item.image
+                    | image_url: width: 240
+                    | image_tag: loading: 'lazy', widths: '120, 180, 240', sizes: '72px', alt: item.image.alt | default: item.product.title
+                  }}
+                {% endif %}
+              </a>
+              <div class="cart-drawer__meta">
+                <a href="{{ item.url }}">{{ item.product.title }}</a>
+                {% unless item.product.has_only_default_variant %}
+                  <p class="cart-drawer__variant">{{ item.variant.title }}</p>
+                {% endunless %}
+                <div class="cart-drawer__qty">
+                  <button type="button" data-qty-change="{{ item.quantity | minus: 1 }}" data-line-key="{{ item.key }}" aria-label="{{ 'cart.update' | t }}">−</button>
+                  <span>{{ item.quantity }}</span>
+                  <button type="button" data-qty-change="{{ item.quantity | plus: 1 }}" data-line-key="{{ item.key }}" aria-label="{{ 'cart.update' | t }}">+</button>
+                </div>
+                <button type="button" class="cart-drawer__remove" data-cart-remove data-line-key="{{ item.key }}">
+                  {{ 'cart.remove' | t }}
+                </button>
+              </div>
+              <div class="cart-drawer__price">{{ item.final_line_price | money }}</div>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <div class="cart-drawer__foot">
+          <div class="cart-drawer__subtotal">
+            <span>{{ 'cart.subtotal' | t }}</span>
+            <strong>{{ cart.total_price | money }}</strong>
+          </div>
+          <p class="cart-drawer__note">{{ 'cart.taxes_shipping' | t }}</p>
+          <form action="{{ routes.cart_url }}" method="post">
+            <button class="button" type="submit" name="checkout">{{ 'cart.checkout' | t }}</button>
+          </form>
+          <a class="link-underline" href="{{ routes.cart_url }}">{{ 'cart.view_cart' | t }}</a>
+        </div>
+      {% endif %}
+    </div>
+  </dialog>
+{% endif %}
+
+{% stylesheet %}
+  .cart-drawer {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: color-mix(in srgb, var(--color-navy) 42%, transparent);
+    color: var(--color-foreground);
+  }
+  .cart-drawer::backdrop {
+    background: color-mix(in srgb, var(--color-navy) 42%, transparent);
+  }
+  .cart-drawer__panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    width: min(28rem, 100%);
+    height: 100%;
+    background: var(--color-background);
+    box-shadow: -24px 0 60px color-mix(in srgb, var(--color-navy) 18%, transparent);
+  }
+  .cart-drawer__head,
+  .cart-drawer__foot,
+  .cart-drawer__empty {
+    padding: var(--space-lg);
+  }
+  .cart-drawer__head {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-md);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .cart-drawer__title {
+    margin-top: 0.35rem;
+    font-size: var(--text-2xl);
+    font-weight: 400;
+  }
+  .cart-drawer__close {
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+  .cart-drawer__items {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-md) var(--space-lg);
+    overflow: auto;
+    flex: 1;
+    display: grid;
+    gap: var(--space-md);
+    align-content: start;
+  }
+  .cart-drawer__item {
+    display: grid;
+    grid-template-columns: 4.5rem 1fr auto;
+    gap: 0.85rem;
+  }
+  .cart-drawer__media {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--color-accent-soft) 40%, var(--color-background));
+  }
+  .cart-drawer__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .cart-drawer__meta a {
+    text-decoration: none;
+    font-family: var(--font-heading--family);
+    font-size: var(--text-lg);
+  }
+  .cart-drawer__variant,
+  .cart-drawer__note {
+    font-size: var(--text-xs);
+    color: var(--color-foreground-50);
+  }
+  .cart-drawer__qty {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-top: 0.55rem;
+  }
+  .cart-drawer__qty button,
+  .cart-drawer__remove {
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+  }
+  .cart-drawer__remove {
+    margin-top: 0.45rem;
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+  .cart-drawer__foot {
+    border-top: 1px solid var(--color-line);
+    display: grid;
+    gap: var(--space-sm);
+  }
+  .cart-drawer__subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: var(--text-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .cart-drawer__subtotal strong {
+    font-family: var(--font-heading--family);
+    font-size: var(--text-xl);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .cart-drawer__foot .button {
+    width: 100%;
+  }
+  .cart-drawer__empty {
+    display: grid;
+    gap: var(--space-sm);
+    align-content: center;
+    flex: 1;
+    text-align: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": [],
+  "enabled_on": {
+    "groups": ["footer"]
+  }
+}
+{% endschema %}

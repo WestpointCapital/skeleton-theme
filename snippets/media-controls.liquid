@@ -1,0 +1,50 @@
+{% doc %}
+  Renders play/pause and mute controls for a cinematic video section.
+
+  @param {boolean} [autoplay] - Whether the video starts playing (default true)
+  @param {boolean} [show_mute] - Whether to show the mute toggle (default true)
+
+  @example
+  {% render 'media-controls', autoplay: true %}
+{% enddoc %}
+
+{% liquid
+  assign autoplay = autoplay | default: true, allow_false: true
+  assign show_mute = show_mute | default: true, allow_false: true
+%}
+
+<div class="media-controls">
+  <button
+    class="media-controls__btn"
+    type="button"
+    data-video-play
+    data-state="{% if autoplay %}playing{% else %}paused{% endif %}"
+    aria-label="{{ 'accessibility.play_pause_video' | t }}"
+  >
+    <svg class="media-controls__icon media-controls__icon--pause" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="7.5" y="6" width="2.5" height="12" fill="currentColor"/>
+      <rect x="14" y="6" width="2.5" height="12" fill="currentColor"/>
+    </svg>
+    <svg class="media-controls__icon media-controls__icon--play" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor"/>
+    </svg>
+  </button>
+  {% if show_mute %}
+    <button
+      class="media-controls__btn"
+      type="button"
+      data-video-mute
+      data-state="muted"
+      aria-label="{{ 'accessibility.mute_unmute_video' | t }}"
+    >
+      <svg class="media-controls__icon media-controls__icon--muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/>
+        <path d="M16.5 9.5l4 4m0-4l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <svg class="media-controls__icon media-controls__icon--unmuted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/>
+        <path d="M16.5 8.5a5 5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+      </svg>
+    </button>
+  {% endif %}
+</div>

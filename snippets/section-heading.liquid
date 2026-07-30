@@ -1,0 +1,55 @@
+{% doc %}
+  Shared editorial section heading with optional eyebrow, italic line, and link.
+
+  @param {string} [eyebrow] - Eyebrow label
+  @param {string} [heading] - Main heading
+  @param {string} [heading_italic] - Italic second line
+  @param {string} [link_label] - Optional text link label
+  @param {string} [link_url] - Optional text link URL
+  @param {string} [heading_tag] - Heading element (default h2)
+  @param {string} [class] - Optional extra class
+
+  @example
+  {% render 'section-heading', eyebrow: 'Regions', heading: 'Where will you begin' %}
+{% enddoc %}
+
+{% liquid
+  assign tag = heading_tag | default: 'h2'
+%}
+
+<div class="section-heading {{ class }}">
+  {% if eyebrow != blank %}
+    <p class="eyebrow eyebrow--rule" data-reveal>{{ eyebrow }}</p>
+  {% endif %}
+  {% if heading != blank or heading_italic != blank %}
+    <{{ tag }} class="section-heading__title" data-reveal style="--reveal-delay: 0.1s">
+      {{ heading }}
+      {% if heading_italic != blank %}
+        <em>{{ heading_italic }}</em>
+      {% endif %}
+    </{{ tag }}>
+  {% endif %}
+  {% if link_label != blank %}
+    <a class="link-underline section-heading__link" href="{{ link_url | default: '#' }}" data-reveal style="--reveal-delay: 0.2s">
+      {{ link_label }}
+    </a>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .section-heading {
+    display: grid;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+  }
+  .section-heading__title {
+    margin: 0;
+    font-weight: 400;
+  }
+  .section-heading__title em {
+    display: block;
+  }
+  .section-heading__link {
+    justify-self: start;
+  }
+{% endstylesheet %}

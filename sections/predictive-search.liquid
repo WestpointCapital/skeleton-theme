@@ -1,0 +1,163 @@
+<div class="predictive-search">
+  {% if predictive_search.performed %}
+    {% if predictive_search.resources.products.size > 0 %}
+      <div class="ps__group">
+        <p class="ps__heading">{{ 'search.products' | t }}</p>
+        <ul class="ps__list">
+          {% for product in predictive_search.resources.products %}
+            <li>
+              <a href="{{ product.url }}" class="ps__item">
+                <div class="ps__thumb">
+                  {% if product.featured_media %}
+                    {{
+                      product.featured_media
+                      | image_url: width: 120
+                      | image_tag:
+                        loading: 'lazy',
+                        widths: '60, 120',
+                        sizes: '48px',
+                        alt: product.title
+                    }}
+                  {% endif %}
+                </div>
+                <div class="ps__meta">
+                  <span class="ps__title">{{ product.title }}</span>
+                  <span class="ps__price">{{ product.price | money }}</span>
+                </div>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if predictive_search.resources.articles.size > 0 %}
+      <div class="ps__group">
+        <p class="ps__heading">{{ 'search.articles' | t }}</p>
+        <ul class="ps__list">
+          {% for article in predictive_search.resources.articles %}
+            <li>
+              <a href="{{ article.url }}" class="ps__item ps__item--text">
+                {{ article.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if predictive_search.resources.pages.size > 0 %}
+      <div class="ps__group">
+        <p class="ps__heading">{{ 'search.pages' | t }}</p>
+        <ul class="ps__list">
+          {% for page in predictive_search.resources.pages %}
+            <li>
+              <a href="{{ page.url }}" class="ps__item ps__item--text">
+                {{ page.title }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% liquid
+      assign ps_total = predictive_search.resources.products.size | plus: predictive_search.resources.articles.size | plus: predictive_search.resources.pages.size
+    %}
+    {% if ps_total > 0 %}
+      <a href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&type=product,article,page" class="ps__view-all">
+        {{ 'search.view_all' | t }}
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
+          <path d="M4 12h15m0 0-5.5-5.5M19 12l-5.5 5.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    {% endif %}
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .predictive-search {
+    font-size: var(--text-sm);
+  }
+  .ps__group {
+    padding: 0.75rem 1rem;
+  }
+  .ps__group + .ps__group {
+    border-top: 1px solid var(--color-line);
+  }
+  .ps__heading {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-foreground-50);
+    margin-bottom: 0.65rem;
+  }
+  .ps__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+  .ps__item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.45rem 0;
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--duration) var(--ease);
+  }
+  .ps__item:hover { color: var(--color-accent); }
+  .ps__item--text { padding: 0.35rem 0; }
+  .ps__thumb {
+    flex-shrink: 0;
+    width: 3rem;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--color-accent-soft) 30%, var(--color-background));
+  }
+  .ps__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .ps__meta {
+    display: grid;
+    gap: 0.15rem;
+  }
+  .ps__title {
+    font-family: var(--font-heading--family);
+    font-size: var(--text-base);
+    line-height: 1.2;
+  }
+  .ps__price {
+    font-size: var(--text-xs);
+    letter-spacing: 0.04em;
+    color: var(--color-foreground-50);
+  }
+  .ps__view-all {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1rem;
+    border-top: 1px solid var(--color-line);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: inherit;
+    transition: color var(--duration) var(--ease);
+  }
+  .ps__view-all:hover { color: var(--color-accent); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Predictive search",
+  "settings": []
+}
+{% endschema %}

@@ -18,6 +18,11 @@
     assign img_alt = section.settings.image_2 | image_url: width: 900
   endif
 
+  assign has_visual_video = false
+  if section.settings.visual_video != blank or section.settings.visual_video_url != blank
+    assign has_visual_video = true
+  endif
+
   assign has_stats = false
   if section.settings.stat_1_value != blank or section.settings.stat_2_value != blank or section.settings.stat_3_value != blank
     assign has_stats = true
@@ -35,12 +40,23 @@
         <span class="meta-label story__vertical">{{ section.settings.vertical_label }}</span>
       {% endif %}
 
-      <div class="story__media">
+      <div class="story__media"{% if has_visual_video %} data-video-section{% endif %}>
         <div class="story__frame" aria-hidden="true"></div>
 
         <div class="story__images">
           <div class="story__main">
-            <img src="{{ img_main }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="2000">
+            {% if has_visual_video %}
+              {% render 'responsive-bg-video',
+                classes: 'story__video',
+                desktop_video: section.settings.visual_video,
+                desktop_url: section.settings.visual_video_url,
+                poster: img_main,
+                autoplay: true,
+                lazy: true
+              %}
+            {% else %}
+              <img src="{{ img_main }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="1600" height="2000">
+            {% endif %}
           </div>
 
           {% if img_alt != blank %}
@@ -221,7 +237,8 @@
   .story__main {
     overflow: hidden;
   }
-  .story__main img {
+  .story__main img,
+  .story__video {
     display: block;
     width: 100%;
     max-width: 100%;
@@ -547,6 +564,18 @@
       "id": "image_2_url",
       "label": "Inset image URL (fallback)",
       "default": "https://images.unsplash.com/photo-1468413253725-0d5181091126?auto=format&fit=crop&w=900&q=80"
+    },
+    {
+      "type": "video",
+      "id": "visual_video",
+      "label": "Visual video (upload)",
+      "info": "Optional video for the main visual. When set, replaces the main image."
+    },
+    {
+      "type": "text",
+      "id": "visual_video_url",
+      "label": "Visual video URL (mp4)",
+      "info": "Used only if no uploaded video is set."
     },
     {
       "type": "text",

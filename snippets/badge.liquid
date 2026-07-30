@@ -1,0 +1,46 @@
+{% doc %}
+  Renders a small status or collection badge.
+
+  @param {string} text - Badge label
+  @param {string} [style] - Optional style: accent | soft | dark | gone
+  @param {string} [class] - Optional extra class
+
+  @example
+  {% render 'badge', text: 'One of a kind', style: 'accent' %}
+{% enddoc %}
+
+{% if text != blank %}
+  <span class="badge badge--{{ style | default: 'soft' }} {{ class }}">{{ text }}</span>
+{% endif %}
+
+{% stylesheet %}
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    line-height: 1;
+    border: 1px solid transparent;
+  }
+  .badge--accent {
+    color: var(--color-contrast);
+    background: var(--color-accent);
+  }
+  .badge--soft {
+    color: var(--color-navy);
+    background: var(--color-accent-soft);
+  }
+  .badge--dark {
+    color: var(--color-contrast);
+    background: color-mix(in srgb, var(--color-navy) 72%, transparent);
+    border-color: color-mix(in srgb, var(--color-contrast) 25%, transparent);
+    backdrop-filter: blur(6px);
+  }
+  .badge--gone {
+    color: var(--color-contrast);
+    background: var(--color-navy);
+  }
+{% endstylesheet %}

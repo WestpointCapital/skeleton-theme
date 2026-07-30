@@ -1,0 +1,62 @@
+{% doc %}
+  Renders a product or variant price with optional compare-at.
+
+  @param {product} [product] - Product to price
+  @param {variant} [variant] - Optional specific variant
+  @param {string} [class] - Optional extra class
+
+  @example
+  {% render 'price', product: product %}
+{% enddoc %}
+
+{% liquid
+  assign target = variant | default: product.selected_or_first_available_variant | default: product
+  assign price = target.price
+  assign compare = target.compare_at_price
+  assign on_sale = false
+  if compare > price
+    assign on_sale = true
+  endif
+%}
+
+<div class="price{% if on_sale %} price--sale{% endif %} {{ class }}">
+  {% if on_sale %}
+    <span class="price__compare">
+      <span class="visually-hidden">{{ 'products.price.regular' | t }}</span>
+      <s>{{ compare | money }}</s>
+    </span>
+  {% endif %}
+  <span class="price__current">
+    <span class="visually-hidden">{{ 'products.price.sale' | t }}</span>
+    {{ price | money }}
+  </span>
+  {% if product != blank and product.price_varies and variant == blank %}
+    <span class="price__from">{{ 'products.price.from' | t }}</span>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .price {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+    font-size: var(--text-sm);
+    letter-spacing: 0.04em;
+  }
+  .price__compare {
+    color: var(--color-foreground-50);
+  }
+  .price__current {
+    font-weight: 500;
+  }
+  .price--sale .price__current {
+    color: var(--color-accent);
+  }
+  .price__from {
+    font-size: var(--text-xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-foreground-50);
+  }
+{% endstylesheet %}

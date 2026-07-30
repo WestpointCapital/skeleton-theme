@@ -1,9 +1,8 @@
 {% comment %}
-  Cinematic video storytelling section — built for telling collection and
-  brand stories. Two layouts:
-    • Overlay — full-bleed video with an editorial text block over a scrim.
-    • Split   — video on one side, a quiet text column on the other.
-  Video can autoplay muted on loop, or wait behind a poster until pressed.
+  V3 cinematic video storytelling section — overlay or split layout.
+  Uses media-controls snippet, tokenised scrim via color-mix,
+  optional chapter numeral / vertical label, and lazy video for
+  non-hero instances.
 {% endcomment %}
 
 {% liquid
@@ -16,14 +15,27 @@
   if section.settings.video != blank or section.settings.video_url != blank or section.settings.video_mobile != blank or section.settings.video_mobile_url != blank
     assign has_video = true
   endif
+
+  assign use_lazy = false
+  if section.settings.autoplay and section.index > 1
+    assign use_lazy = true
+  endif
 %}
 
 <section
   class="vstory full-width vstory--{{ section.settings.layout }} vstory--media-{{ section.settings.media_position }} vstory--align-{{ section.settings.text_align }}{% if section.settings.dark %} on-dark{% endif %}"
-  style="--scrim: {{ section.settings.scrim_strength }}%;"
+  style="--scrim: {{ section.settings.scrim_strength }};"
 >
+  {% if section.settings.chapter != blank %}
+    <span class="vstory__ghost" aria-hidden="true">{{ section.settings.chapter }}</span>
+  {% endif %}
+
   <div class="vstory__grid">
     <div class="vstory__media vstory--h-{{ section.settings.height }}" {% if has_video %}data-video-section{% endif %}>
+      {% if section.settings.vertical_label != blank and section.settings.layout == 'overlay' %}
+        <span class="meta-label vstory__vertical">{{ section.settings.vertical_label }}</span>
+      {% endif %}
+
       {% if has_video %}
         {% render 'responsive-bg-video',
           classes: 'vstory__bg',
@@ -32,7 +44,8 @@
           mobile_video: section.settings.video_mobile,
           mobile_url: section.settings.video_mobile_url,
           poster: poster,
-          autoplay: section.settings.autoplay
+          autoplay: section.settings.autoplay,
+          lazy: use_lazy
         %}
       {% else %}
         <img class="vstory__bg" src="{{ poster }}" alt="{{ section.settings.heading | escape }}" loading="lazy" width="2000" height="1200">
@@ -43,29 +56,7 @@
       {% endif %}
 
       {% if has_video and section.settings.show_controls %}
-        <div class="media-controls">
-          <button class="media-controls__btn" type="button" data-video-play data-state="{% if section.settings.autoplay %}playing{% else %}paused{% endif %}" aria-label="Play or pause video">
-            <svg class="media-controls__icon media-controls__icon--pause" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <rect x="7.5" y="6" width="2.5" height="12" fill="currentColor"/>
-              <rect x="14" y="6" width="2.5" height="12" fill="currentColor"/>
-            </svg>
-            <svg class="media-controls__icon media-controls__icon--play" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M8 5.5v13l11-6.5-11-6.5Z" fill="currentColor"/>
-            </svg>
-          </button>
-          {% if section.settings.autoplay %}
-            <button class="media-controls__btn" type="button" data-video-mute data-state="muted" aria-label="Mute or unmute video">
-              <svg class="media-controls__icon media-controls__icon--muted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/>
-                <path d="M16.5 9.5l4 4m0-4l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-              </svg>
-              <svg class="media-controls__icon media-controls__icon--unmuted" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M4 9v6h4l5 4V5L8 9H4Z" fill="currentColor"/>
-                <path d="M16.5 8.5a5 5 0 0 1 0 7M18.5 6a8 8 0 0 1 0 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>
-              </svg>
-            </button>
-          {% endif %}
-        </div>
+        {% render 'media-controls', autoplay: section.settings.autoplay %}
       {% endif %}
 
       {% if section.settings.layout == 'overlay' %}
@@ -77,6 +68,9 @@
 
     {% if section.settings.layout == 'split' %}
       <div class="vstory__content vstory__content--split">
+        {% if section.settings.vertical_label != blank %}
+          <span class="meta-label vstory__vertical vstory__vertical--split">{{ section.settings.vertical_label }}</span>
+        {% endif %}
         {% render 'vstory-copy', s: section.settings %}
       </div>
     {% endif %}
@@ -88,6 +82,22 @@
     position: relative;
     overflow: hidden;
   }
+
+  .vstory__ghost {
+    position: absolute;
+    top: 0.02em;
+    right: 2vw;
+    font-family: var(--font-heading--family);
+    font-style: italic;
+    font-size: clamp(10rem, 22vw, 28rem);
+    line-height: 0.8;
+    color: var(--color-contrast);
+    opacity: 0.04;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+  .on-dark .vstory__ghost { opacity: 0.05; }
 
   .vstory__media {
     position: relative;
@@ -108,11 +118,34 @@
     inset: 0;
     background: linear-gradient(
       to top,
-      rgba(14, 30, 51, calc(var(--scrim) / 100)) 0%,
-      rgba(14, 30, 51, calc(var(--scrim) / 100 * 0.35)) 40%,
+      color-mix(in srgb, var(--color-navy) calc(var(--scrim) * 1%), transparent) 0%,
+      color-mix(in srgb, var(--color-navy) calc(var(--scrim) * 0.35%), transparent) 40%,
       transparent 72%
     );
     pointer-events: none;
+  }
+
+  .vstory__vertical {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.25rem;
+    z-index: 5;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    letter-spacing: 3px;
+    color: color-mix(in srgb, var(--color-contrast) 55%, transparent);
+  }
+  .vstory__vertical--split {
+    position: relative;
+    top: auto;
+    left: auto;
+    writing-mode: horizontal-tb;
+    transform: none;
+    color: var(--color-foreground-50);
+    margin-bottom: var(--space-sm);
+  }
+  .on-dark .vstory__vertical--split {
+    color: color-mix(in srgb, var(--color-contrast) 55%, transparent);
   }
 
   .vstory__media .media-controls {
@@ -229,6 +262,8 @@
     }
     .vstory--tall { aspect-ratio: 3 / 4; }
     .vstory--cinema { aspect-ratio: 16 / 9; }
+    .vstory__ghost { font-size: clamp(5rem, 18vw, 8rem); }
+    .vstory__vertical { display: none; }
   }
 
   @media (max-width: 749px) {
@@ -297,6 +332,22 @@
     },
     {
       "type": "header",
+      "content": "Chapter"
+    },
+    {
+      "type": "text",
+      "id": "chapter",
+      "label": "Ghost numeral",
+      "info": "Oversized numeral rendered behind the layout."
+    },
+    {
+      "type": "text",
+      "id": "vertical_label",
+      "label": "Vertical label",
+      "info": "Small rotated label along the visual's edge."
+    },
+    {
+      "type": "header",
       "content": "Media"
     },
     {
@@ -310,7 +361,7 @@
       "id": "video_url",
       "label": "Desktop video URL (mp4)",
       "info": "Used only if no uploaded desktop video is set.",
-      "default": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4"
+      "default": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_con_be_ocean_motion_film02_10s_16x9_Gemini/mp4_480p"
     },
     {
       "type": "video",

@@ -1,20 +1,23 @@
-{% comment %}
-  Responsive background video.
+{% doc %}
+  Responsive background video with desktop/mobile sources and poster fallback.
 
-  Renders a single <video> that plays a desktop source by default (works with
-  no JS). theme.js swaps to the mobile source below the breakpoint — without
-  downloading both files. Falls back to the poster image when no video is set.
+  Renders a single video that plays a desktop source by default. theme.js swaps
+  to the mobile source below the breakpoint without downloading both files.
+  Supports lazy loading for below-fold films via the lazy parameter.
 
-  Accepts:
-    desktop_video    — Shopify video object (optional)
-    desktop_url      — mp4 URL fallback (optional)
-    mobile_video     — Shopify video object (optional)
-    mobile_url       — mp4 URL fallback (optional)
-    poster           — poster image URL
-    classes          — class string for the <video>
-    autoplay         — boolean (muted + loop when true)
-    breakpoint       — max-width px for the mobile source (default 750)
-{% endcomment %}
+  @param {video} [desktop_video] - Shopify video object for desktop
+  @param {string} [desktop_url] - mp4 URL fallback for desktop
+  @param {video} [mobile_video] - Shopify video object for mobile
+  @param {string} [mobile_url] - mp4 URL fallback for mobile
+  @param {string} [poster] - Poster image URL
+  @param {string} [classes] - Class string for the video element
+  @param {boolean} [autoplay] - Muted loop autoplay when true
+  @param {number} [breakpoint] - Max-width px for mobile source (default 750)
+  @param {boolean} [lazy] - Defer source until near viewport when true
+
+  @example
+  {% render 'responsive-bg-video', classes: 'hero__bg', desktop_url: url, poster: poster, autoplay: true %}
+{% enddoc %}
 
 {% liquid
   assign d_url = ''
@@ -48,25 +51,30 @@
   if m_url == blank
     assign m_url = d_url
   endif
+
+  assign lazy = lazy | default: false, allow_false: true
+  assign autoplay = autoplay | default: false, allow_false: true
 %}
 
 <video
   class="{{ classes }}"
   {% if autoplay %}autoplay muted loop{% endif %}
   playsinline
-  preload="metadata"
+  preload="{% if lazy %}none{% else %}metadata{% endif %}"
   poster="{{ poster }}"
   data-responsive-video
   data-desktop="{{ d_url }}"
   data-mobile="{{ m_url }}"
   data-breakpoint="{{ breakpoint | default: 750 }}"
+  {% if lazy %}data-lazy-video{% endif %}
 >
-  {% comment %} Desktop sources render inline so playback works without JS {% endcomment %}
-  {% if desktop_video != blank %}
-    {% for s in desktop_video.sources %}
-      <source src="{{ s.url }}" type="{{ s.mime_type }}">
-    {% endfor %}
-  {% elsif desktop_url != blank %}
-    <source src="{{ desktop_url }}" type="video/mp4">
-  {% endif %}
+  {% unless lazy %}
+    {% if desktop_video != blank %}
+      {% for s in desktop_video.sources %}
+        <source src="{{ s.url }}" type="{{ s.mime_type }}">
+      {% endfor %}
+    {% elsif desktop_url != blank %}
+      <source src="{{ desktop_url }}" type="video/mp4">
+    {% endif %}
+  {% endunless %}
 </video>

@@ -1,8 +1,15 @@
 {% comment %}
-  Featured pieces — horizontal gallery rail with scroll-snap, thin arrow
-  controls and a hairline progress indicator. Curated blocks with stock
-  imagery until real products are connected.
+  V3 featured pieces rail — prefers collection products when a collection is
+  set, falls back to manual piece blocks. Uses the product-card snippet for
+  real products. Rail UX (arrows, progress) is handled globally by theme.js.
 {% endcomment %}
+
+{% liquid
+  assign use_collection = false
+  if section.settings.collection != blank and section.settings.collection.products.size > 0
+    assign use_collection = true
+  endif
+%}
 
 <section class="featured section-spacing">
   <div class="featured__head">
@@ -34,41 +41,47 @@
 
   <div class="featured__rail-wrap full-width" data-rail-scope>
     <div class="featured__rail" data-rail>
-      {% for block in section.blocks %}
-        {% liquid
-          assign img = block.settings.image_url
-          if block.settings.image != blank
-            assign img = block.settings.image | image_url: width: 900
-          endif
-          assign index_label = forloop.index | prepend: '00' | slice: -2, 2
-        %}
-        <a class="piece-card" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
-          <div class="piece-card__media">
-            <img src="{{ img }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="900" height="1125">
-            {% if block.settings.badge != blank %}
-              <span class="piece-card__badge">{{ block.settings.badge }}</span>
-            {% endif %}
-            <span class="piece-card__view">
-              View piece
-              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
-                <path d="M4 12h15m0 0-5.5-5.5M19 12l-5.5 5.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </div>
-          <div class="piece-card__info">
-            <span class="meta-label piece-card__index">N&deg; {{ index_label }}</span>
-            <div>
-              {% if block.settings.region != blank %}
-                <span class="piece-card__region">{{ block.settings.region }}</span>
+      {% if use_collection %}
+        {% for product in section.settings.collection.products limit: 8 %}
+          {% render 'product-card', product: product, index: forloop.index, class: 'featured__card' %}
+        {% endfor %}
+      {% else %}
+        {% for block in section.blocks %}
+          {% liquid
+            assign img = block.settings.image_url
+            if block.settings.image != blank
+              assign img = block.settings.image | image_url: width: 900
+            endif
+            assign index_label = forloop.index | prepend: '00' | slice: -2, 2
+          %}
+          <a class="piece-card" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+            <div class="piece-card__media">
+              <img src="{{ img }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="900" height="1125">
+              {% if block.settings.badge != blank %}
+                <span class="piece-card__badge">{{ block.settings.badge }}</span>
               {% endif %}
-              <h3 class="piece-card__title">{{ block.settings.title }}</h3>
-              {% if block.settings.price != blank %}
-                <span class="piece-card__price">{{ block.settings.price }}</span>
-              {% endif %}
+              <span class="piece-card__view">
+                View piece
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
+                  <path d="M4 12h15m0 0-5.5-5.5M19 12l-5.5 5.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
             </div>
-          </div>
-        </a>
-      {% endfor %}
+            <div class="piece-card__info">
+              <span class="meta-label piece-card__index">N&deg; {{ index_label }}</span>
+              <div>
+                {% if block.settings.region != blank %}
+                  <span class="piece-card__region">{{ block.settings.region }}</span>
+                {% endif %}
+                <h3 class="piece-card__title">{{ block.settings.title }}</h3>
+                {% if block.settings.price != blank %}
+                  <span class="piece-card__price">{{ block.settings.price }}</span>
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      {% endif %}
 
       {% if section.settings.link_label != blank %}
         <a class="piece-card piece-card--end" href="{{ section.settings.link_url | default: routes.all_products_collection_url }}">
@@ -155,18 +168,21 @@
     display: none;
   }
 
+  .featured__card,
   .piece-card {
     flex: 0 0 clamp(15rem, 24vw, 22rem);
     scroll-snap-align: start;
+  }
+  .piece-card {
     text-decoration: none;
     color: var(--color-foreground);
   }
 
   @media (max-width: 749px) {
-    /* Touch-first: swipe is the navigation, cards show a peek of the next */
     .featured__controls {
       display: none;
     }
+    .featured__card,
     .piece-card {
       flex: 0 0 82%;
     }
@@ -300,38 +316,16 @@
   }
 {% endstylesheet %}
 
-{% javascript %}
-  document.querySelectorAll('[data-rail-scope]').forEach((scope) => {
-    const rail = scope.querySelector('[data-rail]');
-    const progress = scope.querySelector('[data-rail-progress]');
-    const section = scope.closest('.shopify-section') || document;
-    const prev = section.querySelector('[data-rail-prev]');
-    const next = section.querySelector('[data-rail-next]');
-    if (!rail) return;
-
-    const step = () => {
-      const card = rail.querySelector('.piece-card');
-      return card ? card.getBoundingClientRect().width + 24 : 320;
-    };
-
-    prev?.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
-    next?.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
-
-    const updateProgress = () => {
-      if (!progress) return;
-      const max = rail.scrollWidth - rail.clientWidth;
-      const pct = max > 0 ? (rail.scrollLeft / max) * 100 : 0;
-      progress.style.width = Math.max(6, pct) + '%';
-    };
-    rail.addEventListener('scroll', updateProgress, { passive: true });
-    updateProgress();
-  });
-{% endjavascript %}
-
 {% schema %}
 {
   "name": "Featured pieces",
   "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "If set, products from this collection are shown (up to 8). Leave empty to use manual blocks below."
+    },
     {
       "type": "text",
       "id": "eyebrow",

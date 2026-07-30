@@ -1,30 +1,21 @@
 {% doc %}
   Renders a responsive image that might be wrapped in a link.
 
-  When `width`, `height` and `crop` are provided, the image will be rendered
+  When width, height and crop are provided, the image will be rendered
   with a fixed aspect ratio.
-
-  Serves as an example of how to use the `image_url` filter and `image_tag` filter
-  as well as how you can use LiquidDoc to document your code.
 
   @param {image} image - The image to be rendered
   @param {string} [url] - An optional destination URL for the image
   @param {string} [class] - Optional class to be added to the image wrapper
-  @param {number} [width] - The highest resolution width of the image to be rendered
-  @param {number} [height] - The highest resolution height of the image to be rendered
+  @param {number} [width] - The highest resolution width of the image
+  @param {number} [height] - The highest resolution height of the image
   @param {string} [crop] - The crop position of the image
+  @param {string} [sizes] - Optional sizes attribute
+  @param {string} [loading] - eager or lazy
+  @param {string} [alt] - Optional alt text override
 
   @example
-  {% render 'image', image: product.featured_image %}
-  {% render 'image', image: product.featured_image, url: product.url %}
-  {% render 'image',
-    class: 'product__image',
-    image: product.featured_image,
-    url: product.url,
-    width: 1200,
-    height: 800,
-    crop: 'center',
-  %}
+  {% render 'image', image: product.featured_image, width: 1200, sizes: '(min-width: 990px) 50vw, 100vw' %}
 {% enddoc %}
 
 {% liquid
@@ -37,16 +28,29 @@
   else
     assign wrapper = 'div'
   endif
+
+  assign loading_attr = loading | default: 'lazy'
+  assign alt_text = alt | default: image.alt | default: ''
 %}
 
-<{{ wrapper }}
-  class="image {{ class }}"
-  {% if url %}
-    href="{{ url }}"
-  {% endif %}
->
-  {{ image | image_url: width: width, height: height, crop: crop | image_tag }}
-</{{ wrapper }}>
+{% if image != blank %}
+  <{{ wrapper }}
+    class="image {{ class }}"
+    {% if url %}
+      href="{{ url }}"
+    {% endif %}
+  >
+    {{
+      image
+      | image_url: width: width, height: height, crop: crop
+      | image_tag:
+        loading: loading_attr,
+        widths: '360, 540, 720, 900, 1200, 1600, 2000',
+        sizes: sizes | default: '100vw',
+        alt: alt_text
+    }}
+  </{{ wrapper }}>
+{% endif %}
 
 {% stylesheet %}
   .image {

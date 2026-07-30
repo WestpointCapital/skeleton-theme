@@ -1,35 +1,164 @@
-{% comment %}
-  This section is used in the blog template to render the blog page listing all
-  articles within a blog.
+<section class="blog-index section-spacing">
+  {% render 'section-heading',
+    eyebrow: section.settings.eyebrow,
+    heading: blog.title,
+    heading_italic: section.settings.heading_italic
+  %}
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/blog
-{% endcomment %}
+  {% paginate blog.articles by section.settings.articles_per_page %}
+    {% if blog.articles.size > 0 %}
+      {% assign feature = blog.articles.first %}
+      <a class="blog-index__feature" href="{{ feature.url }}" data-reveal>
+        <div class="blog-index__feature-media">
+          {% if feature.image %}
+            {% render 'image',
+              image: feature.image,
+              class: 'blog-index__feature-image',
+              width: 1600,
+              sizes: '(min-width: 990px) 60vw, 100vw',
+              loading: 'eager',
+              alt: feature.title
+            %}
+          {% endif %}
+        </div>
+        <div class="blog-index__feature-copy">
+          <p class="eyebrow">{{ 'blog.read_more' | t }}</p>
+          <h2>{{ feature.title }}</h2>
+          {% assign date = feature.published_at | time_tag: format: 'date' %}
+          <p class="meta-label">{{ 'blog.article_metadata_html' | t: date: date, author: feature.author }}</p>
+          {% if feature.excerpt != blank %}
+            <p>{{ feature.excerpt | strip_html | truncate: 160 }}</p>
+          {% endif %}
+        </div>
+      </a>
+    {% endif %}
 
-<h1>{{ blog.title }}</h1>
-
-{% paginate blog.articles by 5 %}
-  {% for article in blog.articles %}
-    <div>
-      {% if article.image %}
-        {{ article.image | image_url: width: 1000 | image_tag }}
-      {% endif %}
-      <h2>
-        {{ article.title | link_to: article.url }}
-      </h2>
-      {% assign date = article.published_at | time_tag: format: 'date' %}
-      <p>{{ 'blog.article_metadata_html' | t: date: date, author: article.author }}</p>
-      <p>{{ article.excerpt }}</p>
+    <div class="blog-index__grid">
+      {% for article in blog.articles %}
+        {% if forloop.first %}{% continue %}{% endif %}
+        <a class="blog-card" href="{{ article.url }}" data-reveal style="--reveal-delay: {{ forloop.index0 | times: 0.06 }}s">
+          <div class="blog-card__media">
+            {% if article.image %}
+              {{
+                article.image
+                | image_url: width: 900
+                | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 30vw, 100vw', alt: article.image.alt | default: article.title
+              }}
+            {% endif %}
+            <span class="meta-label blog-card__index">N&deg; {{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
+          </div>
+          <div class="blog-card__copy">
+            <h3>{{ article.title }}</h3>
+            {% assign card_date = article.published_at | time_tag: format: 'date' %}
+            <p class="meta-label">{{ 'blog.article_metadata_html' | t: date: card_date, author: article.author }}</p>
+          </div>
+        </a>
+      {% endfor %}
     </div>
-  {% endfor %}
 
-  {%- if paginate.pages > 1 -%}
-    {{- paginate | default_pagination -}}
-  {%- endif -%}
-{% endpaginate %}
+    {% render 'pagination', paginate: paginate %}
+  {% endpaginate %}
+</section>
+
+{% stylesheet %}
+  .blog-index__feature {
+    display: grid;
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    text-decoration: none;
+    color: inherit;
+  }
+  .blog-index__feature-media {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--color-accent-soft) 40%, var(--color-background));
+  }
+  .blog-index__feature-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .blog-index__feature-copy {
+    display: grid;
+    gap: var(--space-sm);
+    max-width: 42rem;
+  }
+  .blog-index__feature-copy h2 {
+    font-weight: 400;
+  }
+  .blog-index__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  .blog-card {
+    display: grid;
+    gap: var(--space-sm);
+    text-decoration: none;
+    color: inherit;
+  }
+  .blog-card__media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--color-accent-soft) 35%, var(--color-background));
+  }
+  .blog-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.1s var(--ease);
+  }
+  .blog-card:hover .blog-card__media img {
+    transform: scale(1.04);
+  }
+  .blog-card__index {
+    position: absolute;
+    top: 0.85rem;
+    left: 0.85rem;
+    color: var(--color-contrast);
+  }
+  .blog-card__copy h3 {
+    margin: 0 0 0.4rem;
+    font-size: var(--text-xl);
+    font-weight: 400;
+  }
+  @media (min-width: 750px) {
+    .blog-index__feature {
+      grid-template-columns: 1.4fr 1fr;
+      align-items: end;
+    }
+    .blog-index__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:general.blog",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Odyssey Journal"
+    },
+    {
+      "type": "text",
+      "id": "heading_italic",
+      "label": "Heading italic",
+      "default": "Stories from the regions"
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "label": "Articles per page",
+      "default": 7
+    }
+  ]
 }
 {% endschema %}

@@ -1,8 +1,29 @@
 {
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "play_pause_video": "Play or pause video",
+    "mute_unmute_video": "Mute or unmute video",
+    "close": "Close",
+    "open_menu": "Open menu",
+    "close_menu": "Close menu"
+  },
+  "general": {
+    "breadcrumbs": {
+      "label": "Breadcrumbs",
+      "home": "Home"
+    },
+    "pagination": {
+      "label": "Pagination",
+      "previous": "Previous page",
+      "next": "Next page"
+    },
+    "continue_shopping": "Continue shopping",
+    "shop_now": "Shop now"
+  },
   "404": {
-    "title": "404",
-    "not_found": "Page not found.",
-    "back_to_shopping": "Back to shopping"
+    "title": "This region hasn't been charted yet",
+    "not_found": "The page you are looking for has drifted off the map.",
+    "back_to_shopping": "Explore the regions"
   },
   "blog": {
     "article_comments": "Comments",
@@ -11,13 +32,24 @@
     "comment_form_email": "Email",
     "comment_form_name": "Name",
     "comment_form_submit": "Post",
-    "comment_form_title": "Add a comment"
+    "comment_form_title": "Add a comment",
+    "read_more": "Read the story",
+    "related": "Related stories"
   },
   "cart": {
     "checkout": "Checkout",
     "title": "Cart",
     "update": "Update",
-    "remove": "Remove"
+    "remove": "Remove",
+    "empty": "Your collection is empty",
+    "empty_subtext": "Begin with a piece from Oceania, or explore every region.",
+    "subtotal": "Subtotal",
+    "note": "Order note",
+    "taxes_shipping": "Taxes and shipping calculated at checkout",
+    "quantity": "Quantity",
+    "view_cart": "View cart",
+    "drawer_title": "Your cart",
+    "item_added": "Added to cart"
   },
   "customers": {
     "login": {
@@ -28,25 +60,79 @@
     }
   },
   "collections": {
-    "title": "Collections"
+    "title": "Regions of the world",
+    "products_count": {
+      "one": "{{ count }} piece",
+      "other": "{{ count }} pieces"
+    },
+    "empty": "No pieces are available in this region yet.",
+    "sort_by": "Sort by",
+    "filters": {
+      "title": "Filter",
+      "apply": "Apply filters",
+      "clear": "Clear all",
+      "remove": "Remove {{ label }}",
+      "from": "From",
+      "to": "To"
+    },
+    "view_region": "Discover"
+  },
+  "products": {
+    "add_to_cart": "Add to cart",
+    "sold_out": "Sold out",
+    "gone": "This piece has gone",
+    "gone_subtext": "One of a kind treasures never return once claimed.",
+    "quantity": "Quantity",
+    "description": "The story",
+    "shipping": "Shipping & returns",
+    "care": "Care",
+    "recommendations": "Complete the region",
+    "badge": {
+      "one_of_a_kind": "One of a kind",
+      "gone": "Gone"
+    },
+    "card": {
+      "view": "View piece"
+    },
+    "price": {
+      "regular": "Regular price",
+      "sale": "Sale price",
+      "from": "From"
+    },
+    "vendor": "Artisan",
+    "sku": "Reference",
+    "origin": "Origin & craft"
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
     "card": "Gift card",
     "expired": "This gift card has expired",
     "expires_on": "Expires on {{ expires_on }}",
-    "use_at_checkout": "Use this gift card at checkout"
+    "use_at_checkout": "Use this gift card at checkout",
+    "remaining_html": "Remaining balance: {{ balance }}"
   },
   "password": {
-    "title": "This shop is private",
+    "title": "The odyssey begins soon",
+    "subtext": "Enter the password to preview the first drop.",
     "password": "Password",
-    "enter": "Enter"
+    "enter": "Enter",
+    "newsletter": "Be first to collect"
   },
   "search": {
     "title": "Search",
-    "placeholder": "Search articles, pages, or products",
+    "placeholder": "Search jewels, stories, regions",
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
-    "results_for_html": "{{ count }} results found for {{ terms }}"
+    "results_for_html": "{{ count }} results found for {{ terms }}",
+    "products": "Pieces",
+    "pages": "Pages",
+    "articles": "Stories",
+    "view_all": "View all results"
+  },
+  "newsletter": {
+    "label": "Email",
+    "placeholder": "Your email",
+    "submit": "Join",
+    "success": "Thank you for joining the odyssey."
   }
 }

@@ -97,7 +97,7 @@ Core hierarchy from the brief: **Region → Country → City → Artisan**, with
 - [x] **Palette:** Navy (primary) + Rose (accent). Defined in `config/settings_schema.json` and exposed as CSS vars via `snippets/css-variables.liquid`.
 - [x] **Typography:** Premium pairing — Cormorant (display serif, italic accents) + Jost (sans). Set in theme settings; base weight preloaded.
 - [ ] **Logo:** Cleaned-up mark — separate "OJ" from wordmark, keep compass rose, remove busy background so it works for embroidery/small branding. `@client` to supply source; `@core` to produce SVG variants (full, mark-only, mono).
-- [ ] **Tone:** Editorial, story-first, generous whitespace, large photography. "Every Jewel Tells a Story."
+- [x] **Tone:** Editorial, story-first, generous whitespace, large photography. "Every Jewel Tells a Story." *(V3 cinematic direction locked: Gucci campaign pacing × Pandora jewellery clarity)*
 - [ ] **Design tokens doc:** spacing scale, radii, shadows, motion — documented so `@dev` stays consistent.
 
 ---
@@ -107,15 +107,15 @@ Core hierarchy from the brief: **Region → Country → City → Artisan**, with
 Mapped to the skeleton's folders. Items marked `@core` are the premium framework we build; `@dev` items are handed off.
 
 ### 6.1 Global / Layout `@core`
-- [ ] `layout/theme.liquid` — add skip links, header/footer groups, cart drawer mount, structured-data hooks, GTM/analytics slot. *(theme.js reveal/header system wired in)*
+- [x] `layout/theme.liquid` — add skip links, header/footer groups, cart drawer mount, structured-data hooks, GTM/analytics slot. *(theme.js reveal/header system wired in)*
 - [x] `snippets/css-variables.liquid` — full token set (Navy/Rose, spacing, fluid type scale, motion).
-- [ ] `snippets/meta-tags.liquid` — Open Graph, Twitter, canonical, JSON-LD org/product.
+- [x] `snippets/meta-tags.liquid` — Open Graph, Twitter, canonical, JSON-LD org/product.
 - [x] `assets/critical.css` — base grid, typography, buttons, eyebrows/meta-labels, scroll-reveal system.
 
 ### 6.2 Header & Navigation `@core`
 - [x] Clean navigation focused on **region-based collections** — sticky header with blur backdrop, transparent-over-hero mode, full-screen menu overlay. Country/city surface as filters on the collection page, not primary nav.
-- [ ] Cart drawer (AJAX cart) — standard behavior; no special "sold = gone" logic needed here (handled by inventory, see §7.4).
-- [ ] Predictive search.
+- [x] Cart drawer (AJAX cart) — standard behavior; no special "sold = gone" logic needed here (handled by inventory, see §7.4).
+- [x] Predictive search.
 - [x] Account entry (ties to Rewards).
 
 ### 6.3 Homepage sections `@dev` (framework by `@core`)
@@ -129,35 +129,35 @@ Mapped to the skeleton's folders. Items marked `@core` are the premium framework
 - [x] Newsletter signup (footer).
 
 ### 6.4 Product page (PDP) — rebuild `sections/product.liquid` `@core`
-- [ ] Media gallery (multi-image, angles, zoom, video).
-- [ ] Region/country/city/artisan badges linking to story.
-- [ ] Variant picker + robust add-to-cart, dynamic checkout.
-- [ ] "One of a kind" indicator + sold-out → "gone" state.
-- [ ] Artisan story block (from metaobject).
-- [ ] Trust/shipping/returns accordion.
-- [ ] Structured data (Product JSON-LD).
+- [x] Media gallery (multi-image, angles, zoom, video).
+- [x] Region/country/city/artisan badges linking to story.
+- [x] Variant picker + robust add-to-cart, dynamic checkout.
+- [x] "One of a kind" indicator + sold-out → "gone" state.
+- [x] Artisan story block (from metaobject).
+- [x] Trust/shipping/returns accordion.
+- [x] Structured data (Product JSON-LD).
 - [ ] Blockified so `@dev`/merchant can reorder.
 
 ### 6.5 Collection page (PLP) — rebuild `sections/collection.liquid` `@core`
-- [ ] Region hero + collection story header.
-- [ ] Faceted filtering (country, city, artisan, price, availability).
-- [ ] Sort, pagination/infinite scroll.
+- [x] Region hero + collection story header.
+- [x] Faceted filtering (country, city, artisan, price, availability).
+- [x] Sort, pagination/infinite scroll.
 - [ ] Sub-collection navigation.
 
 ### 6.6 Supporting pages `@dev`
-- [ ] Collections index (`collections.liquid`) as a "regions of the world" gateway.
-- [ ] Blog + article templates (storytelling / SEO content).
-- [ ] Cart page + drawer parity.
-- [ ] Search results with facets.
+- [x] Collections index (`collections.liquid`) as a "regions of the world" gateway.
+- [x] Blog + article templates (storytelling / SEO content).
+- [x] Cart page + drawer parity.
+- [x] Search results with facets.
 - [ ] Account pages (rewards, referrals, personal map).
-- [ ] Static: About, Artisans, Returns/Repair policy, Contact, FAQ.
-- [ ] 404, password/coming-soon (branded).
+- [x] Static: About, Artisans, Returns/Repair policy, Contact, FAQ. *(page section supports FAQ accordion blocks; compose additional JSON templates in editor as needed)*
+- [x] 404, password/coming-soon (branded).
 
 ### 6.7 Reusable blocks/snippets `@core`
-- [ ] `product-card` snippet (with region tag, one-of-a-kind flag).
+- [x] `product-card` snippet (with region tag, one-of-a-kind flag).
 - [ ] `artisan-card`, `region-card`.
-- [ ] Rich `image`/media snippet upgrade (responsive, art direction).
-- [ ] `rating`/`badge`/`button` primitives.
+- [x] Rich `image`/media snippet upgrade (responsive, art direction).
+- [x] `rating`/`badge`/`button` primitives.
 
 ---
 
@@ -188,8 +188,8 @@ Mapped to the skeleton's folders. Items marked `@core` are the premium framework
 Keep this simple — **inventory drives it, not custom logic.** One-of-a-kind pieces have quantity 1, so when inventory hits **0 the piece is gone**.
 - [ ] Set unique pieces to inventory qty 1 with "stop selling when out of stock."
 - [ ] Use Shopify's native out-of-stock handling; optionally auto-hide sold-out products from collections (Shopify setting / simple Flow).
-- [ ] Theme shows a tasteful sold-out state on the product page for direct URL hits.
-- [ ] No heavy custom double-sell logic required.
+- [x] Theme shows a tasteful sold-out state on the product page for direct URL hits.
+- [x] No heavy custom double-sell logic required.
 
 ### 7.5 Bulk Inventory Upload `@dev` + `@core`
 - [ ] Define **CSV/Excel template** with columns mapped to metafields/metaobjects (§4.3).
@@ -323,8 +323,30 @@ To hand a clean build to Upwork devs:
 
 1. [ ] Client confirms kickoff date, first drop region, and budget (§11).
 2. [ ] `@client` sends product Excel + logo source + sample photos.
-3. [ ] `@core` locks Navy+Rose palette and typography in theme settings.
+3. [x] `@core` locks Navy+Rose palette and typography in theme settings.
 4. [ ] `@core` defines metaobjects + product metafields (§4).
 5. [ ] `@core` runs AI photo pipeline test on 10–30 products.
-6. [ ] `@core` rebuilds PDP + PLP as the framework reference implementation.
+6. [x] `@core` rebuilds PDP + PLP as the framework reference implementation.
 7. [ ] `@core` posts Upwork roles and begins vetting `@dev`.
+
+---
+
+## 15. V3 Cinematic Redesign Status (Jul 2026)
+
+**Concept:** Video-first Gucci × Pandora synthesis on Odyssey Navy/Rose/Pearl tokens (Cormorant + Jost unchanged).
+
+### Delivered in theme
+- [x] Shared video system (`responsive-bg-video`, `media-controls`, lazy below-fold films, reduced-motion + offscreen pause).
+- [x] Film-first homepage order: hero → marquee → Oceania film → featured rail → regions → makers film → story → promises → closing film CTA.
+- [x] Luxury PDP/PLP/cart drawer/search/recommendations/collections gateway.
+- [x] Branded blog, article, page (FAQ blocks), 404, password gate, gift card.
+- [x] Predictive search + AJAX cart drawer wired through header/footer.
+- [x] Theme Check: 0 errors (Shopify CLI + MCP validate_theme).
+
+### Remaining dependencies (not theme-code blockers)
+- [ ] Real Odyssey footage to replace Amplience/Pandora demo mp4 placeholders (every slot is merchant-replaceable in the editor).
+- [ ] Store metafields/metaobjects (`custom.region`, `custom.is_one_of_a_kind`, artisan story) populated in admin.
+- [ ] Search & Discovery app configuration for recommendations + filtering.
+- [ ] Production catalog linked to featured/regions collection pickers.
+- [ ] Interactive world map + rewards teaser sections (still planned, not in V3).
+- [ ] Live browser QA on a linked Shopify store (`shopify theme dev --store=...`).
