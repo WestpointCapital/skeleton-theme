@@ -1,344 +1,133 @@
 {
   "sections": {
-    "hero": {
-      "type": "hero",
+    "campaign_hero": {
+      "type": "campaign-hero",
       "settings": {
         "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_awa_be_essence_motion_film06_10s_16x9_Gemini/mp4_720p",
         "video_mobile_url": "",
         "poster_url": "https://images.unsplash.com/photo-1505142468610-359e7d316be0?auto=format&fit=crop&w=2400&q=80",
         "show_controls": true,
-        "height": "full",
-        "overlay_opacity": 15,
-        "scrim_strength": 60,
-        "scroll_cue": true,
-        "text_align": "left",
-        "eyebrow": "The Oceania Collection",
-        "heading": "Collect the world",
-        "heading_italic": "One piece at a time",
-        "subheading": "Rare, one-of-a-kind treasures gathered from artisans across the globe.",
-        "button_label": "Shop the collection",
-        "button_url": "",
-        "button_style": "solid",
-        "link_label": "Our story",
-        "link_url": ""
+        "module_color": "navy",
+        "label": "Drop 01",
+        "heading": "Oceania",
+        "subheading": "One-of-a-kind pieces. Limited release.",
+        "button_label": "Shop the drop",
+        "button_url": ""
       }
     },
-    "marquee": {
-      "type": "marquee",
+    "campaign_ticker": {
+      "type": "campaign-ticker",
       "blocks": {
-        "m1": {
+        "t1": {
           "type": "item",
           "settings": {
-            "text": "Oceania"
+            "text": "Oceania — Live now",
+            "link": ""
           }
         },
-        "m2": {
+        "t2": {
           "type": "item",
           "settings": {
-            "text": "Every jewel tells a story"
+            "text": "Limited release",
+            "link": ""
           }
         },
-        "m3": {
+        "t3": {
           "type": "item",
           "settings": {
-            "text": "Asia"
+            "text": "One of a kind",
+            "link": ""
           }
         },
-        "m4": {
+        "t4": {
           "type": "item",
           "settings": {
-            "text": "One of a kind"
-          }
-        },
-        "m5": {
-          "type": "item",
-          "settings": {
-            "text": "The Founders Collection"
-          }
-        },
-        "m6": {
-          "type": "item",
-          "settings": {
-            "text": "Artisan made"
+            "text": "Artisan made",
+            "link": ""
           }
         }
       },
-      "block_order": [
-        "m1",
-        "m2",
-        "m3",
-        "m4",
-        "m5",
-        "m6"
-      ],
+      "block_order": ["t1", "t2", "t3", "t4"],
       "settings": {
-        "dark": false,
-        "speed": 45
+        "field_color": "rose",
+        "aria_label": "Current drop information"
       }
     },
-    "video_story": {
-      "type": "video-story",
+    "campaign_drop": {
+      "type": "campaign-drop",
       "settings": {
-        "layout": "overlay",
-        "height": "cinema",
-        "media_position": "left",
-        "text_align": "left",
-        "dark": true,
-        "chapter": "",
-        "vertical_label": "",
+        "field_color": "pearl",
+        "label": "The drop",
+        "heading": "Oceania",
+        "subheading": "Studio-staged pieces from the first collection.",
+        "drop_label": "Oceania",
+        "products_to_show": 4,
+        "link_label": "View full drop",
+        "link_url": ""
+      }
+    },
+    "campaign_film": {
+      "type": "campaign-film",
+      "settings": {
         "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_con_be_ocean_motion_film02_10s_16x9_Gemini/mp4_480p",
         "video_mobile_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_con_be_ocean_motion_film02_10s_16x9_Gemini/mp4_480p",
         "poster_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
         "autoplay": true,
         "show_controls": true,
-        "scrim_strength": 55,
-        "eyebrow": "Oceania — Chapter One",
-        "heading": "Born of the",
-        "heading_italic": "South Pacific",
-        "body": "<p>Follow the tide to where each piece began — the hands, the heritage and the horizon behind the Oceania collection.</p>",
-        "button_label": "Explore Oceania",
-        "button_url": "",
-        "link_label": "Watch the film",
-        "link_url": ""
-      }
-    },
-    "featured": {
-      "type": "featured",
-      "blocks": {
-        "f2": {
-          "type": "piece",
-          "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa43ef7/MeBlaZ9fcF1eV-EpztFDK_C7MMfBhB.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Peach Baroque Pearl Necklace",
-            "price": "$980",
-            "link": ""
-          }
-        },
-        "f1": {
-          "type": "piece",
-          "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa2a355/1KvGspbVz7FB-vNaVmuMs_1PMtu5Fl.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Silver Bangle W Dragon Heads & Red Garnets",
-            "price": "$1,200",
-            "link": ""
-          }
-        },
-        "f3": {
-          "type": "piece",
-          "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa2a035/_vPx06A9yHfRFH2-_-MfC_T6W1QA3Z.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Silver Rope Necklace With Silver Heart",
-            "price": "$1,540",
-            "link": ""
-          }
-        },
-        "f4": {
-          "type": "piece",
-          "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa43e65/UYxn4eeG2gPYcD3XVIq2y_kulxxVs7.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Pink Pearl Stud Earrings",
-            "price": "$760",
-            "link": ""
-          }
-        },
-        "f5": {
-          "type": "piece",
-          "settings": {
-            "image_url": "https://v3b.fal.media/files/b/0aa43dde/Xj5y88Yz1T0TS7lnAg4tC_g6xrYfnK.jpg",
-            "badge": "One of a kind",
-            "region": "Oceania",
-            "title": "Red Howlite Silver Earrings",
-            "price": "$1,880",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "f2",
-        "f1",
-        "f3",
-        "f4",
-        "f5"
-      ],
-      "settings": {
-        "eyebrow": "The first drop",
-        "heading": "Oceania",
-        "heading_italic": "Collection",
-        "link_label": "View the full collection",
-        "link_url": ""
-      }
-    },
-    "regions": {
-      "type": "regions",
-      "blocks": {
-        "r1": {
-          "type": "region",
-          "settings": {
-            "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80",
-            "status": "Available now",
-            "title": "Oceania",
-            "subtitle": "Treasures of the South Pacific",
-            "meta": "First drop — 200 pieces",
-            "cta": "Discover",
-            "link": ""
-          }
-        },
-        "r2": {
-          "type": "region",
-          "settings": {
-            "image_url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=1400&q=80",
-            "status": "By invitation",
-            "title": "The Founders Collection",
-            "subtitle": "Rare pieces for our earliest collectors",
-            "meta": "Private access",
-            "cta": "Enquire",
-            "link": ""
-          }
-        },
-        "r3": {
-          "type": "region",
-          "settings": {
-            "image_url": "https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1400&q=80",
-            "status": "Coming soon",
-            "title": "Asia",
-            "subtitle": "Along the ancient trade routes",
-            "meta": "Region in progress",
-            "cta": "Join the waitlist",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3"
-      ],
-      "settings": {
-        "eyebrow": "The regions",
-        "heading": "Where in the world",
-        "heading_italic": "will you begin?",
-        "link_label": "All regions",
-        "link_url": ""
-      }
-    },
-    "video_story_makers": {
-      "type": "video-story",
-      "settings": {
-        "layout": "split",
-        "height": "cinema",
-        "media_position": "left",
-        "text_align": "left",
-        "dark": true,
-        "chapter": "02",
-        "vertical_label": "The Odyssey Journal — Chapter 02",
-        "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_awa_be_essence_motion_film06_10s_16x9_Gemini/mp4_720p",
-        "video_mobile_url": "",
-        "poster_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80",
-        "autoplay": true,
-        "show_controls": true,
-        "scrim_strength": 45,
-        "eyebrow": "The makers",
-        "heading": "Meet the",
-        "heading_italic": "makers",
-        "body": "<p>Behind every treasure is a person and a place. We put their names, their cities and their craft at the heart of the story — because you're not just collecting jewellery, you're collecting the world.</p>",
-        "button_label": "Meet the makers",
-        "button_url": "",
-        "link_label": "",
-        "link_url": ""
-      }
-    },
-    "story": {
-      "type": "story",
-      "settings": {
-        "chapter": "01",
-        "vertical_label": "The Odyssey Journal — Chapter 01",
-        "image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg",
-        "image_2_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/53/fe/ff/24/1b/v1_E10/E10BGVG6.jpg?w=1600&cf_fit=scale-down&q=85&format=auto&s=85d2124cbd83092632878d32f1ffb88eb0a45aaad67c813f5c7d9bc343934491",
-        "visual_caption": "Gold work — hand finished, one of one",
-        "media_position": "left",
-        "dark": false,
-        "eyebrow": "Our philosophy",
-        "heading": "Every jewel",
-        "heading_italic": "tells a story",
-        "body": "<p>We travel to the far corners of the world to work directly with master artisans. Each piece we bring home is one of a kind — shaped by the hands, heritage and horizon of the place it came from. When it's gone, it's gone.</p>",
-        "stat_1_value": "07",
-        "stat_1_label": "Regions to explore",
-        "stat_2_value": "1/1",
-        "stat_2_label": "Every piece unique",
-        "stat_3_value": "200",
-        "stat_3_label": "Pieces in first drop",
-        "button_label": "Read our story",
+        "copy_color": "navy",
+        "label": "Film",
+        "heading": "Craft in motion",
+        "body": "<p>Hand-finished pieces staged like a studio campaign — direct, bold, and one of a kind.</p>",
+        "button_label": "Shop the drop",
         "button_url": ""
       }
     },
-    "promises": {
-      "type": "promises",
+    "campaign_manifesto": {
+      "type": "campaign-manifesto",
       "blocks": {
-        "p1": {
-          "type": "promise",
+        "m1": {
+          "type": "panel",
           "settings": {
-            "title": "One of a kind",
-            "text": "Every piece is unique. When it's gone, it's gone forever."
+            "field_color": "navy",
+            "label": "01",
+            "heading": "One piece. One story.",
+            "body": "<p>Every jewel is one of a kind — gathered from artisans, staged like a campaign, sold once.</p>",
+            "image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg"
           }
         },
-        "p2": {
-          "type": "promise",
+        "m2": {
+          "type": "panel",
           "settings": {
-            "title": "Artisan made",
-            "text": "Crafted by master makers in their homeland, never mass-produced."
-          }
-        },
-        "p3": {
-          "type": "promise",
-          "settings": {
-            "title": "Worldwide delivery",
-            "text": "Complimentary, fully insured shipping across the globe."
+            "field_color": "rose",
+            "label": "02",
+            "heading": "Made by hand.",
+            "body": "<p>Craft, not catalog. Makers named. Provenance kept.</p>",
+            "image_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/53/fe/ff/24/1b/v1_E10/E10BGVG6.jpg?w=1200&cf_fit=scale-down&q=85&format=auto"
           }
         }
       },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3"
-      ],
-      "settings": {
-        "eyebrow": "The Odyssey standard",
-        "dark": false
-      }
+      "block_order": ["m1", "m2"]
     },
-    "cta": {
-      "type": "cta-banner",
+    "campaign_gate": {
+      "type": "campaign-gate",
       "settings": {
         "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_con_be_ocean_motion_film02_10s_16x9_Gemini/mp4_480p",
         "poster_url": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=2400&q=80",
         "show_controls": true,
-        "overlay_opacity": 45,
-        "eyebrow": "The odyssey begins",
-        "heading": "Begin your",
-        "heading_italic": "collection",
-        "subheading": "The first region has landed. Claim a piece of Oceania before it's gone forever.",
-        "button_label": "Shop the first drop",
+        "cta_color": "rose",
+        "label": "Now live",
+        "heading": "Shop the drop",
+        "button_label": "Enter the collection",
         "button_url": ""
       }
     }
   },
   "order": [
-    "hero",
-    "marquee",
-    "video_story",
-    "featured",
-    "regions",
-    "video_story_makers",
-    "story",
-    "promises",
-    "cta"
+    "campaign_hero",
+    "campaign_ticker",
+    "campaign_drop",
+    "campaign_film",
+    "campaign_manifesto",
+    "campaign_gate"
   ]
 }

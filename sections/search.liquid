@@ -47,7 +47,7 @@
             <h2 class="search-page__group-title">{{ 'search.products' | t }}</h2>
             <div class="product-grid">
               {% for item in product_results %}
-                {% render 'product-card', product: item, index: forloop.index %}
+                {% render 'product-card', product: item %}
               {% endfor %}
             </div>
           </div>

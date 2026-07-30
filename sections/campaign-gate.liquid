@@ -1,0 +1,188 @@
+{% comment %}
+  Campaign gate — abrupt closing film/image and one direct shop action.
+{% endcomment %}
+
+<section class="camp-gate full-width">
+  <div class="camp-gate__frame">
+    {% if section.settings.video_url != blank %}
+      {% render 'responsive-bg-video',
+        classes: 'camp-gate__video',
+        desktop_url: section.settings.video_url,
+        mobile_url: section.settings.video_mobile_url,
+        poster: section.settings.poster_url,
+        autoplay: true,
+        lazy: true
+      %}
+      {% if section.settings.show_controls %}
+        {% render 'media-controls' %}
+      {% endif %}
+    {% elsif section.settings.image != blank %}
+      {{
+        section.settings.image
+        | image_url: width: 2400
+        | image_tag:
+          class: 'camp-gate__img',
+          loading: 'lazy',
+          widths: '750, 1200, 1800, 2400',
+          sizes: '100vw',
+          alt: section.settings.heading
+      }}
+    {% elsif section.settings.image_url != blank %}
+      <img
+        class="camp-gate__img"
+        src="{{ section.settings.image_url }}"
+        alt="{{ section.settings.heading | escape }}"
+        loading="lazy"
+        width="2400"
+        height="1350"
+      >
+    {% else %}
+      {{ 'lifestyle-2' | placeholder_svg_tag: 'camp-gate__img camp-gate__img--placeholder' }}
+    {% endif %}
+
+    <div class="camp-gate__cta field-{{ section.settings.cta_color }}" data-cut-in>
+      {% if section.settings.label != blank %}
+        <p class="camp-label">{{ section.settings.label }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="camp-gate__title">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.button_label != blank %}
+        {% liquid
+          assign btn_url = section.settings.button_url
+          if btn_url == blank and section.settings.collection != blank
+            assign btn_url = section.settings.collection.url
+          endif
+        %}
+        <a class="button button--on-dark" href="{{ btn_url | default: routes.all_products_collection_url }}">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .camp-gate__frame {
+    position: relative;
+    min-height: clamp(20rem, 70vh, 40rem);
+    background: var(--field-ink);
+    overflow: hidden;
+  }
+  .camp-gate__video,
+  .camp-gate__img {
+    width: 100%;
+    height: 100%;
+    min-height: clamp(20rem, 70vh, 40rem);
+    object-fit: cover;
+  }
+  .camp-gate__cta {
+    position: absolute;
+    inset: auto var(--page-inline) clamp(2rem, 4vw, 4rem);
+    max-width: min(36rem, calc(100% - 2rem));
+    padding: clamp(1.25rem, 2vw, 2rem);
+    display: grid;
+    gap: var(--space-md);
+    z-index: 2;
+  }
+  .camp-gate__title {
+    margin: 0;
+    font-family: var(--font-display--family);
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
+  }
+  .camp-gate__cta.field-pearl .camp-label {
+    background: var(--field-rose);
+    color: var(--color-contrast);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Campaign gate",
+  "tag": "section",
+  "class": "camp-gate-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "video_url",
+      "label": "Video URL",
+      "default": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_con_be_ocean_motion_film02_10s_16x9_Gemini/mp4_480p"
+    },
+    {
+      "type": "text",
+      "id": "video_mobile_url",
+      "label": "Mobile video URL"
+    },
+    {
+      "type": "text",
+      "id": "poster_url",
+      "label": "Poster URL",
+      "default": "https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=2400&q=80"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_controls",
+      "label": "Show video controls",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (overrides video)"
+    },
+    {
+      "type": "text",
+      "id": "image_url",
+      "label": "Image URL fallback"
+    },
+    {
+      "type": "select",
+      "id": "cta_color",
+      "label": "CTA block color",
+      "options": [
+        { "value": "navy", "label": "Navy" },
+        { "value": "rose", "label": "Rose" },
+        { "value": "pearl", "label": "Pearl" }
+      ],
+      "default": "rose"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Now live"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop the drop"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Enter the collection"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Fallback collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Campaign gate"
+    }
+  ]
+}
+{% endschema %}

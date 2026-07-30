@@ -1,7 +1,7 @@
 <section class="page-main section-spacing">
   <header class="page-main__header">
     {% if section.settings.eyebrow != blank %}
-      <p class="eyebrow eyebrow--rule">{{ section.settings.eyebrow }}</p>
+      <p class="camp-label">{{ section.settings.eyebrow }}</p>
     {% endif %}
     <h1>{{ page.title }}</h1>
   </header>
@@ -36,7 +36,8 @@
     margin-bottom: var(--space-xl);
   }
   .page-main__header h1 {
-    font-weight: 400;
+    font-weight: 700;
+    text-transform: uppercase;
   }
   .page-main__content {
     font-size: var(--text-lg);

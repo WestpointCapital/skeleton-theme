@@ -1,14 +1,13 @@
 {% comment %}
-  Footer: newsletter + link columns above an oversized serif wordmark,
-  closing with a hairline legal row and payment icons.
+  Footer — modular studio campaign footer.
 {% endcomment %}
 
-<footer class="site-footer on-dark full-width">
+<footer class="site-footer full-width field-navy">
   <div class="site-footer__inner">
-    <div class="site-footer__top">
+    <div class="site-footer__top studio-grid">
       <div class="site-footer__brand">
         {% if section.settings.tagline != blank %}
-          <p class="eyebrow eyebrow--rule">{{ section.settings.tagline }}</p>
+          <p class="camp-label">{{ section.settings.tagline }}</p>
         {% endif %}
         {% if section.settings.blurb != blank %}
           <p class="site-footer__blurb measure">{{ section.settings.blurb }}</p>
@@ -34,7 +33,7 @@
                 </button>
               </div>
               {% if form.posted_successfully? %}
-                <p class="newsletter-note">Thank you — welcome to the regions.</p>
+                <p class="newsletter-note">{{ 'newsletter.success' | t }}</p>
               {% endif %}
             {% endform %}
           </div>
@@ -59,15 +58,13 @@
       </div>
     </div>
 
-    <p class="site-footer__giant" aria-hidden="true">{{ shop.name }}</p>
-
     <div class="site-footer__bottom">
       <p class="site-footer__copyright">
         &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
       </p>
 
-      {% if section.settings.coordinates != blank %}
-        <span class="meta-label site-footer__coords">{{ section.settings.coordinates }}</span>
+      {% if section.settings.footer_note != blank %}
+        <span class="meta-label site-footer__note">{{ section.settings.footer_note }}</span>
       {% endif %}
 
       {% if section.settings.show_payment_icons %}
@@ -96,8 +93,19 @@
 
   .site-footer__top {
     display: grid;
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-columns: 1fr;
     gap: var(--space-2xl);
+  }
+  @media (min-width: 990px) {
+    .site-footer__top {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+    .site-footer__brand {
+      grid-column: span 5;
+    }
+    .site-footer__columns {
+      grid-column: span 7;
+    }
   }
 
   .site-footer__brand {
@@ -113,9 +121,11 @@
   }
 
   .site-footer__news-title {
-    font-family: var(--font-heading--family);
-    font-style: italic;
+    font-family: var(--font-display--family);
     font-size: var(--text-xl);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-display);
     margin-bottom: var(--space-sm);
   }
   .newsletter-field {
@@ -195,30 +205,14 @@
     padding-left: 0.4rem;
   }
 
-  /* Oversized wordmark — scales to fit any phone width */
-  .site-footer__giant {
-    font-family: var(--font-heading--family);
-    font-size: clamp(1.35rem, 9vw, 10rem);
-    line-height: 1.05;
-    text-transform: uppercase;
-    letter-spacing: clamp(0.02em, 1.2vw, 0.06em);
-    text-align: center;
-    white-space: nowrap;
-    width: 100%;
-    max-width: 100%;
-    overflow: hidden;
-    color: color-mix(in srgb, var(--color-contrast) 92%, transparent);
-    border-bottom: 1px solid color-mix(in srgb, var(--color-contrast) 15%, transparent);
-    padding-bottom: var(--space-lg);
-    margin: 0;
-  }
-
   .site-footer__bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-md);
     flex-wrap: wrap;
+    padding-top: var(--space-lg);
+    border-top: 2px solid color-mix(in srgb, var(--color-contrast) 15%, transparent);
   }
   .site-footer__copyright {
     font-size: var(--text-xs);
@@ -226,8 +220,8 @@
     letter-spacing: 0.04em;
     color: color-mix(in srgb, var(--color-contrast) 60%, transparent);
   }
-  .site-footer__coords {
-    color: color-mix(in srgb, var(--color-contrast) 45%, transparent);
+  .site-footer__note {
+    color: color-mix(in srgb, var(--color-contrast) 55%, transparent);
   }
   .site-footer__payment {
     display: flex;
@@ -250,12 +244,6 @@
       align-items: flex-start;
       gap: var(--space-sm);
     }
-    .site-footer__giant {
-      font-size: clamp(1.15rem, 7.8vw, 2.25rem);
-      letter-spacing: 0.04em;
-      white-space: normal;
-      word-break: break-word;
-    }
     .newsletter-field {
       min-width: 0;
       width: 100%;
@@ -271,13 +259,13 @@
       "type": "text",
       "id": "tagline",
       "label": "Tagline",
-      "default": "Travel the world, collect the world"
+      "default": "Studio campaign"
     },
     {
       "type": "textarea",
       "id": "blurb",
       "label": "Brand statement",
-      "default": "One-of-a-kind treasures gathered from artisans across the globe. Each piece carries the story of where it came from."
+      "default": "One-of-a-kind treasures from master artisans. Each drop is limited, staged, and sold once."
     },
     {
       "type": "header",
@@ -293,7 +281,7 @@
       "type": "text",
       "id": "newsletter_title",
       "label": "Newsletter title",
-      "default": "Explore the regions"
+      "default": "Next drop alerts"
     },
     {
       "type": "text",
@@ -307,9 +295,9 @@
     },
     {
       "type": "text",
-      "id": "coordinates",
-      "label": "Coordinates line",
-      "default": "Charting all seven regions of the world"
+      "id": "footer_note",
+      "label": "Footer note",
+      "default": "Limited studio drops"
     },
     {
       "type": "checkbox",

@@ -17,8 +17,8 @@
       {
         "type": "font_picker",
         "id": "type_heading_font",
-        "default": "cormorant_n4",
-        "label": "Heading font"
+        "default": "jost_n7",
+        "label": "Display font"
       },
       {
         "type": "font_picker",

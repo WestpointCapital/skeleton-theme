@@ -1,15 +1,14 @@
 {% doc %}
-  Renders a luxury product card for grids and rails.
+  Studio campaign product card for grids and rails.
 
   @param {product} product - Product to render
-  @param {string} [region] - Optional region label override
+  @param {string} [drop_label] - Optional drop/collection label
   @param {string} [badge] - Optional badge override
-  @param {number} [index] - Optional index for N° label
   @param {string} [class] - Optional extra class
   @param {boolean} [lazy] - Whether to lazy-load the image (default true)
 
   @example
-  {% render 'product-card', product: product, index: forloop.index %}
+  {% render 'product-card', product: product %}
 {% enddoc %}
 
 {% liquid
@@ -19,9 +18,9 @@
     assign loading = 'eager'
   endif
 
-  assign card_region = region
-  if card_region == blank and product.metafields.custom.region != blank
-    assign card_region = product.metafields.custom.region.value.name | default: product.metafields.custom.region.value | default: product.metafields.custom.region
+  assign card_drop = drop_label
+  if card_drop == blank and product.metafields.custom.region != blank
+    assign card_drop = product.metafields.custom.region.value.name | default: product.metafields.custom.region.value | default: product.metafields.custom.region
   endif
 
   assign card_badge = badge
@@ -31,8 +30,6 @@
   if card_badge == blank and product.available == false
     assign card_badge = 'products.badge.gone' | t
   endif
-
-  assign index_label = index | default: 1 | prepend: '00' | slice: -2, 2
 %}
 
 <a
@@ -64,24 +61,14 @@
       %}
       {% render 'badge', text: card_badge, style: badge_style, class: 'product-card__badge' %}
     {% endif %}
-
-    <span class="product-card__view">
-      {{ 'products.card.view' | t }}
-      <svg viewBox="0 0 24 24" width="13" height="13" fill="none" aria-hidden="true">
-        <path d="M4 12h15m0 0-5.5-5.5M19 12l-5.5 5.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </span>
   </div>
 
   <div class="product-card__info">
-    <span class="meta-label product-card__index">N&deg; {{ index_label }}</span>
-    <div>
-      {% if card_region != blank %}
-        <span class="product-card__region">{{ card_region }}</span>
-      {% endif %}
-      <h3 class="product-card__title">{{ product.title }}</h3>
-      {% render 'price', product: product, class: 'product-card__price' %}
-    </div>
+    {% if card_drop != blank %}
+      <span class="product-card__drop">{{ card_drop }}</span>
+    {% endif %}
+    <h3 class="product-card__title">{{ product.title }}</h3>
+    {% render 'price', product: product, class: 'product-card__price' %}
   </div>
 </a>
 
@@ -93,84 +80,47 @@
     text-decoration: none;
     color: inherit;
     min-width: 0;
+    background: color-mix(in srgb, var(--field-ink) 3%, var(--color-background));
+    padding: var(--space-sm);
   }
   .product-card__media {
     position: relative;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
-    background: color-mix(in srgb, var(--color-accent-soft) 35%, var(--color-background));
+    background: var(--field-pearl);
   }
   .product-card__image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 1.1s var(--ease);
-  }
-  .product-card:hover .product-card__image {
-    transform: scale(1.04);
   }
   .product-card__badge {
     position: absolute;
-    top: 0.85rem;
-    left: 0.85rem;
+    top: 0;
+    left: 0;
     z-index: 1;
-  }
-  .product-card__view {
-    position: absolute;
-    left: 0.85rem;
-    right: 0.85rem;
-    bottom: 0.85rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    padding: 0.7rem 0.85rem;
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-contrast);
-    background: color-mix(in srgb, var(--color-navy) 72%, transparent);
-    backdrop-filter: blur(8px);
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity var(--duration) var(--ease), transform var(--duration) var(--ease);
-  }
-  .product-card:hover .product-card__view,
-  .product-card:focus-visible .product-card__view {
-    opacity: 1;
-    transform: translateY(0);
   }
   .product-card__info {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-sm);
-    align-items: start;
+    gap: 0.35rem;
   }
-  .product-card__index {
-    padding-top: 0.2rem;
-  }
-  .product-card__region {
-    display: block;
-    margin-bottom: 0.25rem;
+  .product-card__drop {
     font-size: var(--text-xs);
-    letter-spacing: 0.14em;
+    font-weight: 700;
+    letter-spacing: var(--tracking-label);
     text-transform: uppercase;
     color: var(--color-accent);
   }
   .product-card__title {
-    margin: 0 0 0.35rem;
+    margin: 0;
+    font-family: var(--font-display--family);
     font-size: var(--text-lg);
-    font-weight: 400;
-    line-height: 1.2;
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
   }
   .product-card--unavailable {
-    opacity: 0.72;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .product-card:hover .product-card__image {
-      transform: none;
-    }
+    opacity: 0.6;
   }
 {% endstylesheet %}

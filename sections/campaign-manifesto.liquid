@@ -1,0 +1,192 @@
+{% comment %}
+  Campaign manifesto — alternating navy/rose statement panels.
+{% endcomment %}
+
+<section class="camp-manifesto full-width">
+  {% for block in section.blocks %}
+    <article class="camp-manifesto__panel field-{{ block.settings.field_color }}" {{ block.shopify_attributes }}>
+      <div class="camp-manifesto__grid studio-grid">
+        <div class="camp-manifesto__copy" data-cut-in>
+          {% if block.settings.label != blank %}
+            <p class="camp-label">{{ block.settings.label }}</p>
+          {% endif %}
+          {% if block.settings.heading != blank %}
+            <h2 class="camp-manifesto__title">{{ block.settings.heading }}</h2>
+          {% endif %}
+          {% if block.settings.body != blank %}
+            <div class="camp-manifesto__body rte">{{ block.settings.body }}</div>
+          {% endif %}
+        </div>
+        <div class="camp-manifesto__visual" data-cut-in style="--cut-delay: 0.08s">
+          {% if block.settings.image != blank %}
+            {{
+              block.settings.image
+              | image_url: width: 1200
+              | image_tag:
+                class: 'camp-manifesto__img',
+                loading: 'lazy',
+                widths: '540, 720, 960, 1200',
+                sizes: '(min-width: 990px) 50vw, 100vw',
+                alt: block.settings.image.alt | default: block.settings.heading
+            }}
+          {% elsif block.settings.image_url != blank %}
+            <img
+              class="camp-manifesto__img"
+              src="{{ block.settings.image_url }}"
+              alt="{{ block.settings.heading | escape }}"
+              loading="lazy"
+              width="1200"
+              height="1500"
+            >
+          {% else %}
+            {{ 'lifestyle-1' | placeholder_svg_tag: 'camp-manifesto__img camp-manifesto__img--placeholder' }}
+          {% endif %}
+        </div>
+      </div>
+    </article>
+  {% endfor %}
+</section>
+
+{% stylesheet %}
+  .camp-manifesto__panel {
+    padding: var(--section-spacing) var(--page-inline);
+    border-bottom: var(--grid-gap) solid var(--field-pearl);
+  }
+  .camp-manifesto__grid {
+    align-items: center;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  @media (min-width: 990px) {
+    .camp-manifesto__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+    .camp-manifesto__copy {
+      grid-column: span 5;
+    }
+    .camp-manifesto__visual {
+      grid-column: span 7;
+    }
+    .camp-manifesto__panel:nth-child(even) .camp-manifesto__copy {
+      order: 2;
+      grid-column: 8 / span 5;
+    }
+    .camp-manifesto__panel:nth-child(even) .camp-manifesto__visual {
+      order: 1;
+      grid-column: 1 / span 7;
+    }
+  }
+  .camp-manifesto__copy {
+    display: grid;
+    gap: var(--space-md);
+  }
+  .camp-manifesto__title {
+    margin: 0;
+    font-family: var(--font-display--family);
+    font-size: var(--text-display);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: var(--tracking-display);
+    text-transform: uppercase;
+  }
+  .camp-manifesto__body {
+    max-width: 38ch;
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+  .camp-manifesto__visual {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--color-contrast) 8%, transparent);
+  }
+  .camp-manifesto__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .camp-manifesto__panel.field-pearl .camp-label {
+    background: var(--field-rose);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Campaign manifesto",
+  "tag": "section",
+  "class": "camp-manifesto-section",
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Statement panel",
+      "settings": [
+        {
+          "type": "select",
+          "id": "field_color",
+          "label": "Background",
+          "options": [
+            { "value": "navy", "label": "Navy" },
+            { "value": "rose", "label": "Rose" },
+            { "value": "pearl", "label": "Pearl" }
+          ],
+          "default": "navy"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Manifesto"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "One piece. One story."
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body",
+          "default": "<p>We work directly with master artisans. Each piece is unique — when it sells, it is gone.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "image_url",
+          "label": "Image URL (fallback)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Campaign manifesto",
+      "blocks": [
+        {
+          "type": "panel",
+          "settings": {
+            "field_color": "navy",
+            "label": "01",
+            "heading": "One piece. One story.",
+            "body": "<p>Every jewel is one of a kind — gathered from artisans, staged like a campaign, sold once.</p>",
+            "image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "field_color": "rose",
+            "label": "02",
+            "heading": "Made by hand.",
+            "body": "<p>Craft, not catalog. Makers named. Provenance kept.</p>",
+            "image_url": "https://elements-resized.envatousercontent.com/envato-dam-assets-production/EVA/TRX/53/fe/ff/24/1b/v1_E10/E10BGVG6.jpg?w=1200&cf_fit=scale-down&q=85&format=auto"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

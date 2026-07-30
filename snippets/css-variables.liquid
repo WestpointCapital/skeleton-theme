@@ -1,73 +1,70 @@
 {% style %}
-  {% # Load all body font variations with display: swap %}
   {{ settings.type_primary_font | font_face: font_display: 'swap' }}
   {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'weight', 'bold' | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-  {{ settings.type_primary_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
-
-  {% # Load heading font variations %}
+  {{ settings.type_primary_font | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
   {{ settings.type_heading_font | font_face: font_display: 'swap' }}
   {{ settings.type_heading_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
-  {{ settings.type_heading_font | font_modify: 'style', 'italic' | font_face: font_display: 'swap' }}
+  {{ settings.type_heading_font | font_modify: 'weight', '700' | font_face: font_display: 'swap' }}
 
   :root {
-    /* Typography */
     --font-primary--family: {{ settings.type_primary_font.family }}, {{ settings.type_primary_font.fallback_families }};
-    --font-primary--style: {{ settings.type_primary_font.style }};
     --font-primary--weight: {{ settings.type_primary_font.weight }};
     --font-heading--family: {{ settings.type_heading_font.family }}, {{ settings.type_heading_font.fallback_families }};
-    --font-heading--style: {{ settings.type_heading_font.style }};
-    --font-heading--weight: {{ settings.type_heading_font.weight }};
-    --tracking-heading: {{ settings.type_heading_tracking }}px;
-    --tracking-eyebrow: {{ settings.type_eyebrow_tracking }}px;
+    --font-heading--weight: 700;
+    --font-display--family: var(--font-heading--family);
+    --tracking-display: -0.04em;
+    --tracking-label: 0.18em;
+    --tracking-ui: 0.12em;
 
-    /* Type scale (fluid) */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
-    --text-2xl: clamp(1.6rem, 1.3rem + 1.4vw, 2.25rem);
-    --text-3xl: clamp(2rem, 1.5rem + 2.4vw, 3.25rem);
-    --text-4xl: clamp(2.6rem, 1.8rem + 4vw, 5rem);
-    --text-hero: clamp(3rem, 2rem + 6vw, 7rem);
+    --text-xs: 0.6875rem;
+    --text-sm: 0.8125rem;
+    --text-base: 0.9375rem;
+    --text-lg: 1.0625rem;
+    --text-xl: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+    --text-2xl: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+    --text-3xl: clamp(2rem, 1.4rem + 2.5vw, 3.5rem);
+    --text-4xl: clamp(2.75rem, 1.8rem + 4vw, 5.5rem);
+    --text-display: clamp(3.5rem, 2rem + 8vw, 9rem);
+    --text-campaign: clamp(4.5rem, 2.5rem + 10vw, 14rem);
 
-    /* Layout */
     --page-width: {{ settings.max_page_width }};
     --page-margin: {{ settings.min_page_margin }}px;
+    --grid-columns: 12;
+    --grid-gap: 1px;
 
-    /* Spacing scale */
     --space-2xs: 0.5rem;
     --space-xs: 0.75rem;
     --space-sm: 1rem;
     --space-md: 1.5rem;
-    --space-lg: 2.5rem;
-    --space-xl: 4rem;
-    --space-2xl: 6rem;
-    --space-3xl: 9rem;
-    --section-spacing: clamp(4rem, 2rem + 7vw, 9rem);
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    --space-2xl: 4.5rem;
+    --section-spacing: clamp(3rem, 2rem + 4vw, 5rem);
 
-    /* Colors */
     --color-background: {{ settings.background_color }};
     --color-foreground: {{ settings.foreground_color }};
     --color-navy: {{ settings.color_navy }};
     --color-accent: {{ settings.color_accent }};
     --color-accent-soft: {{ settings.color_accent_soft }};
     --color-contrast: {{ settings.color_contrast }};
+    --field-navy: {{ settings.color_navy }};
+    --field-rose: {{ settings.color_accent }};
+    --field-pearl: {{ settings.background_color }};
+    --field-ink: {{ settings.foreground_color }};
     --color-foreground-50: color-mix(in srgb, var(--color-foreground) 50%, transparent);
     --color-foreground-12: color-mix(in srgb, var(--color-foreground) 12%, transparent);
-    --color-line: color-mix(in srgb, var(--color-foreground) 14%, transparent);
+    --color-line: color-mix(in srgb, var(--color-foreground) 18%, transparent);
 
-    /* Shape & motion */
     --style-border-radius-inputs: {{ settings.input_corner_radius }}px;
-    --ease: cubic-bezier(0.22, 1, 0.36, 1);
-    --duration: 0.6s;
+    --ease-cut: cubic-bezier(0.4, 0, 0.2, 1);
+    --duration-cut: 0.22s;
+    --duration: 0.22s;
+    --hdr-bar-height: 4rem;
   }
 
-  /* Tighter gutters on phones (never wider than the desktop setting) */
   @media (max-width: 749px) {
     :root {
-      --page-margin: {{ settings.min_page_margin | at_most: 20 }}px;
+      --page-margin: {{ settings.min_page_margin | at_most: 16 }}px;
     }
   }
 {% endstyle %}

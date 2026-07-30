@@ -22,7 +22,7 @@
       <div class="recs__viewport">
         <div class="recs__rail" data-rail>
           {% for product in recommendations.products limit: limit %}
-            {% render 'product-card', product: product, index: forloop.index, class: 'recs__card' %}
+            {% render 'product-card', product: product, class: 'recs__card' %}
           {% endfor %}
         </div>
       </div>
@@ -116,7 +116,7 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Complete the region"
+      "default": "Complete the drop"
     },
     {
       "type": "range",

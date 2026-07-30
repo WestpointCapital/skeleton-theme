@@ -2,13 +2,13 @@
   {% render 'section-heading',
     eyebrow: section.settings.eyebrow,
     heading: blog.title,
-    heading_italic: section.settings.heading_italic
+    subheading: section.settings.subheading
   %}
 
   {% paginate blog.articles by section.settings.articles_per_page %}
     {% if blog.articles.size > 0 %}
       {% assign feature = blog.articles.first %}
-      <a class="blog-index__feature" href="{{ feature.url }}" data-reveal>
+      <a class="blog-index__feature" href="{{ feature.url }}" data-cut-in>
         <div class="blog-index__feature-media">
           {% if feature.image %}
             {% render 'image',
@@ -22,7 +22,7 @@
           {% endif %}
         </div>
         <div class="blog-index__feature-copy">
-          <p class="eyebrow">{{ 'blog.read_more' | t }}</p>
+          <p class="camp-label">{{ 'blog.read_more' | t }}</p>
           <h2>{{ feature.title }}</h2>
           {% assign date = feature.published_at | time_tag: format: 'date' %}
           <p class="meta-label">{{ 'blog.article_metadata_html' | t: date: date, author: feature.author }}</p>
@@ -36,7 +36,7 @@
     <div class="blog-index__grid">
       {% for article in blog.articles %}
         {% if forloop.first %}{% continue %}{% endif %}
-        <a class="blog-card" href="{{ article.url }}" data-reveal style="--reveal-delay: {{ forloop.index0 | times: 0.06 }}s">
+        <a class="blog-card" href="{{ article.url }}" data-cut-in style="--cut-delay: {{ forloop.index0 | times: 0.05 }}s">
           <div class="blog-card__media">
             {% if article.image %}
               {{
@@ -45,7 +45,6 @@
                 | image_tag: loading: 'lazy', widths: '360, 540, 720, 900', sizes: '(min-width: 990px) 30vw, 100vw', alt: article.image.alt | default: article.title
               }}
             {% endif %}
-            <span class="meta-label blog-card__index">N&deg; {{ forloop.index | prepend: '00' | slice: -2, 2 }}</span>
           </div>
           <div class="blog-card__copy">
             <h3>{{ article.title }}</h3>
@@ -121,7 +120,8 @@
   .blog-card__copy h3 {
     margin: 0 0 0.4rem;
     font-size: var(--text-xl);
-    font-weight: 400;
+    font-weight: 700;
+    text-transform: uppercase;
   }
   @media (min-width: 750px) {
     .blog-index__feature {
@@ -142,13 +142,13 @@
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "The Odyssey Journal"
+      "default": "Stories"
     },
     {
-      "type": "text",
-      "id": "heading_italic",
-      "label": "Heading italic",
-      "default": "Stories from the regions"
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Campaign notes and studio journal."
     },
     {
       "type": "range",

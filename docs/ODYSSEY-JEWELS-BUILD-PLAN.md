@@ -95,9 +95,9 @@ Core hierarchy from the brief: **Region → Country → City → Artisan**, with
 ## 5. Design System
 
 - [x] **Palette:** Navy (primary) + Rose (accent). Defined in `config/settings_schema.json` and exposed as CSS vars via `snippets/css-variables.liquid`.
-- [x] **Typography:** Premium pairing — Cormorant (display serif, italic accents) + Jost (sans). Set in theme settings; base weight preloaded.
+- [x] **Typography:** Jost-led sans display system (bold/black campaign headings, 10–14rem display scale). Cormorant italic editorial hierarchy **retired** in V3 Studio Campaign rebuild.
 - [ ] **Logo:** Cleaned-up mark — separate "OJ" from wordmark, keep compass rose, remove busy background so it works for embroidery/small branding. `@client` to supply source; `@core` to produce SVG variants (full, mark-only, mono).
-- [x] **Tone:** Editorial, story-first, generous whitespace, large photography. "Every Jewel Tells a Story." *(V3 cinematic direction locked: Gucci campaign pacing × Pandora jewellery clarity)*
+- [x] **Tone:** Gucci-inspired studio campaign — saturated color fields, rigid modular layouts, oversized sans type, hard cinematic cuts. No dedicated regions homepage section. *(Earlier V3 cinematic editorial direction superseded Jul 2026.)*
 - [ ] **Design tokens doc:** spacing scale, radii, shadows, motion — documented so `@dev` stays consistent.
 
 ---
@@ -119,12 +119,11 @@ Mapped to the skeleton's folders. Items marked `@core` are the premium framework
 - [x] Account entry (ties to Rewards).
 
 ### 6.3 Homepage sections `@dev` (framework by `@core`)
-- [x] Hero (clean, premium Pandora-inspired full-bleed video — bottom-left composition, subtle scrim, elegant play/pause + mute controls, alignment/height/button-style options).
+- [x] **V3 Studio Campaign homepage** — six dedicated sections only: `campaign-hero`, `campaign-ticker`, `campaign-drop`, `campaign-film`, `campaign-manifesto`, `campaign-gate`. No regions grid, no journal chapters, no "Where in the world" copy.
 - [ ] Interactive World Map section (**hero custom feature** — see §7.1).
-- [x] Featured drop (Oceania) — horizontal gallery rail with controls + progress line.
-- [x] Cinematic video storytelling section (`video-story`) — full-bleed overlay or split layout, autoplay/click-to-play, reusable for collection & brand stories.
-- [x] "How it works" / storytelling band — layered dual-image story sections + destination marquee + promises ledger.
-- [x] Featured artisans (dark story variant; to be backed by artisan metaobjects later).
+- [x] Featured drop surfaced via `campaign-drop` (collection-driven, studio-staged product grid).
+- [x] Cinematic film sections (`campaign-hero`, `campaign-film`, `campaign-gate`) with demo video placeholders.
+- [x] Manifesto panels (`campaign-manifesto`) — alternating navy/rose modular statements.
 - [ ] Rewards teaser.
 - [x] Newsletter signup (footer).
 
@@ -145,7 +144,7 @@ Mapped to the skeleton's folders. Items marked `@core` are the premium framework
 - [ ] Sub-collection navigation.
 
 ### 6.6 Supporting pages `@dev`
-- [x] Collections index (`collections.liquid`) as a "regions of the world" gateway.
+- [x] Collections index (`collections.liquid`) as a **drop archive** (not a regions gateway).
 - [x] Blog + article templates (storytelling / SEO content).
 - [x] Cart page + drawer parity.
 - [x] Search results with facets.
@@ -331,22 +330,27 @@ To hand a clean build to Upwork devs:
 
 ---
 
-## 15. V3 Cinematic Redesign Status (Jul 2026)
+## 15. V3 Studio Campaign Rebuild Status (Jul 2026)
 
-**Concept:** Video-first Gucci × Pandora synthesis on Odyssey Navy/Rose/Pearl tokens (Cormorant + Jost unchanged).
+**Concept:** Gucci-inspired studio campaign on Odyssey Navy/Rose/Pearl/Ink tokens — saturated color fields, oversized Jost sans, rigid 12-column modules, hard cut motion. **Supersedes** the earlier V3 cinematic editorial pass (Cormorant italic, chapter numbers, regions grid, slow reveals).
 
 ### Delivered in theme
-- [x] Shared video system (`responsive-bg-video`, `media-controls`, lazy below-fold films, reduced-motion + offscreen pause).
-- [x] Film-first homepage order: hero → marquee → Oceania film → featured rail → regions → makers film → story → promises → closing film CTA.
-- [x] Luxury PDP/PLP/cart drawer/search/recommendations/collections gateway.
-- [x] Branded blog, article, page (FAQ blocks), 404, password gate, gift card.
-- [x] Predictive search + AJAX cart drawer wired through header/footer.
-- [x] Theme Check: 0 errors (Shopify CLI + MCP validate_theme).
+- [x] Campaign design tokens + hard cut-in motion (`data-cut-in`, clip/opacity transitions, reduced-motion safe).
+- [x] Six homepage sections only: hero → ticker → drop → film → manifesto → gate (`templates/index.json` rebuilt).
+- [x] Campaign snippets: `campaign-heading`, `campaign-product`.
+- [x] Compact campaign header + modular studio footer (no serif ghost wordmark, no region language).
+- [x] Commerce aligned: product cards, PDP, PLP, drop archive, recommendations, cart, search.
+- [x] Editorial/utility aligned: blog, article, page, 404, password, gift card; locales rewritten for drop/campaign copy.
+- [x] Legacy sections retained on disk (`regions`, `story`, `video-story`, etc.) but **not used on homepage**.
 
 ### Remaining dependencies (not theme-code blockers)
 - [ ] Real Odyssey footage to replace Amplience/Pandora demo mp4 placeholders (every slot is merchant-replaceable in the editor).
-- [ ] Store metafields/metaobjects (`custom.region`, `custom.is_one_of_a_kind`, artisan story) populated in admin.
+- [ ] Store metafields/metaobjects (`custom.region` as drop label, `custom.is_one_of_a_kind`, artisan story) populated in admin.
 - [ ] Search & Discovery app configuration for recommendations + filtering.
-- [ ] Production catalog linked to featured/regions collection pickers.
-- [ ] Interactive world map + rewards teaser sections (still planned, not in V3).
+- [ ] Production catalog linked to `campaign-drop` collection picker.
+- [ ] Interactive world map + rewards teaser sections (still planned, not in V3 Studio Campaign).
 - [ ] Live browser QA on a linked Shopify store (`shopify theme dev --store=...`).
+
+### Superseded (do not revert to)
+- ~~V3 cinematic homepage order: hero → marquee → video_story → featured → **regions** → makers film → story → promises → CTA~~
+- ~~Cormorant italic split headings, chapter numerals, N° product indices, hairline eyebrows, soft scrims, slow translateY reveals~~

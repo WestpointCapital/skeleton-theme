@@ -96,7 +96,7 @@
       </div>
 
       {% if product.metafields.custom.region != blank %}
-        <p class="pdp__region meta-label">
+        <p class="pdp__drop camp-label">
           {{ product.metafields.custom.region.value.name | default: product.metafields.custom.region.value | default: product.metafields.custom.region }}
         </p>
       {% endif %}
@@ -293,7 +293,7 @@
     margin-bottom: 1rem;
   }
   .pdp__price { margin-bottom: 0.85rem; }
-  .pdp__region { margin-bottom: 1.5rem; }
+  .pdp__drop { margin-bottom: 1.5rem; width: fit-content; }
   .pdp__sku {
     margin-top: 1.5rem;
     margin-bottom: 0.25rem;

@@ -43,7 +43,7 @@
     <div class="featured__rail" data-rail>
       {% if use_collection %}
         {% for product in section.settings.collection.products limit: 8 %}
-          {% render 'product-card', product: product, index: forloop.index, class: 'featured__card' %}
+          {% render 'product-card', product: product, class: 'featured__card' %}
         {% endfor %}
       {% else %}
         {% for block in section.blocks %}

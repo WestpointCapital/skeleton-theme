@@ -1,71 +1,38 @@
-<section class="error-404 full-width on-dark">
-  <div class="error-404__media" aria-hidden="true">
-    {% if section.settings.image != blank %}
-      {{
-        section.settings.image
-        | image_url: width: 2400
-        | image_tag: class: 'error-404__bg', loading: 'eager', widths: '800, 1200, 1600, 2400', sizes: '100vw', alt: ''
-      }}
-    {% elsif section.settings.image_url != blank %}
-      <img class="error-404__bg" src="{{ section.settings.image_url }}" alt="" loading="eager" width="2400" height="1350">
-    {% endif %}
-    <div class="error-404__overlay"></div>
-  </div>
-
+<section class="error-404 full-width field-navy">
   <div class="error-404__content">
-    <p class="eyebrow">404</p>
-    <h1 class="error-404__title">
-      {{ section.settings.heading }}
-      {% if section.settings.heading_italic != blank %}
-        <em>{{ section.settings.heading_italic }}</em>
-      {% endif %}
+    <p class="camp-label" data-cut-in>404</p>
+    <h1 class="error-404__title" data-cut-in style="--cut-delay: 0.05s">
+      {{ section.settings.heading | default: '404.title' | t }}
     </h1>
-    <p class="error-404__text">{{ section.settings.text }}</p>
-    <a class="button button--on-dark" href="{{ section.settings.button_url | default: routes.collections_url }}">
-      {{ section.settings.button_label }}
+    <p class="error-404__text" data-cut-in style="--cut-delay: 0.1s">
+      {{ section.settings.text | default: '404.not_found' | t }}
+    </p>
+    <a class="button button--on-dark" href="{{ section.settings.button_url | default: routes.all_products_collection_url }}" data-cut-in style="--cut-delay: 0.15s">
+      {{ section.settings.button_label | default: '404.back_to_shopping' | t }}
     </a>
   </div>
 </section>
 
 {% stylesheet %}
   .error-404 {
-    position: relative;
-    min-height: 88svh;
+    min-height: 70svh;
     display: grid;
     place-items: center;
-    isolation: isolate;
-    overflow: hidden;
     color: var(--color-contrast);
     text-align: center;
-  }
-  .error-404__media {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-  }
-  .error-404__bg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  .error-404__overlay {
-    position: absolute;
-    inset: 0;
-    background: color-mix(in srgb, var(--color-navy) 72%, transparent);
+    padding: var(--section-spacing) var(--page-inline);
   }
   .error-404__content {
     display: grid;
     gap: var(--space-md);
     justify-items: center;
-    padding: var(--space-xl) var(--page-inline);
     max-width: 40rem;
   }
   .error-404__title {
-    font-size: var(--text-4xl);
-    font-weight: 400;
-  }
-  .error-404__title em {
-    display: block;
+    font-size: var(--text-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 0;
   }
   .error-404__text {
     max-width: 34ch;
@@ -78,39 +45,19 @@
   "name": "t:general.404",
   "settings": [
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Background image"
-    },
-    {
-      "type": "text",
-      "id": "image_url",
-      "label": "Background image URL",
-      "default": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2400&q=80"
-    },
-    {
       "type": "text",
       "id": "heading",
-      "label": "Heading",
-      "default": "This region hasn't been charted yet"
-    },
-    {
-      "type": "text",
-      "id": "heading_italic",
-      "label": "Heading italic",
-      "default": ""
+      "label": "Heading"
     },
     {
       "type": "textarea",
       "id": "text",
-      "label": "Text",
-      "default": "The page you are looking for has drifted off the map."
+      "label": "Text"
     },
     {
       "type": "text",
       "id": "button_label",
-      "label": "Button label",
-      "default": "Explore the regions"
+      "label": "Button label"
     },
     {
       "type": "url",

@@ -1,6 +1,6 @@
-/* Global theme behaviors: reveals, header, video, cart, search, commerce. */
+/* Global theme behaviors: cut-in motion, header, video, cart, search, commerce. */
 (() => {
-  document.documentElement.classList.add('reveal-ready');
+  document.documentElement.classList.add('cut-ready', 'reveal-ready');
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -8,22 +8,22 @@
     (entries) => {
       for (const entry of entries) {
         if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
+          entry.target.classList.add('is-cut', 'is-visible');
           observer.unobserve(entry.target);
         }
       }
     },
-    { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }
+    { threshold: 0.08, rootMargin: '0px 0px -4% 0px' }
   );
 
-  const observeReveals = () => {
+  const observeMotion = () => {
     document
-      .querySelectorAll('[data-reveal]:not(.is-visible)')
+      .querySelectorAll('[data-cut-in]:not(.is-cut), [data-reveal]:not(.is-visible)')
       .forEach((el) => observer.observe(el));
   };
 
-  observeReveals();
-  document.addEventListener('shopify:section:load', observeReveals);
+  observeMotion();
+  document.addEventListener('shopify:section:load', observeMotion);
 
   const header = document.querySelector('[data-header]');
   if (header) {

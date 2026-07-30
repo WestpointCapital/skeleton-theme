@@ -21,9 +21,9 @@
     "shop_now": "Shop now"
   },
   "404": {
-    "title": "This region hasn't been charted yet",
-    "not_found": "The page you are looking for has drifted off the map.",
-    "back_to_shopping": "Explore the regions"
+    "title": "Page not found",
+    "not_found": "This page is not part of the current campaign.",
+    "back_to_shopping": "Return to shop"
   },
   "blog": {
     "article_comments": "Comments",
@@ -33,7 +33,7 @@
     "comment_form_name": "Name",
     "comment_form_submit": "Post",
     "comment_form_title": "Add a comment",
-    "read_more": "Read the story",
+    "read_more": "Read more",
     "related": "Related stories"
   },
   "cart": {
@@ -41,8 +41,8 @@
     "title": "Cart",
     "update": "Update",
     "remove": "Remove",
-    "empty": "Your collection is empty",
-    "empty_subtext": "Begin with a piece from Oceania, or explore every region.",
+    "empty": "Your cart is empty",
+    "empty_subtext": "Shop the current drop or browse the archive.",
     "subtotal": "Subtotal",
     "note": "Order note",
     "taxes_shipping": "Taxes and shipping calculated at checkout",
@@ -60,12 +60,12 @@
     }
   },
   "collections": {
-    "title": "Regions of the world",
+    "title": "Drop archive",
     "products_count": {
       "one": "{{ count }} piece",
       "other": "{{ count }} pieces"
     },
-    "empty": "No pieces are available in this region yet.",
+    "empty": "No pieces in this drop yet.",
     "sort_by": "Sort by",
     "filters": {
       "title": "Filter",
@@ -75,18 +75,18 @@
       "from": "From",
       "to": "To"
     },
-    "view_region": "Discover"
+    "view_drop": "View drop"
   },
   "products": {
     "add_to_cart": "Add to cart",
     "sold_out": "Sold out",
     "gone": "This piece has gone",
-    "gone_subtext": "One of a kind treasures never return once claimed.",
+    "gone_subtext": "One-of-a-kind pieces never return once claimed.",
     "quantity": "Quantity",
-    "description": "The story",
+    "description": "Details",
     "shipping": "Shipping & returns",
     "care": "Care",
-    "recommendations": "Complete the region",
+    "recommendations": "Complete the drop",
     "badge": {
       "one_of_a_kind": "One of a kind",
       "gone": "Gone"
@@ -112,15 +112,15 @@
     "remaining_html": "Remaining balance: {{ balance }}"
   },
   "password": {
-    "title": "The odyssey begins soon",
-    "subtext": "Enter the password to preview the first drop.",
+    "title": "The drop opens soon",
+    "subtext": "Enter the password to preview the campaign.",
     "password": "Password",
     "enter": "Enter",
-    "newsletter": "Be first to collect"
+    "newsletter": "Get drop alerts"
   },
   "search": {
     "title": "Search",
-    "placeholder": "Search jewels, stories, regions",
+    "placeholder": "Search pieces and stories",
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}",
@@ -133,6 +133,6 @@
     "label": "Email",
     "placeholder": "Your email",
     "submit": "Join",
-    "success": "Thank you for joining the odyssey."
+    "success": "Thank you — you're on the list."
   }
 }
