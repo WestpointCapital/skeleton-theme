@@ -1,8 +1,10 @@
 <section id="AtlasArtisans-{{ section.id }}" class="atlas-artisans">
   <header class="atlas-artisans__header">
-    <p>{{ section.settings.eyebrow }}</p>
-    <h2>{{ section.settings.heading }}</h2>
-    <div>{{ section.settings.intro }}</div>
+    <div class="atlas-artisans__title">
+      <p>{{ section.settings.eyebrow }}</p>
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+    <div class="atlas-artisans__intro">{{ section.settings.intro }}</div>
   </header>
 
   <div class="atlas-artisans__layout">
@@ -49,26 +51,26 @@
   }
   #AtlasArtisans-{{ section.id }} .atlas-artisans__header {
     display: grid;
-    grid-template-columns: .4fr 1fr .75fr;
+    grid-template-columns: minmax(0, 1.45fr) minmax(18rem, .55fr);
     gap: clamp(1.5rem, 4vw, 4rem);
-    align-items: start;
+    align-items: end;
     margin-bottom: clamp(2.5rem, 5vw, 5rem);
   }
-  #AtlasArtisans-{{ section.id }} .atlas-artisans__header > p {
-    margin: .55rem 0 0;
+  #AtlasArtisans-{{ section.id }} .atlas-artisans__title p {
+    margin: 0 0 1rem;
     font-size: .68rem;
     letter-spacing: .16em;
     text-transform: uppercase;
   }
   #AtlasArtisans-{{ section.id }} .atlas-artisans__header h2 {
-    max-width: 12ch;
+    max-width: 17ch;
     margin: 0;
     font-size: clamp(2.5rem, 4.8vw, 5rem);
     font-weight: 400;
     line-height: .95;
     letter-spacing: -.04em;
   }
-  #AtlasArtisans-{{ section.id }} .atlas-artisans__header > div {
+  #AtlasArtisans-{{ section.id }} .atlas-artisans__intro {
     line-height: 1.7;
     opacity: .74;
   }
