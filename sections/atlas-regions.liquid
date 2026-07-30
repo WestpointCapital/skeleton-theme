@@ -15,7 +15,23 @@
       {% for block in section.blocks %}
         <article class="atlas-regions__panel{% if forloop.first %} is-active{% endif %}" id="AtlasRegionPanel-{{ section.id }}-{{ forloop.index0 }}" data-atlas-panel {% unless forloop.first %}hidden{% endunless %}>
           <div class="atlas-regions__media">
-            {% if block.settings.image != blank %}
+            {% if block.settings.video != blank %}
+              {{
+                block.settings.video
+                | video_tag:
+                  autoplay: true,
+                  loop: true,
+                  muted: true,
+                  controls: false,
+                  playsinline: true,
+                  preload: 'metadata',
+                  image_size: '1500x'
+              }}
+            {% elsif block.settings.video_url != blank %}
+              <video autoplay muted loop playsinline preload="metadata">
+                <source src="{{ block.settings.video_url }}" type="video/mp4">
+              </video>
+            {% elsif block.settings.image != blank %}
               {{ block.settings.image | image_url: width: 1500 | image_tag: loading: 'lazy', widths: '600, 900, 1200, 1500', sizes: '(min-width: 900px) 62vw, 100vw', alt: block.settings.title }}
             {% elsif block.settings.fallback_image_url != blank %}
               <img src="{{ block.settings.fallback_image_url }}" alt="{{ block.settings.title | escape }}" width="1400" height="900" loading="lazy">
@@ -115,11 +131,11 @@
     visibility: hidden;
   }
   #AtlasRegions-{{ section.id }} .atlas-regions__media,
-  #AtlasRegions-{{ section.id }} .atlas-regions__media :is(img, svg) {
+  #AtlasRegions-{{ section.id }} .atlas-regions__media :is(img, video, svg) {
     width: 100%;
     height: 100%;
   }
-  #AtlasRegions-{{ section.id }} .atlas-regions__media :is(img, svg) {
+  #AtlasRegions-{{ section.id }} .atlas-regions__media :is(img, video, svg) {
     display: block;
     object-fit: cover;
     opacity: .78;
@@ -220,6 +236,18 @@
     root.dataset.ready = 'true';
     const tabs = [...root.querySelectorAll('[data-atlas-tab]')];
     const panels = [...root.querySelectorAll('[data-atlas-panel]')];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const syncVideos = activeIndex => {
+      panels.forEach((panel, panelIndex) => {
+        panel.querySelectorAll('video').forEach(video => {
+          if (panelIndex === activeIndex && !reduceMotion.matches) {
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        });
+      });
+    };
     tabs.forEach((tab, index) => {
       tab.addEventListener('click', () => {
         tabs.forEach((item, itemIndex) => {
@@ -229,6 +257,7 @@
           panels[itemIndex].hidden = !active;
           panels[itemIndex].classList.toggle('is-active', active);
         });
+        syncVideos(index);
       });
       tab.addEventListener('keydown', event => {
         if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
@@ -237,6 +266,13 @@
         tabs[(index + direction + tabs.length) % tabs.length].focus();
       });
     });
+    syncVideos(0);
+    if (reduceMotion.addEventListener) {
+      reduceMotion.addEventListener('change', () => {
+        const activeIndex = tabs.findIndex(tab => tab.classList.contains('is-active'));
+        syncVideos(activeIndex);
+      });
+    }
   })();
 </script>
 
@@ -258,7 +294,9 @@
         { "type": "text", "id": "coordinates", "label": "Coordinates", "default": "17° 32′ S · 149° 34′ W" },
         { "type": "text", "id": "status", "label": "Status", "default": "Now available" },
         { "type": "textarea", "id": "description", "label": "Description", "default": "Pearls, shell and silver jewellery made across the islands of the South Pacific." },
-        { "type": "image_picker", "id": "image", "label": "Shopify image" },
+        { "type": "video", "id": "video", "label": "Shopify video" },
+        { "type": "url", "id": "video_url", "label": "Demo video URL (MP4)" },
+        { "type": "image_picker", "id": "image", "label": "Shopify image fallback" },
         { "type": "url", "id": "fallback_image_url", "label": "Demo image URL" },
         { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop the collection" },
         { "type": "url", "id": "link", "label": "Link" }
