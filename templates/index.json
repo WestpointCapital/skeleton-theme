@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "atlas_hero": {
@@ -11,9 +20,9 @@
         "button_link": "",
         "secondary_label": "Explore by place",
         "secondary_link": "",
-        "video_url": "https://assets.mixkit.co/videos/preview/mixkit-tropical-beach-with-palm-trees-and-clear-water-1564-large.mp4",
-        "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg",
+        "video_url": "https://cdn.media.amplience.net/v/pandora/2026Q2D_platform_summer_con_be_ocean_motion_film02_10s_16x9_Gemini/mp4_480p",
         "image_alt": "Handcrafted jewellery photographed on natural stone",
+        "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a029/vh-eQ3LLv2tcx_ZigycOE_7T7bVH6W.jpg",
         "caption": "Made by hand, found around the world"
       }
     },
@@ -57,7 +66,11 @@
           }
         }
       },
-      "block_order": ["oceania", "asia", "north"],
+      "block_order": [
+        "oceania",
+        "asia",
+        "north"
+      ],
       "settings": {
         "eyebrow": "Regions",
         "heading": "Discover jewellery by place.",
@@ -70,6 +83,7 @@
         "object_1": {
           "type": "object",
           "settings": {
+            "product": "",
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a355/1KvGspbVz7FB-vNaVmuMs_1PMtu5Fl.jpg",
             "fallback_title": "Dragon Head Garnet Bangle",
             "fallback_price": "$1,200",
@@ -81,6 +95,7 @@
         "object_2": {
           "type": "object",
           "settings": {
+            "product": "",
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa43ef7/MeBlaZ9fcF1eV-EpztFDK_C7MMfBhB.jpg",
             "fallback_title": "Peach Baroque Pearl Necklace",
             "fallback_price": "$980",
@@ -92,6 +107,7 @@
         "object_3": {
           "type": "object",
           "settings": {
+            "product": "",
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa2a035/_vPx06A9yHfRFH2-_-MfC_T6W1QA3Z.jpg",
             "fallback_title": "Silver Rope Heart Necklace",
             "fallback_price": "$1,540",
@@ -103,6 +119,7 @@
         "object_4": {
           "type": "object",
           "settings": {
+            "product": "",
             "fallback_image_url": "https://v3b.fal.media/files/b/0aa43e65/UYxn4eeG2gPYcD3XVIq2y_kulxxVs7.jpg",
             "fallback_title": "Pink Pearl Stud Earrings",
             "fallback_price": "$760",
@@ -112,10 +129,16 @@
           }
         }
       },
-      "block_order": ["object_1", "object_2", "object_3", "object_4"],
+      "block_order": [
+        "object_1",
+        "object_2",
+        "object_3",
+        "object_4"
+      ],
       "settings": {
         "eyebrow": "Current selection",
         "heading": "Pieces from around the world.",
+        "collection": "",
         "sold_label": "Sold out",
         "footer_note": "Selected for their beauty, craftsmanship and connection to place.",
         "link_label": "Shop all jewellery",
@@ -150,7 +173,11 @@
           }
         }
       },
-      "block_order": ["trace_1", "trace_2", "trace_3"],
+      "block_order": [
+        "trace_1",
+        "trace_2",
+        "trace_3"
+      ],
       "settings": {
         "eyebrow": "Behind the jewellery",
         "heading": "Every piece begins somewhere.",
@@ -188,7 +215,10 @@
           }
         }
       },
-      "block_order": ["artisan_1", "artisan_2"],
+      "block_order": [
+        "artisan_1",
+        "artisan_2"
+      ],
       "settings": {
         "eyebrow": "Meet the makers",
         "heading": "Made by people, not production lines.",
@@ -205,6 +235,7 @@
         "entry_1": {
           "type": "entry",
           "settings": {
+            "article": "",
             "fallback_image_url": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1400&q=85",
             "fallback_title": "How the lagoon shapes a pearl",
             "excerpt": "A closer look at the light, water and time behind the colour and character of every pearl.",
@@ -217,6 +248,7 @@
         "entry_2": {
           "type": "entry",
           "settings": {
+            "article": "",
             "fallback_image_url": "https://images.unsplash.com/photo-1459908676235-d5f02a50184b?auto=format&fit=crop&w=1400&q=85",
             "fallback_title": "The beauty of the maker’s mark",
             "excerpt": "Why small variations and traces of the hand are worth keeping in a finished piece.",
@@ -229,6 +261,7 @@
         "entry_3": {
           "type": "entry",
           "settings": {
+            "article": "",
             "fallback_image_url": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=85",
             "fallback_title": "Where we’re going next: the North",
             "excerpt": "A first look at the makers, materials and landscapes inspiring our northern collection.",
@@ -239,7 +272,11 @@
           }
         }
       },
-      "block_order": ["entry_1", "entry_2", "entry_3"],
+      "block_order": [
+        "entry_1",
+        "entry_2",
+        "entry_3"
+      ],
       "settings": {
         "eyebrow": "Stories from around the world",
         "heading": "Places, people and jewellery.",
