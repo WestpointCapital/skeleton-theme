@@ -306,7 +306,8 @@ button.button {
 
 /** Utilities */
 .section-spacing {
-  padding-block: var(--section-spacing);
+  /* padding-block: var(--section-spacing); */
+  padding-block: clamp(2rem, 1rem + 1vw, 4rem);
 }
 
 .measure {
