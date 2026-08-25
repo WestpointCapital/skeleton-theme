@@ -8,5 +8,16 @@
  * ------------------------------------------------------------
  */
 {
-  "current": {}
+  "current": {
+    "min_page_margin": 40,
+    "sections": {
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {
+          "kicker": "Your field case"
+        }
+      }
+    },
+    "content_for_index": []
+  }
 }
