@@ -38,7 +38,8 @@
   #AtlasSignup-{{ section.id }} {
     display: grid;
     place-items: center;
-    padding: var(--section-spacing) var(--page-margin);
+    /* padding: var(--section-spacing) var(--page-margin); */
+    padding: clamp(2rem, 1rem + 2vw, 4rem);
     color: var(--color-foreground);
     background: color-mix(in srgb, var(--color-accent-soft) 72%, var(--color-background));
   }
